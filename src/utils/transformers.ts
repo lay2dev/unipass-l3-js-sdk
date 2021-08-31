@@ -50,14 +50,6 @@ function transformRawObject(debugPath: string, object: any, keys: any) {
   return result;
 }
 
-function toInvokeArray(invokeFunction) {
-  return function (debugPath, array) {
-    return array.map((item, i) => {
-      return invokeFunction(`${debugPath}[${i}]`, item);
-    });
-  };
-}
-
 function toInvoke(transform) {
   return function (debugPath, value) {
     return transform(value, {
@@ -66,54 +58,26 @@ function toInvoke(transform) {
     });
   };
 }
-export function TransformTarget(
+export function TransformRowAction(
   target: any,
-  { validation = true, debugPath = 'target' } = {}
+  { debugPath = 'row_action' } = {}
 ) {
-  const formatTarget = transformObject(debugPath, target, {
-    to: invokeSerializeJson,
-    amount: invokeSerializeJson,
+  const formatAction = transformObject(debugPath, target, {
+    registerEmail: invokeSerializeJson,
+    pubkey: invokeSerializeJson,
+    recoveryEmail: invokeSerializeJson,
+    quickLogin: invokeSerializeJson,
   });
-
-  if (validation) {
-    validators.ValidateTarget(formatTarget, {
-      debugPath: `(transformed) ${debugPath}`,
-    });
-  }
-
-  return formatTarget;
+  return formatAction;
 }
 
-export function Transform(
-  target: any,
-  { validation = true, debugPath = 'raw' } = {}
-) {
-  const formatRow = transformObject(debugPath, target, {
-    type_id: invokeSerializeJson,
-    from: invokeSerializeJson,
+export function TransformInnerRaw(target: any, { debugPath = 'raw' } = {}) {
+  const formatRowInner = transformRawObject(debugPath, target, {
     nonce: invokeSerializeJson,
-    total_amount: invokeSerializeJson,
-    fee: invokeSerializeJson,
-    targets: toInvokeArray(toInvoke(TransformTarget)),
+    type: invokeSerializeJson,
+    action: toInvoke(TransformRowAction),
   });
-  if (validation) {
-    validators.ValidateRaw(formatRow, {
-      debugPath: `(transformed) ${debugPath}`,
-    });
-  }
-  return formatRow;
-}
-
-export function TransformRaw(target: any, { debugPath = 'raw' } = {}) {
-  const formatRow = transformRawObject(debugPath, target, {
-    typeId: invokeSerializeJson,
-    from: invokeSerializeJson,
-    nonce: invokeSerializeJson,
-    totalAmount: invokeSerializeJson,
-    fee: invokeSerializeJson,
-    targets: toInvokeArray(toInvoke(TransformTarget)),
-  });
-  return formatRow;
+  return formatRowInner;
 }
 
 export function TransformTxStatus(target: any, { debugPath = 'raw' } = {}) {
@@ -124,14 +88,93 @@ export function TransformTxStatus(target: any, { debugPath = 'raw' } = {}) {
   return formatRow;
 }
 
+export function TransformRecoveryEmail(
+  target: any,
+  { debugPath = 'raw' } = {}
+) {
+  const formatRecoveryEmail = transformRawObject(debugPath, target, {
+    threshold: invokeSerializeJson,
+    firstN: invokeSerializeJson,
+    emails: invokeSerializeJson,
+  });
+  return formatRecoveryEmail;
+}
+
+export function TransformPendingState(target: any, { debugPath = 'raw' } = {}) {
+  const formatRecoveryEmail = transformRawObject(debugPath, target, {
+    pendingKey: invokeSerializeJson,
+    replaceOld: invokeSerializeJson,
+    timeCell: invokeSerializeJson,
+  });
+  return formatRecoveryEmail;
+}
+
+// raw transaction
+export function TransformRawTransaction(
+  rawTransaction: any,
+  { debugPath = 'raw_transaction' } = {}
+) {
+  let formateTransaction = {};
+  if (rawTransaction.tx_status) {
+    formateTransaction = transformRawObject(debugPath, rawTransaction, {
+      transactionInner: toInvoke(TransformInnerRaw),
+      txStatus: toInvoke(TransformTxStatus),
+    });
+  } else {
+    formateTransaction = transformRawObject(debugPath, rawTransaction, {
+      registerEmail: invokeSerializeJson,
+      quickLogin: invokeSerializeJson,
+      localKeys: invokeSerializeJson,
+      recoveryEmail: toInvoke(TransformTxStatus),
+      pendingState: toInvoke(TransformPendingState),
+    });
+  }
+  console.log(formateTransaction);
+  return formateTransaction;
+}
+
+export function TransformAction(
+  target: any,
+  { validation = true, debugPath = 'action' } = {}
+) {
+  const formatAction = transformObject(debugPath, target, {
+    register_email: invokeSerializeJson,
+    pubkey: invokeSerializeJson,
+    recovery_email: invokeSerializeJson,
+    quick_login: invokeSerializeJson,
+  });
+  if (validation) {
+    validators.ValidateAction(formatAction, {
+      debugPath: `(transformed) ${debugPath}`,
+    });
+  }
+  return formatAction;
+}
+export function TransformInner(
+  target: any,
+  { validation = true, debugPath = 'inner' } = {}
+) {
+  const formatInner = transformObject(debugPath, target, {
+    type: invokeSerializeJson,
+    nonce: invokeSerializeJson,
+    action: toInvoke(TransformAction),
+  });
+  if (validation) {
+    validators.ValidateInner(formatInner, {
+      debugPath: `(transformed) ${debugPath}`,
+    });
+  }
+  return formatInner;
+}
 export function TransformTransaction(
   transaction: any,
   { validation = true, debugPath = 'transaction' } = {}
 ) {
   const formateTransaction = transformObject(debugPath, transaction, {
-    raw: toInvoke(Transform),
+    inner: toInvoke(TransformInner),
     sig: invokeSerializeJson,
   });
+  console.log(formateTransaction);
 
   if (validation) {
     validators.ValidateTransaction(formateTransaction, {
@@ -142,24 +185,8 @@ export function TransformTransaction(
   return formateTransaction;
 }
 
-export function TransformRawTransaction(
-  rawTransaction: any,
-  { debugPath = 'raw_transaction' } = {}
-) {
-  const formateTransaction = transformRawObject(debugPath, rawTransaction, {
-    transaction: toInvoke(TransformRaw),
-    txStatus: toInvoke(TransformTxStatus),
-    symbol: invokeSerializeJson,
-    name: invokeSerializeJson,
-    decimal: invokeSerializeJson,
-    issuer: invokeSerializeJson,
-    totalSupply: invokeSerializeJson,
-  });
-  return formateTransaction;
-}
-
 export const transaction = {
   TransformTransaction,
   TransformRawTransaction,
-  Transform,
+  TransformInner,
 };

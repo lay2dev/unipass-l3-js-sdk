@@ -1,9 +1,17 @@
-export interface TokenInfoResult {
-  symbol: string;
-  name: string;
-  decimal: number;
-  issuer: string;
-  totalSupply: string;
+export interface UserInfoResult {
+  registerEmail: string;
+  quickLogin: boolean;
+  localKeys: string[];
+  recoveryEmail: {
+    threshold: number;
+    firstN: number;
+    emails: string[];
+  };
+  pendingState: {
+    pendingKey: string;
+    replaceOld: boolean;
+    timeCell: string;
+  };
 }
 
 export interface Targets {
@@ -15,13 +23,17 @@ export interface Message {
   message: string;
 }
 
-export interface UniTransaction {
-  typeId: string;
-  from: string;
+export interface TransactionInner {
+  type: string;
   nonce: string;
-  totalAmount: string;
-  fee: string;
-  targets: Targets[];
+  action: Action;
+}
+
+export interface Action {
+  registerEmail: string;
+  pubkey: string;
+  recoveryEmail: string | null;
+  quickLogin: boolean;
 }
 
 export interface TxStatus {
@@ -30,18 +42,18 @@ export interface TxStatus {
 }
 
 export interface TransactionResult {
-  transaction: UniTransaction;
+  transactionInner: TransactionInner;
   txStatus: TxStatus;
 }
 
 export interface ResponseInfo {
   jsonrpc: string;
-  result: string | TokenInfoResult | TransactionResult;
+  result: string | UserInfoResult | TransactionResult;
   id: number;
 }
 
 export interface TransactionParams {
-  raw: UniTransaction;
+  inner: TransactionInner;
   sig: string;
 }
 

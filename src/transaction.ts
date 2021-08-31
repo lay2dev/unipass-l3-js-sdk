@@ -7,17 +7,17 @@ import {
 } from '.';
 import { validators, transaction } from './utils';
 export class Transaction implements UniTokenModel {
-  constructor(public raw: any, public sig?: string) {}
+  constructor(public inner: any, public sig?: string) {}
 
   validate(): Transaction {
     const data = this.transform() as TransactionParams;
-    validators.ValidateRaw(data.raw);
+    validators.ValidateInner(data.inner);
     return this;
   }
 
   validateRaw(): Transaction {
-    const data = transaction.Transform(this.raw);
-    validators.ValidateRaw(data);
+    const data = transaction.TransformInner(this.inner);
+    validators.ValidateInner(data);
     return this;
   }
 
@@ -33,14 +33,14 @@ export class Transaction implements UniTokenModel {
 
   serializeJson(): TransactionParams {
     return {
-      raw: this.raw,
+      inner: this.inner,
       sig: this.sig,
     };
   }
 
   async sendTransaction(rpc: RPC) {
     const transformData = this.transform();
-    const data = await rpc.send_ut_transaction(transformData);
+    const data = await rpc.send_up_transaction(transformData);
     if (data) {
       const rawResponse = data as RawTransaction;
       const txHash = (rawResponse.transform() as ResponseInfo).result;

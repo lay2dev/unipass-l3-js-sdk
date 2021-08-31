@@ -94,7 +94,7 @@ function serializeTable(buffers) {
   return buffer;
 }
 
-class AccountValue {
+class Action {
   public view: DataView;
   constructor(reader, { validate = true } = {}) {
     this.view = new DataView(assertArrayBuffer(reader));
@@ -103,56 +103,28 @@ class AccountValue {
     }
   }
 
-  getAmount() {
-    return new Uint128(this.view.buffer.slice(0, 0 + Uint128.size()), {
+  registerEmail() {
+    return new Byte32(this.view.buffer.slice(0, 0 + Byte32.size()), {
       validate: false,
     });
   }
-
-  getNonce() {
-    return new Uint64(
-      this.view.buffer.slice(
-        0 + Uint128.size(),
-        0 + Uint128.size() + Uint64.size()
-      ),
-      { validate: false }
-    );
-  }
-
-  validate(compatible = false) {
-    assertDataLength(this.view.byteLength, AccountValue.size());
-    this.getAmount().validate(compatible);
-    this.getNonce().validate(compatible);
-  }
-  static size() {
-    return 0 + Uint128.size() + Uint64.size();
-  }
-}
-
-function SerializeAccountValue(value) {
-  const array = new Uint8Array(0 + Uint128.size() + Uint64.size());
-  const view = new DataView(array.buffer);
-  array.set(new Uint8Array(SerializeUint128(value.amount)), 0);
-  array.set(new Uint8Array(SerializeUint64(value.nonce)), 0 + Uint128.size());
-  return array.buffer;
-}
-
-class Target {
-  public view: DataView;
-  constructor(reader, { validate = true } = {}) {
-    this.view = new DataView(assertArrayBuffer(reader));
-    if (validate) {
-      this.validate();
-    }
-  }
-
-  getTo() {
+  getPubkey() {
     return new Byte32(this.view.buffer.slice(0, 0 + Byte32.size()), {
       validate: false,
     });
   }
 
-  getAmount() {
+  getRecoveryEmail() {
+    return new Uint128(
+      this.view.buffer.slice(
+        0 + Byte32.size(),
+        0 + Byte32.size() + Uint128.size()
+      ),
+      { validate: false }
+    );
+  }
+
+  quickLogin() {
     return new Uint128(
       this.view.buffer.slice(
         0 + Byte32.size(),
@@ -163,190 +135,38 @@ class Target {
   }
 
   validate(compatible = false) {
-    assertDataLength(this.view.byteLength, Target.size());
-    this.getTo().validate(compatible);
-    this.getAmount().validate(compatible);
+    assertDataLength(this.view.byteLength, Action.size());
+    this.registerEmail().validate(compatible);
+    this.getPubkey().validate(compatible);
+    this.getRecoveryEmail().validate(compatible);
+    this.quickLogin().validate(compatible);
   }
   static size() {
     return 0 + Byte32.size() + Uint128.size();
   }
 }
 
-function SerializeTarget(value) {
-  const array = new Uint8Array(0 + Byte32.size() + Uint128.size());
-  const view = new DataView(array.buffer);
-  array.set(new Uint8Array(SerializeByte32(value.to)), 0);
-  array.set(new Uint8Array(SerializeUint128(value.amount)), 0 + Byte32.size());
+function SerializeAction(value) {
+  const array = new Uint8Array(4 + Action.size() * value.length);
+  array.set(new Uint8Array(SerializeByte32(value.registerEmail)), 0);
+  array.set(new Uint8Array(SerializeUint128(value.pubkey)), 0 + Byte32.size());
+  array.set(
+    new Uint8Array(SerializeUint128(value.recoveryEmail)),
+    0 + Byte32.size()
+  );
+  array.set(
+    new Uint8Array(SerializeUint128(value.quickLogin)),
+    0 + Byte32.size()
+  );
   return array.buffer;
 }
 
-class Targets {
-  public view: DataView;
-  constructor(reader, { validate = true } = {}) {
-    this.view = new DataView(assertArrayBuffer(reader));
-    if (validate) {
-      this.validate();
-    }
-  }
-
-  validate(compatible = false) {
-    if (this.view.byteLength < 4) {
-      dataLengthError(this.view.byteLength, '>4');
-    }
-    const requiredByteLength = this.length() * Target.size() + 4;
-    assertDataLength(this.view.byteLength, requiredByteLength);
-    for (let i = 0; i < 0; i++) {
-      const item = this.indexAt(i);
-      item.validate(compatible);
-    }
-  }
-
-  indexAt(i) {
-    return new Target(
-      this.view.buffer.slice(
-        4 + i * Target.size(),
-        4 + (i + 1) * Target.size()
-      ),
-      { validate: false }
-    );
-  }
-
-  length() {
-    return this.view.getUint32(0, true);
-  }
-}
-
-function SerializeTargets(value) {
-  const array = new Uint8Array(4 + Target.size() * value.length);
-  new DataView(array.buffer).setUint32(0, value.length, true);
-  for (let i = 0; i < value.length; i++) {
-    const itemBuffer = SerializeTarget(value[i]);
-    array.set(new Uint8Array(itemBuffer), 4 + i * Target.size());
-  }
-  return array.buffer;
-}
-
-class RawLedgerTransaction {
-  public view: DataView;
-  constructor(reader, { validate = true } = {}) {
-    this.view = new DataView(assertArrayBuffer(reader));
-    if (validate) {
-      this.validate();
-    }
-  }
-
-  validate(compatible = false) {
-    const offsets = verifyAndExtractOffsets(this.view, 0, true);
-    new Byte32(this.view.buffer.slice(offsets[0], offsets[1]), {
-      validate: false,
-    }).validate();
-    new Byte32(this.view.buffer.slice(offsets[1], offsets[2]), {
-      validate: false,
-    }).validate();
-    new Uint64(this.view.buffer.slice(offsets[2], offsets[3]), {
-      validate: false,
-    }).validate();
-    new Uint128(this.view.buffer.slice(offsets[3], offsets[4]), {
-      validate: false,
-    }).validate();
-    new Uint128(this.view.buffer.slice(offsets[4], offsets[5]), {
-      validate: false,
-    }).validate();
-    new Targets(this.view.buffer.slice(offsets[5], offsets[6]), {
-      validate: false,
-    }).validate();
-  }
-
-  getTypeId() {
-    const start = 4;
-    const offset = this.view.getUint32(start, true);
-    const offset_end = this.view.getUint32(start + 4, true);
-    return new Byte32(this.view.buffer.slice(offset, offset_end), {
-      validate: false,
-    });
-  }
-
-  getFrom() {
-    const start = 8;
-    const offset = this.view.getUint32(start, true);
-    const offset_end = this.view.getUint32(start + 4, true);
-    return new Byte32(this.view.buffer.slice(offset, offset_end), {
-      validate: false,
-    });
-  }
-
-  getNonce() {
-    const start = 12;
-    const offset = this.view.getUint32(start, true);
-    const offset_end = this.view.getUint32(start + 4, true);
-    return new Uint64(this.view.buffer.slice(offset, offset_end), {
-      validate: false,
-    });
-  }
-
-  getTotalAmount() {
-    const start = 16;
-    const offset = this.view.getUint32(start, true);
-    const offset_end = this.view.getUint32(start + 4, true);
-    return new Uint128(this.view.buffer.slice(offset, offset_end), {
-      validate: false,
-    });
-  }
-
-  getFee() {
-    const start = 20;
-    const offset = this.view.getUint32(start, true);
-    const offset_end = this.view.getUint32(start + 4, true);
-    return new Uint128(this.view.buffer.slice(offset, offset_end), {
-      validate: false,
-    });
-  }
-
-  getTargets() {
-    const start = 24;
-    const offset = this.view.getUint32(start, true);
-    const offset_end = this.view.byteLength;
-    return new Targets(this.view.buffer.slice(offset, offset_end), {
-      validate: false,
-    });
-  }
-}
-
-export function SerializeRawLedgerTransaction(value: any) {
+export function SerializeInnerTransaction(value: any) {
   const buffers = [];
-  buffers.push(SerializeByte32(value.typeId));
-  buffers.push(SerializeByte32(value.from));
+  buffers.push(SerializeByte32(value.type));
   buffers.push(SerializeUint64(value.nonce));
-  buffers.push(SerializeUint128(value.totalAmount));
-  buffers.push(SerializeUint128(value.fee));
-  buffers.push(SerializeTargets(value.targets));
+  buffers.push(SerializeAction(value.action));
   return serializeTable(buffers);
-}
-
-class Uint64 {
-  public view: DataView;
-  constructor(reader, { validate = true } = {}) {
-    this.view = new DataView(assertArrayBuffer(reader));
-    if (validate) {
-      this.validate();
-    }
-  }
-
-  validate(compatible = false) {
-    assertDataLength(this.view.byteLength, 8);
-  }
-
-  indexAt(i) {
-    return this.view.getUint8(i);
-  }
-
-  raw() {
-    return this.view.buffer;
-  }
-
-  static size() {
-    return 8;
-  }
 }
 
 function SerializeUint64(value) {
@@ -420,5 +240,5 @@ function SerializeByte32(value) {
 }
 
 export const sst = {
-  SerializeRawLedgerTransaction,
+  SerializeInnerTransaction,
 };

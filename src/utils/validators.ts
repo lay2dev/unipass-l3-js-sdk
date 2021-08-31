@@ -35,81 +35,36 @@ function assertObjectWithKeys(
     throw new Error(errorMessage);
   }
 }
-function assertInteger(debugPath: string, i: string) {
-  if (!/^0x[1-9a-fA-F][0-9a-fA-F]*$/.test(i)) {
-    throw new Error(`${debugPath} must be a hex integer!`);
-  }
-}
-function assertArray(
-  debugPath: string,
-  array: any[],
-  validateFunction,
-  nestedValidation: boolean
-) {
-  if (!Array.isArray(array)) {
-    throw new Error(`${debugPath} is not an array!`);
-  }
-  if (nestedValidation) {
-    for (let i = 0; i < array.length; i++) {
-      validateFunction(`${debugPath}[${i}]`, array[i]);
-    }
-  }
-}
 
-function toAssert(validateFunction, nestedValidation: boolean) {
-  return function (debugPath: string, value: any) {
-    validateFunction(value, {
-      nestedValidation: nestedValidation,
-      debugPath: debugPath,
-    });
-  };
-}
-
-export function ValidateTarget(
-  target: any,
-  { nestedValidation = true, debugPath = 'target' } = {}
-) {
+export function ValidateTarget(target: any, { debugPath = 'target' } = {}) {
   assertObjectWithKeys(debugPath, target, ['to', 'amount'], []);
 }
 
-function assertCommonTransaction(
-  debugPath: string,
-  rawTransaction: any,
-  nestedValidation: boolean
-) {
-  assertArray(
-    `${debugPath}.targets`,
-    rawTransaction.targets,
-    toAssert(ValidateTarget, nestedValidation),
-    nestedValidation
-  );
-  assertInteger(`${debugPath}.fee`, rawTransaction.fee);
-  assertInteger(`${debugPath}.total_amount`, rawTransaction.total_amount);
-}
-
-export function ValidateRaw(
-  raw: any,
-  { nestedValidation = true, debugPath = 'raw' } = {}
-) {
+export function ValidateAction(raw: any, { debugPath = 'action' } = {}) {
   assertObjectWithKeys(
     debugPath,
     raw,
-    ['type_id', 'from', 'nonce', 'total_amount', 'fee', 'targets'],
+    ['register_email', 'pubkey', 'recovery_email', 'quick_login'],
     []
   );
-  assertCommonTransaction(debugPath, raw, nestedValidation);
+}
+
+export function ValidateInner(raw: any, { debugPath = 'inner' } = {}) {
+  assertObjectWithKeys(debugPath, raw, ['type', 'nonce', 'action'], []);
+  ValidateInner(raw.action);
 }
 
 export function ValidateTransaction(
   transaction: any,
-  { nestedValidation = true, debugPath = 'transaction' } = {}
+  { debugPath = 'transaction' } = {}
 ) {
-  assertObjectWithKeys(debugPath, transaction, ['raw', 'sig'], []);
-  ValidateRaw(transaction.raw);
+  assertObjectWithKeys(debugPath, transaction, ['inner', 'sig'], []);
+  ValidateInner(transaction.inner);
 }
 
 export const validators = {
   ValidateTransaction,
-  ValidateRaw,
+  ValidateInner,
+  ValidateAction,
   ValidateTarget,
 };
