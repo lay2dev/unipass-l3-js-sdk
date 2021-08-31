@@ -23,9 +23,7 @@ function transformObject(debugPath: string, object: any, keys: any) {
       );
       value = object[camelKey];
     }
-    if (value) {
-      result[key] = (f as any)(`${debugPath}.${key}`, value);
-    }
+    result[key] = (f as any)(`${debugPath}.${key}`, value);
   }
   return result;
 }
@@ -43,9 +41,7 @@ function transformRawObject(debugPath: string, object: any, keys: any) {
       const camelKey = key.replace(/([A-Z])/g, '_$1').toLowerCase();
       value = object[camelKey];
     }
-    if (value) {
-      result[key] = (f as any)(`${debugPath}.${key}`, value);
-    }
+    result[key] = (f as any)(`${debugPath}.${key}`, value);
   }
   return result;
 }
@@ -62,7 +58,7 @@ export function TransformRowAction(
   target: any,
   { debugPath = 'row_action' } = {}
 ) {
-  const formatAction = transformObject(debugPath, target, {
+  const formatAction = transformRawObject(debugPath, target, {
     registerEmail: invokeSerializeJson,
     pubkey: invokeSerializeJson,
     recoveryEmail: invokeSerializeJson,
@@ -129,7 +125,6 @@ export function TransformRawTransaction(
       pendingState: toInvoke(TransformPendingState),
     });
   }
-  console.log(formateTransaction);
   return formateTransaction;
 }
 
@@ -174,7 +169,6 @@ export function TransformTransaction(
     inner: toInvoke(TransformInner),
     sig: invokeSerializeJson,
   });
-  console.log(formateTransaction);
 
   if (validation) {
     validators.ValidateTransaction(formateTransaction, {

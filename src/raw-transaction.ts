@@ -13,7 +13,7 @@ export class RawTransaction implements UniTokenModel {
         result: this.transactionResult.result,
       };
     }
-    return transaction.TransformRawTransaction(this.serializeJson());
+    return transaction.TransformRawTransaction(this.transactionResult.result);
   }
 
   serializeJson(): object {

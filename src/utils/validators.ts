@@ -51,7 +51,7 @@ export function ValidateAction(raw: any, { debugPath = 'action' } = {}) {
 
 export function ValidateInner(raw: any, { debugPath = 'inner' } = {}) {
   assertObjectWithKeys(debugPath, raw, ['type', 'nonce', 'action'], []);
-  ValidateInner(raw.action);
+  ValidateAction(raw.action);
 }
 
 export function ValidateTransaction(

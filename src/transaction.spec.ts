@@ -16,9 +16,8 @@ const sig = '0x11011';
 test('test Transaction formateData', async (t) => {
   const data = new Transaction(rawData, sig);
   const formateData = data.transform();
-  const register_email = (formateData as TransactionParams).inner.action
-    .registerEmail;
-  t.is(register_email, rawData.action.registerEmail);
+  const type = (formateData as TransactionParams).inner.type;
+  t.is(type, rawData.type);
 });
 
 test('test Transaction serializeJson', async (t) => {

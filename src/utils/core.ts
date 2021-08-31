@@ -115,6 +115,7 @@ function SerializeAction(value) {
 }
 
 export function SerializeInnerTransaction(value: any) {
+  console.log('======>', value);
   const buffers = [];
   buffers.push(SerializeByte32(value.type));
   buffers.push(SerializeUint32(value.nonce));
