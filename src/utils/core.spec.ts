@@ -1,6 +1,6 @@
 import test from 'ava';
 import { ArrayBufferReader } from '../reader';
-import { sst } from './sst';
+import { core } from './core';
 
 const rawData = {
   typeId: '0x9bd7e06f3ecf4be0f2fcd2188b23f1b9fcc88e5d4b65a8637b17723bbda3cce8',
@@ -17,7 +17,7 @@ const rawData = {
 };
 
 test('test core data-=-----', async (t) => {
-  const data = sst.SerializeRawLedgerTransaction(rawData);
+  const data = core.SerializeInnerTransaction(rawData);
   console.log('data------', data.byteLength);
   const reader = new ArrayBufferReader(data);
   console.log('data---reader---', reader.serializeJson());

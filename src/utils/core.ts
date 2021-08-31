@@ -25,53 +25,6 @@ function assertArrayBuffer(value: string, length?: number) {
   return reader.toArrayBuffer(length);
 }
 
-function verifyAndExtractOffsets(view, expectedFieldCount, compatible) {
-  if (view.byteLength < 4) {
-    dataLengthError(view.byteLength, '>4');
-  }
-  const requiredByteLength = view.getUint32(0, true);
-  assertDataLength(view.byteLength, requiredByteLength);
-  if (requiredByteLength === 4) {
-    return [requiredByteLength];
-  }
-  if (requiredByteLength < 8) {
-    dataLengthError(view.byteLength, '>8');
-  }
-  const firstOffset = view.getUint32(4, true);
-  if (firstOffset % 4 !== 0 || firstOffset < 8) {
-    throw new Error(`Invalid first offset: ${firstOffset}`);
-  }
-  const itemCount = firstOffset / 4 - 1;
-  if (itemCount < expectedFieldCount) {
-    throw new Error(
-      `Item count not enough! Required: ${expectedFieldCount}, actual: ${itemCount}`
-    );
-  } else if (!compatible && itemCount > expectedFieldCount) {
-    throw new Error(
-      `Item count is more than required! Required: ${expectedFieldCount}, actual: ${itemCount}`
-    );
-  }
-  if (requiredByteLength < firstOffset) {
-    throw new Error(`First offset is larger than byte length: ${firstOffset}`);
-  }
-  const offsets = [];
-  for (let i = 0; i < itemCount; i++) {
-    const start = 4 + i * 4;
-    offsets.push(view.getUint32(start, true));
-  }
-  offsets.push(requiredByteLength);
-  for (let i = 0; i < offsets.length - 1; i++) {
-    if (offsets[i] > offsets[i + 1]) {
-      throw new Error(
-        `Offset index ${i}: ${offsets[i]} is larger than offset index ${
-          i + 1
-        }: ${offsets[i + 1]}`
-      );
-    }
-  }
-  return offsets;
-}
-
 function serializeTable(buffers) {
   const itemCount = buffers.length;
   let totalSize = 4 * (itemCount + 1);
@@ -151,11 +104,11 @@ function SerializeAction(value) {
   array.set(new Uint8Array(SerializeByte32(value.registerEmail)), 0);
   array.set(new Uint8Array(SerializeUint128(value.pubkey)), 0 + Byte32.size());
   array.set(
-    new Uint8Array(SerializeUint128(value.recoveryEmail)),
+    new Uint8Array(SerializeByte32(value.recoveryEmail)),
     0 + Byte32.size()
   );
   array.set(
-    new Uint8Array(SerializeUint128(value.quickLogin)),
+    new Uint8Array(SerializeBytes(value.quickLogin)),
     0 + Byte32.size()
   );
   return array.buffer;
@@ -164,15 +117,23 @@ function SerializeAction(value) {
 export function SerializeInnerTransaction(value: any) {
   const buffers = [];
   buffers.push(SerializeByte32(value.type));
-  buffers.push(SerializeUint64(value.nonce));
+  buffers.push(SerializeUint32(value.nonce));
   buffers.push(SerializeAction(value.action));
   return serializeTable(buffers);
 }
 
-function SerializeUint64(value) {
-  const buffer = assertArrayBuffer(value, 8);
-  assertDataLength(buffer.byteLength, 8);
+export function SerializeUint32(value) {
+  const buffer = assertArrayBuffer(value);
+  assertDataLength(buffer.byteLength, 4);
   return buffer;
+}
+
+export function SerializeBytes(value) {
+  const item = assertArrayBuffer(value);
+  const array = new Uint8Array(4 + item.byteLength);
+  new DataView(array.buffer).setUint32(0, item.byteLength, true);
+  array.set(new Uint8Array(item), 4);
+  return array.buffer;
 }
 
 class Uint128 {
@@ -239,6 +200,6 @@ function SerializeByte32(value) {
   return buffer;
 }
 
-export const sst = {
+export const core = {
   SerializeInnerTransaction,
 };
