@@ -26,11 +26,13 @@ export interface Message {
 export interface TransactionInner {
   type: string;
   nonce: string;
+  username?: string;
   action: Action;
 }
 
 export interface Action {
   registerEmail: string;
+  username?: string;
   pubkey: string;
   recoveryEmail: string | null;
   quickLogin: boolean;

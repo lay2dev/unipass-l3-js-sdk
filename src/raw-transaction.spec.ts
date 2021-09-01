@@ -58,12 +58,14 @@ const stringRawData = { jsonrpc: '2.0', result: '0x2cb4', id: 2 };
 test('test rawTransaction tx formateData', async (t) => {
   const data = new RawTransaction(txRawData);
   const formateData = data.transform() as TransactionResult;
+  console.log(formateData);
   t.is(formateData.txStatus.ckbTxHash, txRawData.result.tx_status.ckb_tx_hash);
 });
 
 test('test rawTransaction tokenInfoRawData ', async (t) => {
   const data = new RawTransaction(userInfoRawData);
   const formateData = data.transform() as UserInfoResult;
+  console.log(formateData);
   t.is(formateData.registerEmail, userInfoRawData.result.register_email);
 });
 

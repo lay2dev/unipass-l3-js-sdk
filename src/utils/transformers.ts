@@ -121,7 +121,7 @@ export function TransformRawTransaction(
       registerEmail: invokeSerializeJson,
       quickLogin: invokeSerializeJson,
       localKeys: invokeSerializeJson,
-      recoveryEmail: toInvoke(TransformTxStatus),
+      recoveryEmail: toInvoke(TransformRecoveryEmail),
       pendingState: toInvoke(TransformPendingState),
     });
   }
