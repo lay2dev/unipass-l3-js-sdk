@@ -1,5 +1,5 @@
 import test from 'ava';
-import { Transaction, TransactionParams } from '.';
+import { RPC, Transaction, TransactionParams } from '.';
 
 const rawData = {
   nonce: '0x1',
@@ -12,6 +12,9 @@ const rawData = {
   },
 };
 const sig = '0x11011';
+
+const uri = 'https://testnet.ckb.dev';
+const rpc = new RPC(uri);
 
 test('test Transaction formateData', async (t) => {
   const data = new Transaction(rawData, sig);
@@ -30,4 +33,10 @@ test('test Transaction validate', async (t) => {
   const data = new Transaction(rawData, sig);
   const transaction = data.validate();
   t.is(transaction.inner.action.registerEmail, rawData.action.registerEmail);
+});
+
+test('test Transaction sendTransaction validate', async (t) => {
+  const data = new Transaction(rawData, sig);
+  await data.sendTransaction(rpc);
+  t.is(true, true);
 });
