@@ -24,7 +24,7 @@ const txRawData = {
   },
 };
 
-const historyTxRawData = {
+const historyTxRawStringData = {
   id: 2,
   jsonrpc: '2.0',
   result: [
@@ -104,12 +104,12 @@ test('test rawTransaction tx txRawData', async (t) => {
 });
 
 test('test rawTransaction historyTxRawData ', async (t) => {
-  const data = new RawTransaction(historyTxRawData);
+  const data = new RawTransaction(historyTxRawStringData);
   const formateData = data.transform() as TransactionResult[];
   console.log(formateData);
   t.is(
     formateData[0].txStatus.ckbTxHash,
-    historyTxRawData.result[0].tx_status.ckb_tx_hash
+    historyTxRawStringData.result[0].tx_status.ckb_tx_hash
   );
 });
 
