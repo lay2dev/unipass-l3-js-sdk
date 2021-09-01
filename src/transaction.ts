@@ -43,8 +43,7 @@ export class Transaction implements UniTokenModel {
     const data = await rpc.send_up_transaction(transformData);
     if (data) {
       const rawResponse = data as RawTransaction;
-      const txHash = (rawResponse.transform() as ResponseInfo).result;
-      return txHash;
+      return rawResponse.transform();
     }
     throw new Error(`TxHashError: txhash error ${data}`);
   }
