@@ -105,6 +105,26 @@ export function TransformPendingState(target: any, { debugPath = 'raw' } = {}) {
   return formatRecoveryEmail;
 }
 
+function toTxRowArray(array: any[]) {
+  const data = array.map((item, i) => {
+    return TransformRowTransaction(item);
+  });
+  return data;
+}
+
+export function TransformRowTransaction(
+  rawTransaction: any,
+  { debugPath = 'raw' } = {}
+) {
+  console.log('[TransformRowTransaction]', rawTransaction);
+  const formateTransaction = transformRawObject(debugPath, rawTransaction, {
+    transactionInner: toInvoke(TransformInnerRaw),
+    txStatus: toInvoke(TransformTxStatus),
+  });
+  console.log('formateTransaction', formateTransaction);
+  return formateTransaction;
+}
+
 // raw transaction
 export function TransformRawTransaction(
   rawTransaction: any,
@@ -112,11 +132,8 @@ export function TransformRawTransaction(
 ) {
   let formateTransaction = {};
   if (rawTransaction.tx_status) {
-    formateTransaction = transformRawObject(debugPath, rawTransaction, {
-      transactionInner: toInvoke(TransformInnerRaw),
-      txStatus: toInvoke(TransformTxStatus),
-    });
-  } else {
+    formateTransaction = TransformRowTransaction(rawTransaction);
+  } else if (rawTransaction.register_email) {
     formateTransaction = transformRawObject(debugPath, rawTransaction, {
       registerEmail: invokeSerializeJson,
       quickLogin: invokeSerializeJson,
@@ -124,6 +141,8 @@ export function TransformRawTransaction(
       recoveryEmail: toInvoke(TransformRecoveryEmail),
       pendingState: toInvoke(TransformPendingState),
     });
+  } else {
+    formateTransaction = toTxRowArray(rawTransaction);
   }
   return formateTransaction;
 }

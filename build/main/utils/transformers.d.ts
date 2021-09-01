@@ -13,6 +13,9 @@ export declare function TransformRecoveryEmail(target: any, { debugPath }?: {
 export declare function TransformPendingState(target: any, { debugPath }?: {
     debugPath?: string;
 }): {};
+export declare function TransformRowTransaction(rawTransaction: any, { debugPath }?: {
+    debugPath?: string;
+}): {};
 export declare function TransformRawTransaction(rawTransaction: any, { debugPath }?: {
     debugPath?: string;
 }): {};

@@ -24,6 +24,47 @@ const txRawData = {
   },
 };
 
+const historyTxRawData = {
+  id: 2,
+  jsonrpc: '2.0',
+  result: [
+    {
+      transaction_inner: {
+        nonce: '0x1',
+        type: 'register',
+        action: {
+          register_email: 'johnz@lay2.dev',
+          pubkey: '0x01415498a39E37B7C17b586AB8AB77BE0B518DBDFc',
+          recovery_email: null,
+          quick_login: true,
+        },
+      },
+      tx_status: {
+        ckb_tx_hash:
+          '0x067da578be477e3b0596a282e0fea6c33121f40df2e9dbe787f00d1249af01a2',
+        status: 'pending',
+      },
+    },
+    {
+      transaction_inner: {
+        nonce: '0x1',
+        type: 'register',
+        action: {
+          register_email: 'johnz@lay2.dev',
+          pubkey: '0x01415498a39E37B7C17b586AB8AB77BE0B518DBDFc',
+          recovery_email: null,
+          quick_login: true,
+        },
+      },
+      tx_status: {
+        ckb_tx_hash:
+          '0x067da578be477e3b0596a282e0fea6c33121f40df2e9dbe787f00d1249af01a2',
+        status: 'pending',
+      },
+    },
+  ],
+};
+
 const userInfoRawData = {
   id: 2,
   jsonrpc: '2.0',
@@ -55,14 +96,24 @@ interface stringResult {
 
 const stringRawData = { jsonrpc: '2.0', result: '0x2cb4', id: 2 };
 
-test('test rawTransaction tx formateData', async (t) => {
+test('test rawTransaction tx txRawData', async (t) => {
   const data = new RawTransaction(txRawData);
   const formateData = data.transform() as TransactionResult;
   console.log(formateData);
   t.is(formateData.txStatus.ckbTxHash, txRawData.result.tx_status.ckb_tx_hash);
 });
 
-test('test rawTransaction tokenInfoRawData ', async (t) => {
+test('test rawTransaction historyTxRawData ', async (t) => {
+  const data = new RawTransaction(historyTxRawData);
+  const formateData = data.transform() as TransactionResult[];
+  console.log(formateData);
+  t.is(
+    formateData[0].txStatus.ckbTxHash,
+    historyTxRawData.result[0].tx_status.ckb_tx_hash
+  );
+});
+
+test('test rawTransaction userInfoRawData ', async (t) => {
   const data = new RawTransaction(userInfoRawData);
   const formateData = data.transform() as UserInfoResult;
   console.log(formateData);
@@ -71,6 +122,7 @@ test('test rawTransaction tokenInfoRawData ', async (t) => {
 
 test('test rawTransaction stringRawData ', async (t) => {
   const data = new RawTransaction(stringRawData);
-  const formateData = data.transform() as stringResult;
-  t.is(formateData.result, stringRawData.result);
+  const formateData = data.transform();
+  console.log(formateData);
+  t.is(formateData, stringRawData.result);
 });
