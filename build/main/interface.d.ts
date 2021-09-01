@@ -52,7 +52,7 @@ export interface TransactionParams {
 }
 export interface UniTokenModel {
     transform(): any;
-    serializeJson(): object;
+    serializeJson(): object | string;
 }
 export interface FormatOptions {
     section?: 'integer' | 'decimal';

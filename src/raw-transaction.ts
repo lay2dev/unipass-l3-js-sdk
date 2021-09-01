@@ -7,20 +7,16 @@ export class RawTransaction implements UniTokenModel {
     return this.transactionResult;
   }
 
-  transform(): object {
+  transform(): object | string {
     if (typeof this.transactionResult.result == 'string') {
-      return {
-        result: this.transactionResult.result,
-      };
+      return this.transactionResult.result;
     }
     return transaction.TransformRawTransaction(this.transactionResult.result);
   }
 
-  serializeJson(): object {
+  serializeJson(): object | string {
     if (typeof this.transactionResult.result == 'string') {
-      return {
-        result: this.transactionResult.result,
-      };
+      return this.transactionResult.result;
     }
     return transaction.TransformRawTransaction(this.transactionResult.result);
   }
