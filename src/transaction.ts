@@ -40,7 +40,7 @@ export class Transaction implements UniTokenModel {
     };
   }
 
-  getSignMessage() {
+  getSignMessage(): string {
     this.validateRaw();
 
     const signData = {
@@ -50,10 +50,12 @@ export class Transaction implements UniTokenModel {
       recoveryEmail: this.inner.action.recoveryEmail,
       nonce: this.inner.nonce,
     };
+
     const signMessage = new ArrayBufferReader(
       userInfo.SerializeUserInfo(signData)
     );
-    return signMessage;
+
+    return signMessage.serializeJson();
   }
 
   async sendTransaction(rpc: RPC) {

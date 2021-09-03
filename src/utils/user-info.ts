@@ -7,6 +7,7 @@ function dataLengthError(actual, required) {
 }
 
 function assertDataLength(actual, required) {
+  console.log(actual, required);
   if (actual !== required) {
     dataLengthError(actual, required);
   }
@@ -184,12 +185,12 @@ export function SerializeUserInfo(value) {
   const buffers = [];
   buffers.push(SerializeBytes32(value.registerEmail));
   buffers.push(SerializePubkeyVec(value.pubkey)); //localKeys
-  const quickLoginView = new DataView(new ArrayBuffer(1));
-  quickLoginView.setUint8(0, value.quickLogin);
-  buffers.push(quickLoginView.buffer);
-  buffers.push(SerializeBytes32(value.recoveryEmail));
-  // buffers.push(SerializePendingState(value.pending_state));
-  buffers.push(SerializeUint32(value.nonce));
+  // const quickLoginView = new DataView(new ArrayBuffer(1));
+  // quickLoginView.setUint8(0, value.quickLogin);
+  // buffers.push(quickLoginView.buffer);
+  // buffers.push(SerializeBytes32(value.recoveryEmail));
+  // // buffers.push(SerializePendingState(value.pending_state));
+  // buffers.push(SerializeUint32(value.nonce));
   return serializeTable(buffers);
 }
 
@@ -280,7 +281,7 @@ export class TypeId {
 }
 
 export function SerializeTypeId(value) {
-  const buffer = assertArrayBuffer(value);
+  const buffer = assertArrayBuffer(value, 32);
   assertDataLength(buffer.byteLength, 32);
   return buffer;
 }
@@ -389,7 +390,7 @@ export class Secp256k1Pubkey {
 }
 
 export function SerializeSecp256k1Pubkey(value) {
-  const buffer = assertArrayBuffer(value);
+  const buffer = assertArrayBuffer(value, 65);
   assertDataLength(buffer.byteLength, 65);
   return buffer;
 }
@@ -421,7 +422,7 @@ export class Secp256r1Pubkey {
 }
 
 export function SerializeSecp256r1Pubkey(value) {
-  const buffer = assertArrayBuffer(value);
+  const buffer = assertArrayBuffer(value, 65);
   assertDataLength(buffer.byteLength, 65);
   return buffer;
 }
@@ -595,7 +596,7 @@ export class Bytes32 {
 }
 
 export function SerializeBytes32(value) {
-  const buffer = assertArrayBuffer(value);
+  const buffer = assertArrayBuffer(value, 32);
   assertDataLength(buffer.byteLength, 32);
   return buffer;
 }
@@ -627,7 +628,7 @@ export class Bytes256 {
 }
 
 export function SerializeBytes256(value) {
-  const buffer = assertArrayBuffer(value);
+  const buffer = assertArrayBuffer(value, 256);
   assertDataLength(buffer.byteLength, 256);
   return buffer;
 }
@@ -667,7 +668,7 @@ export class Uint32 {
 }
 
 export function SerializeUint32(value) {
-  const buffer = assertArrayBuffer(value);
+  const buffer = assertArrayBuffer(value, 4);
   assertDataLength(buffer.byteLength, 4);
   return buffer;
 }

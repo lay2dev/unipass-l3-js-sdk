@@ -40,3 +40,10 @@ test('test Transaction sendTransaction validate', async (t) => {
   await data.sendTransaction(rpc);
   t.is(true, true);
 });
+
+test('test Transaction getSignMessage validate', async (t) => {
+  const data = new Transaction(rawData, sig);
+  const signMessage = await data.getSignMessage();
+  console.log(signMessage);
+  t.is(true, true);
+});
