@@ -1,11 +1,13 @@
 import {
+  ArrayBufferReader,
   RawTransaction,
   ResponseInfo,
   RPC,
   TransactionParams,
   UniTokenModel,
 } from '.';
-import { validators, transaction } from './utils';
+import { validators, transaction, userInfo } from './utils';
+
 export class Transaction implements UniTokenModel {
   constructor(public inner: any, public sig?: string) {}
 
@@ -36,6 +38,22 @@ export class Transaction implements UniTokenModel {
       inner: this.inner,
       sig: this.sig,
     };
+  }
+
+  getSignMessage() {
+    this.validateRaw();
+
+    const signData = {
+      registerEmail: this.inner.action.registerEmail,
+      pubkey: this.inner.action.pubkey,
+      quickLogin: this.inner.action.quickLogin,
+      recoveryEmail: this.inner.action.recoveryEmail,
+      nonce: this.inner.nonce,
+    };
+    const signMessage = new ArrayBufferReader(
+      userInfo.SerializeUserInfo(signData)
+    );
+    return signMessage;
   }
 
   async sendTransaction(rpc: RPC) {

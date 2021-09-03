@@ -1,0 +1,36 @@
+import { Hasher } from '.';
+import blake2b from 'blake2b';
+import { ArrayBufferReader, HexStringReader } from '..';
+export class Blake2bHasher extends Hasher {
+    constructor() {
+        const h = blake2b(32, null, null, new Uint8Array(HexStringReader.fromRawString('ckb-default-hash').toArrayBuffer()));
+        super(h);
+    }
+    update(data) {
+        let array;
+        if (data instanceof ArrayBufferReader || data instanceof HexStringReader) {
+            /** Reader type params not enter this branch, it's weired */
+            array = Buffer.from(data.serializeJson().replace('0x', ''));
+        }
+        else if (data instanceof ArrayBuffer) {
+            array = Buffer.from(new Uint8Array(data));
+        }
+        else if (typeof data === 'string') {
+            array = Buffer.from(data);
+        }
+        else {
+            array = Buffer.from(new Uint8Array(new ArrayBufferReader(data).toArrayBuffer()));
+        }
+        this.h.update(array);
+        return this;
+    }
+    digest() {
+        const out = new Uint8Array(32);
+        this.h.digest(out);
+        return new ArrayBufferReader(out.buffer);
+    }
+    reset() {
+        this.h = blake2b(32, null, null, new Uint8Array(ArrayBufferReader.fromRawString('ckb-default-hash').toArrayBuffer()));
+    }
+}
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiYmxha2UyYi1oYXNoZXIuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi8uLi8uLi9zcmMvaGFzaC9ibGFrZTJiLWhhc2hlci50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQSxPQUFPLEVBQUUsTUFBTSxFQUFFLE1BQU0sR0FBRyxDQUFDO0FBQzNCLE9BQU8sT0FBTyxNQUFNLFNBQVMsQ0FBQztBQUM5QixPQUFPLEVBQUUsaUJBQWlCLEVBQUUsZUFBZSxFQUFFLE1BQU0sSUFBSSxDQUFDO0FBRXhELE1BQU0sT0FBTyxhQUFjLFNBQVEsTUFBTTtJQUN2QztRQUNFLE1BQU0sQ0FBQyxHQUFHLE9BQU8sQ0FDZixFQUFFLEVBQ0YsSUFBSSxFQUNKLElBQUksRUFDSixJQUFJLFVBQVUsQ0FDWixlQUFlLENBQUMsYUFBYSxDQUFDLGtCQUFrQixDQUFDLENBQUMsYUFBYSxFQUFFLENBQ2xFLENBQ0YsQ0FBQztRQUNGLEtBQUssQ0FBQyxDQUFDLENBQUMsQ0FBQztJQUNYLENBQUM7SUFFRCxNQUFNLENBQUMsSUFBMEI7UUFDL0IsSUFBSSxLQUFhLENBQUM7UUFDbEIsSUFBSSxJQUFJLFlBQVksaUJBQWlCLElBQUksSUFBSSxZQUFZLGVBQWUsRUFBRTtZQUN4RSw0REFBNEQ7WUFDNUQsS0FBSyxHQUFHLE1BQU0sQ0FBQyxJQUFJLENBQUMsSUFBSSxDQUFDLGFBQWEsRUFBRSxDQUFDLE9BQU8sQ0FBQyxJQUFJLEVBQUUsRUFBRSxDQUFDLENBQUMsQ0FBQztTQUM3RDthQUFNLElBQUksSUFBSSxZQUFZLFdBQVcsRUFBRTtZQUN0QyxLQUFLLEdBQUcsTUFBTSxDQUFDLElBQUksQ0FBQyxJQUFJLFVBQVUsQ0FBQyxJQUFJLENBQUMsQ0FBQyxDQUFDO1NBQzNDO2FBQU0sSUFBSSxPQUFPLElBQUksS0FBSyxRQUFRLEVBQUU7WUFDbkMsS0FBSyxHQUFHLE1BQU0sQ0FBQyxJQUFJLENBQUMsSUFBSSxDQUFDLENBQUM7U0FDM0I7YUFBTTtZQUNMLEtBQUssR0FBRyxNQUFNLENBQUMsSUFBSSxDQUNqQixJQUFJLFVBQVUsQ0FBQyxJQUFJLGlCQUFpQixDQUFDLElBQUksQ0FBQyxDQUFDLGFBQWEsRUFBRSxDQUFDLENBQzVELENBQUM7U0FDSDtRQUNELElBQUksQ0FBQyxDQUFDLENBQUMsTUFBTSxDQUFDLEtBQUssQ0FBQyxDQUFDO1FBQ3JCLE9BQU8sSUFBSSxDQUFDO0lBQ2QsQ0FBQztJQUVELE1BQU07UUFDSixNQUFNLEdBQUcsR0FBRyxJQUFJLFVBQVUsQ0FBQyxFQUFFLENBQUMsQ0FBQztRQUMvQixJQUFJLENBQUMsQ0FBQyxDQUFDLE1BQU0sQ0FBQyxHQUFHLENBQUMsQ0FBQztRQUNuQixPQUFPLElBQUksaUJBQWlCLENBQUMsR0FBRyxDQUFDLE1BQU0sQ0FBQyxDQUFDO0lBQzNDLENBQUM7SUFFRCxLQUFLO1FBQ0gsSUFBSSxDQUFDLENBQUMsR0FBRyxPQUFPLENBQ2QsRUFBRSxFQUNGLElBQUksRUFDSixJQUFJLEVBQ0osSUFBSSxVQUFVLENBQ1osaUJBQWlCLENBQUMsYUFBYSxDQUFDLGtCQUFrQixDQUFDLENBQUMsYUFBYSxFQUFFLENBQ3BFLENBQ0YsQ0FBQztJQUNKLENBQUM7Q0FDRiJ9

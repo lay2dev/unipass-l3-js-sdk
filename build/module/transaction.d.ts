@@ -1,4 +1,4 @@
-import { RPC, TransactionParams, UniTokenModel } from '.';
+import { ArrayBufferReader, RPC, TransactionParams, UniTokenModel } from '.';
 export declare class Transaction implements UniTokenModel {
     inner: any;
     sig?: string;
@@ -8,5 +8,6 @@ export declare class Transaction implements UniTokenModel {
     setSig(sig: any): void;
     transform(): object;
     serializeJson(): TransactionParams;
+    sigVerify(): ArrayBufferReader;
     sendTransaction(rpc: RPC): Promise<string | object>;
 }
