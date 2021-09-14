@@ -51,7 +51,7 @@ ava_1.default('test Transaction getSignMessage validate', async (t) => {
     const data = new _1.Transaction(rawData, sig);
     // const testSignMessage = await data.testSignMessage();
     // console.log(testSignMessage);
-    const signMessage = await data.getRegisterSignByRSAMessage();
+    const signMessage = await data.getRegisterSignMessageByRSA();
     console.log(signMessage);
     t.is(true, true);
 });

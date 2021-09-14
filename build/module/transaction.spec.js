@@ -46,7 +46,7 @@ test('test Transaction getSignMessage validate', async (t) => {
     const data = new Transaction(rawData, sig);
     // const testSignMessage = await data.testSignMessage();
     // console.log(testSignMessage);
-    const signMessage = await data.getRegisterSignByRSAMessage();
+    const signMessage = await data.getRegisterSignMessageByRSA();
     console.log(signMessage);
     t.is(true, true);
 });

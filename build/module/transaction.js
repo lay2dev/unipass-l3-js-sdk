@@ -27,7 +27,7 @@ export class Transaction {
             sig: this.sig,
         };
     }
-    getRegisterSignByRSAMessage() {
+    getRegisterSignMessageByRSA() {
         const rsa = new Rsa(new StringReader(this.inner.pubkey.value.e).toArrayBuffer(4), new StringReader(this.inner.pubkey.value.n).toArrayBuffer(256));
         const inner = new RegisterInner(new StringReader(this.inner.username).toArrayBuffer(32), new StringReader(this.inner.action.registerEmail).toArrayBuffer(32), new RsaPubkey(rsa), new RecoveryEmail(1, 1, [
             new StringReader(this.inner.action.registerEmail).toArrayBuffer(32),
