@@ -12,7 +12,6 @@ const rawData = {
   },
   registerEmail: 'johnz@lay2.dev',
 };
-const sig = '0x11011';
 
 test('test Transaction getSignMessage validate', async (t) => {
   const data = new RegisterMessage(rawData);
