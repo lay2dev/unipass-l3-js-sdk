@@ -1,21 +1,25 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.RegisterMessage = void 0;
+exports.SignMessage = void 0;
 const __1 = require("..");
-class RegisterMessage {
+const sign_message_base_1 = require("./sign-message-base");
+class SignMessage {
     constructor(inner) {
         this.inner = inner;
     }
     sign() {
-        const rsa = new __1.Rsa(new __1.StringReader(this.inner.pubkey.value.e).toArrayBuffer(4), new __1.StringReader(this.inner.pubkey.value.n).toArrayBuffer(256));
-        const inner = new __1.RegisterInner(new __1.StringReader(this.inner.username).toArrayBuffer(32), new __1.StringReader(this.inner.registerEmail).toArrayBuffer(32), new __1.RsaPubkey(rsa), new __1.RecoveryEmail(1, 1, [
-            new __1.StringReader(this.inner.registerEmail).toArrayBuffer(32),
-        ]));
-        console.log(inner);
-        const message = inner.serialize();
-        console.log('---message------', message);
-        return message;
+        if (this.inner.action == 'register') {
+            const rsa = new sign_message_base_1.Rsa(new __1.StringReader(this.inner.pubkey.value.e).toArrayBuffer(4), new __1.StringReader(this.inner.pubkey.value.n).toArrayBuffer(256));
+            const inner = new sign_message_base_1.RegisterInner(new __1.StringReader(this.inner.username).toArrayBuffer(32), new __1.StringReader(this.inner.registerEmail).toArrayBuffer(32), new sign_message_base_1.RsaPubkey(rsa), new sign_message_base_1.RecoveryEmail(1, 1, [
+                new __1.StringReader(this.inner.registerEmail).toArrayBuffer(32),
+            ]));
+            const message = inner.serialize().serializeJson();
+            return message;
+        }
+        else {
+            throw new Error(`SignError: action  error `);
+        }
     }
 }
-exports.RegisterMessage = RegisterMessage;
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoic2lnbi1tZXNzYWdlLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiLi4vLi4vLi4vc3JjL21lc3NhZ2Uvc2lnbi1tZXNzYWdlLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7OztBQUFBLDBCQU9ZO0FBRVosTUFBYSxlQUFlO0lBQzFCLFlBQW9CLEtBQW9CO1FBQXBCLFVBQUssR0FBTCxLQUFLLENBQWU7SUFBRyxDQUFDO0lBQzVDLElBQUk7UUFDRixNQUFNLEdBQUcsR0FBRyxJQUFJLE9BQUcsQ0FDakIsSUFBSSxnQkFBWSxDQUFDLElBQUksQ0FBQyxLQUFLLENBQUMsTUFBTSxDQUFDLEtBQUssQ0FBQyxDQUFDLENBQUMsQ0FBQyxhQUFhLENBQUMsQ0FBQyxDQUFDLEVBQzVELElBQUksZ0JBQVksQ0FBQyxJQUFJLENBQUMsS0FBSyxDQUFDLE1BQU0sQ0FBQyxLQUFLLENBQUMsQ0FBQyxDQUFDLENBQUMsYUFBYSxDQUFDLEdBQUcsQ0FBQyxDQUMvRCxDQUFDO1FBRUYsTUFBTSxLQUFLLEdBQUcsSUFBSSxpQkFBYSxDQUM3QixJQUFJLGdCQUFZLENBQUMsSUFBSSxDQUFDLEtBQUssQ0FBQyxRQUFRLENBQUMsQ0FBQyxhQUFhLENBQUMsRUFBRSxDQUFDLEVBQ3ZELElBQUksZ0JBQVksQ0FBQyxJQUFJLENBQUMsS0FBSyxDQUFDLGFBQWEsQ0FBQyxDQUFDLGFBQWEsQ0FBQyxFQUFFLENBQUMsRUFDNUQsSUFBSSxhQUFTLENBQUMsR0FBRyxDQUFDLEVBQ2xCLElBQUksaUJBQWEsQ0FBQyxDQUFDLEVBQUUsQ0FBQyxFQUFFO1lBQ3RCLElBQUksZ0JBQVksQ0FBQyxJQUFJLENBQUMsS0FBSyxDQUFDLGFBQWEsQ0FBQyxDQUFDLGFBQWEsQ0FBQyxFQUFFLENBQUM7U0FDN0QsQ0FBQyxDQUNILENBQUM7UUFDRixPQUFPLENBQUMsR0FBRyxDQUFDLEtBQUssQ0FBQyxDQUFDO1FBQ25CLE1BQU0sT0FBTyxHQUFHLEtBQUssQ0FBQyxTQUFTLEVBQUUsQ0FBQztRQUNsQyxPQUFPLENBQUMsR0FBRyxDQUFDLGtCQUFrQixFQUFFLE9BQU8sQ0FBQyxDQUFDO1FBQ3pDLE9BQU8sT0FBTyxDQUFDO0lBQ2pCLENBQUM7Q0FDRjtBQXJCRCwwQ0FxQkMifQ==
+exports.SignMessage = SignMessage;
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoic2lnbi1tZXNzYWdlLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiLi4vLi4vLi4vc3JjL21lc3NhZ2Uvc2lnbi1tZXNzYWdlLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7OztBQUFBLDBCQUE0RTtBQUM1RSwyREFLNkI7QUFFN0IsTUFBYSxXQUFXO0lBQ3RCLFlBQW9CLEtBQW9CO1FBQXBCLFVBQUssR0FBTCxLQUFLLENBQWU7SUFBRyxDQUFDO0lBQzVDLElBQUk7UUFDRixJQUFJLElBQUksQ0FBQyxLQUFLLENBQUMsTUFBTSxJQUFJLFVBQVUsRUFBRTtZQUNuQyxNQUFNLEdBQUcsR0FBRyxJQUFJLHVCQUFHLENBQ2pCLElBQUksZ0JBQVksQ0FBQyxJQUFJLENBQUMsS0FBSyxDQUFDLE1BQU0sQ0FBQyxLQUFLLENBQUMsQ0FBQyxDQUFDLENBQUMsYUFBYSxDQUFDLENBQUMsQ0FBQyxFQUM1RCxJQUFJLGdCQUFZLENBQUMsSUFBSSxDQUFDLEtBQUssQ0FBQyxNQUFNLENBQUMsS0FBSyxDQUFDLENBQUMsQ0FBQyxDQUFDLGFBQWEsQ0FBQyxHQUFHLENBQUMsQ0FDL0QsQ0FBQztZQUNGLE1BQU0sS0FBSyxHQUFHLElBQUksaUNBQWEsQ0FDN0IsSUFBSSxnQkFBWSxDQUFDLElBQUksQ0FBQyxLQUFLLENBQUMsUUFBUSxDQUFDLENBQUMsYUFBYSxDQUFDLEVBQUUsQ0FBQyxFQUN2RCxJQUFJLGdCQUFZLENBQUMsSUFBSSxDQUFDLEtBQUssQ0FBQyxhQUFhLENBQUMsQ0FBQyxhQUFhLENBQUMsRUFBRSxDQUFDLEVBQzVELElBQUksNkJBQVMsQ0FBQyxHQUFHLENBQUMsRUFDbEIsSUFBSSxpQ0FBYSxDQUFDLENBQUMsRUFBRSxDQUFDLEVBQUU7Z0JBQ3RCLElBQUksZ0JBQVksQ0FBQyxJQUFJLENBQUMsS0FBSyxDQUFDLGFBQWEsQ0FBQyxDQUFDLGFBQWEsQ0FBQyxFQUFFLENBQUM7YUFDN0QsQ0FBQyxDQUNILENBQUM7WUFDRixNQUFNLE9BQU8sR0FBSSxLQUFLLENBQUMsU0FBUyxFQUF3QixDQUFDLGFBQWEsRUFBRSxDQUFDO1lBRXpFLE9BQU8sT0FBTyxDQUFDO1NBQ2hCO2FBQU07WUFDTCxNQUFNLElBQUksS0FBSyxDQUFDLDJCQUEyQixDQUFDLENBQUM7U0FDOUM7SUFDSCxDQUFDO0NBQ0Y7QUF2QkQsa0NBdUJDIn0=

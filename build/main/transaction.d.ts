@@ -8,6 +8,5 @@ export declare class Transaction implements UniTokenModel {
     setSig(sig: any): void;
     transform(): object;
     serializeJson(): TransactionParams;
-    testSignMessage(): string;
     sendTransaction(rpc: RPC): Promise<string | object>;
 }

@@ -48,10 +48,3 @@ const sig = '0x11011';
 //   await data.sendTransaction(rpc);
 //   t.is(true, true);
 // });
-
-// test('test Transaction getSignMessage validate', async (t) => {
-//   const data = new Transaction(rawData, sig);
-//   const signMessage = await data.getRegisterSignMessageByRSA();
-//   console.log(signMessage);
-//   t.is(true, true);
-// });

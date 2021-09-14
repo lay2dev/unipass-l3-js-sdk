@@ -13,5 +13,4 @@ Object.defineProperty(exports, "__esModule", { value: true });
 __exportStar(require("./hasher"), exports);
 __exportStar(require("./blake2b-hasher"), exports);
 __exportStar(require("./keccak256-hasher"), exports);
-__exportStar(require("./signer"), exports);
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiaW5kZXguanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi8uLi8uLi9zcmMvaGFzaC9pbmRleC50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7Ozs7Ozs7Ozs7QUFBQSwyQ0FBeUI7QUFDekIsbURBQWlDO0FBQ2pDLHFEQUFtQztBQUNuQywyQ0FBeUIifQ==
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiaW5kZXguanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi8uLi8uLi9zcmMvaGFzaC9pbmRleC50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7Ozs7Ozs7Ozs7QUFBQSwyQ0FBeUI7QUFDekIsbURBQWlDO0FBQ2pDLHFEQUFtQyJ9

@@ -1,7 +1,8 @@
 import test from 'ava';
-import { RegisterMessage } from './sign-message';
+import { SignMessage } from './sign-message';
 
 const rawData = {
+  action: 'register',
   username: 'aven',
   pubkey: {
     type: 'RsaPubkey',
@@ -14,8 +15,8 @@ const rawData = {
 };
 
 test('test Transaction getSignMessage validate', async (t) => {
-  const data = new RegisterMessage(rawData);
+  const data = new SignMessage(rawData);
   const signMessage = await data.sign();
   console.log(signMessage);
-  t.is(true, true);
+  t.is(signMessage.length, 748);
 });

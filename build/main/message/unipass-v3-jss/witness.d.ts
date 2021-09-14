@@ -262,6 +262,16 @@ export class UserInfoOpt {
     value(): UserInfo;
     hasValue(): boolean;
 }
+export class RecoveryEmail {
+    constructor(reader: any, { validate }?: {
+        validate?: boolean;
+    });
+    view: DataView;
+    validate(compatible?: boolean): void;
+    getThreshold(): number;
+    getFirstN(): number;
+    getEmails(): Bytes32Vec;
+}
 export class RecoveryEmailOpt {
     constructor(reader: any, { validate }?: {
         validate?: boolean;
@@ -350,6 +360,15 @@ export class BytesVec {
     length(): number;
     indexAt(i: any): Bytes;
 }
+export class RsaPubkey {
+    constructor(reader: any, { validate }?: {
+        validate?: boolean;
+    });
+    view: DataView;
+    validate(compatible?: boolean): void;
+    getE(): Uint32;
+    getN(): Bytes256;
+}
 export class Secp256k1Pubkey {
     static size(): number;
     constructor(reader: any, { validate }?: {
@@ -388,23 +407,3 @@ export class PubkeyVec {
     length(): number;
     indexAt(i: any): Pubkey;
 }
-declare class RecoveryEmail {
-    constructor(reader: any, { validate }?: {
-        validate?: boolean;
-    });
-    view: DataView;
-    validate(compatible?: boolean): void;
-    getThreshold(): number;
-    getFirstN(): number;
-    getEmails(): Bytes32Vec;
-}
-declare class RsaPubkey {
-    constructor(reader: any, { validate }?: {
-        validate?: boolean;
-    });
-    view: DataView;
-    validate(compatible?: boolean): void;
-    getE(): Uint32;
-    getN(): Bytes256;
-}
-export {};
