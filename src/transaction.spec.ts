@@ -16,7 +16,7 @@ const rawData = {
     registerEmail: 'johnz@lay2.dev',
     pubkey: '0x01415498a39E37B7C17b586AB8AB77BE0B518DBDFc',
     recoveryEmail: null,
-    quickLogin: true,
+    quickLogin: false,
   },
 };
 const sig = '0x11011';
@@ -49,11 +49,9 @@ const sig = '0x11011';
 //   t.is(true, true);
 // });
 
-test('test Transaction getSignMessage validate', async (t) => {
-  const data = new Transaction(rawData, sig);
-  // const testSignMessage = await data.testSignMessage();
-  // console.log(testSignMessage);
-  const signMessage = await data.getRegisterSignMessageByRSA();
-  console.log(signMessage);
-  t.is(true, true);
-});
+// test('test Transaction getSignMessage validate', async (t) => {
+//   const data = new Transaction(rawData, sig);
+//   const signMessage = await data.getRegisterSignMessageByRSA();
+//   console.log(signMessage);
+//   t.is(true, true);
+// });

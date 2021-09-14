@@ -31,6 +31,11 @@ export interface pubkey {
     type: string;
     value: any;
 }
+export interface registerInner {
+    pubkey: pubkey;
+    username: string;
+    registerEmail: string;
+}
 export interface Action {
     registerEmail: string;
     username?: string;
