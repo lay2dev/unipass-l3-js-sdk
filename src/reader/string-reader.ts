@@ -1,6 +1,6 @@
 import { ArrayBufferReader } from '..';
 
-export class HexStringReader {
+export class StringReader {
   constructor(public input: string) {}
   static fromRawString(string) {
     const buffer = new ArrayBuffer(string.length);
@@ -24,7 +24,11 @@ export class HexStringReader {
   }
 
   indexAt(i: number): any {
-    return parseInt(this.input.substr(2 + i * 2, 2), 16);
+    try {
+      return parseInt(this.input.substr(2 + i * 2, 2), 16);
+    } catch (e) {
+      return 0;
+    }
   }
 
   toArrayBuffer(length: number): ArrayBuffer {

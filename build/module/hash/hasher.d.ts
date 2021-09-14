@@ -1,4 +1,4 @@
-import { ArrayBufferReader, HexStringReader } from '..';
+import { Reader } from '..';
 export interface HashMethod {
     update(data: string | Uint8Array): HashMethod;
     digest(data?: string | Uint8Array): string | Uint8Array;
@@ -7,9 +7,9 @@ export interface HashMethod {
 export declare abstract class Hasher {
     protected h: HashMethod;
     constructor(h: HashMethod);
-    abstract update(data: string | ArrayBuffer | HexStringReader | ArrayBufferReader): Hasher;
-    abstract digest(): HexStringReader | ArrayBufferReader;
+    abstract update(data: string | ArrayBuffer | Reader): Hasher;
+    abstract digest(): Reader;
     abstract reset(): void;
     protected setH(h: HashMethod): void;
-    hash(data: string | Uint8Array | HexStringReader | ArrayBufferReader): HexStringReader | ArrayBufferReader;
+    hash(data: string | Uint8Array | Reader): Reader;
 }

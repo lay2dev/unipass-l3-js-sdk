@@ -1,2 +1,2 @@
-export * from './array-buffer-reader';
-export * from './hex-string-reader';
+export * from './reader';
+export * from './string-reader';

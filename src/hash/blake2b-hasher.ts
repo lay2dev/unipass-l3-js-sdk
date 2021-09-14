@@ -1,6 +1,6 @@
 import { Hasher } from '.';
 import blake2b from 'blake2b';
-import { ArrayBufferReader, HexStringReader } from '..';
+import { HexStringReader, Reader } from '..';
 
 export class Blake2bHasher extends Hasher {
   constructor() {
@@ -8,35 +8,33 @@ export class Blake2bHasher extends Hasher {
       32,
       null,
       null,
-      new Uint8Array(
-        HexStringReader.fromRawString('ckb-default-hash').toArrayBuffer()
-      )
+      new Uint8Array(Reader.fromRawString('ckb-default-hash').toArrayBuffer())
     );
     super(h);
   }
 
   update(data: string | ArrayBuffer): Hasher {
     let array: Buffer;
-    if (data instanceof ArrayBufferReader || data instanceof HexStringReader) {
+    if (data instanceof Reader) {
       /** Reader type params not enter this branch, it's weired */
-      array = Buffer.from(data.serializeJson().replace('0x', ''));
+      array = Buffer.from((data as string).replace('0x', ''));
     } else if (data instanceof ArrayBuffer) {
       array = Buffer.from(new Uint8Array(data));
     } else if (typeof data === 'string') {
       array = Buffer.from(data);
     } else {
       array = Buffer.from(
-        new Uint8Array(new ArrayBufferReader(data).toArrayBuffer())
+        new Uint8Array((new Reader(data) as HexStringReader).toArrayBuffer())
       );
     }
     this.h.update(array);
     return this;
   }
 
-  digest(): ArrayBufferReader {
+  digest(): Reader {
     const out = new Uint8Array(32);
     this.h.digest(out);
-    return new ArrayBufferReader(out.buffer);
+    return new Reader(out.buffer);
   }
 
   reset(): void {
@@ -44,9 +42,7 @@ export class Blake2bHasher extends Hasher {
       32,
       null,
       null,
-      new Uint8Array(
-        ArrayBufferReader.fromRawString('ckb-default-hash').toArrayBuffer()
-      )
+      new Uint8Array(Reader.fromRawString('ckb-default-hash').toArrayBuffer())
     );
   }
 }

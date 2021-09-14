@@ -27,7 +27,12 @@ export interface TransactionInner {
   type: string;
   nonce: string;
   username?: string;
+  pubkey?: pubkey;
   action: Action;
+}
+export interface pubkey {
+  type: string;
+  value: any;
 }
 
 export interface Action {

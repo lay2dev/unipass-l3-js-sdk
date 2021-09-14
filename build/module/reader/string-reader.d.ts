@@ -1,5 +1,5 @@
 import { ArrayBufferReader } from '..';
-export declare class HexStringReader {
+export declare class StringReader {
     input: string;
     constructor(input: string);
     static fromRawString(string: any): ArrayBufferReader;

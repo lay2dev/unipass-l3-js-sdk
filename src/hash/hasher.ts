@@ -1,4 +1,4 @@
-import { ArrayBufferReader, HexStringReader } from '..';
+import { Reader } from '..';
 
 export interface HashMethod {
   update(data: string | Uint8Array): HashMethod;
@@ -8,17 +8,13 @@ export interface HashMethod {
 
 export abstract class Hasher {
   constructor(protected h: HashMethod) {}
-  abstract update(
-    data: string | ArrayBuffer | HexStringReader | ArrayBufferReader
-  ): Hasher;
-  abstract digest(): HexStringReader | ArrayBufferReader;
+  abstract update(data: string | ArrayBuffer | Reader): Hasher;
+  abstract digest(): Reader;
   abstract reset(): void;
   protected setH(h: HashMethod): void {
     this.h = h;
   }
-  hash(
-    data: string | Uint8Array | HexStringReader | ArrayBufferReader
-  ): HexStringReader | ArrayBufferReader {
+  hash(data: string | Uint8Array | Reader): Reader {
     return this.update(data).digest();
   }
 }
