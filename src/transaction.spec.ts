@@ -51,7 +51,9 @@ const sig = '0x11011';
 
 test('test Transaction getSignMessage validate', async (t) => {
   const data = new Transaction(rawData, sig);
-  const signMessage = await data.testSignMessage();
+  // const testSignMessage = await data.testSignMessage();
+  // console.log(testSignMessage);
+  const signMessage = await data.getRegisterSignMessageByRSA();
   console.log(signMessage);
   t.is(true, true);
 });

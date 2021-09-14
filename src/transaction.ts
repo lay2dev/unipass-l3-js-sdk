@@ -44,25 +44,24 @@ export class Transaction implements UniTokenModel {
       sig: this.sig,
     };
   }
-  getRegisterSignMessage(): string {
-    if (this.inner.type == '') {
-      const rsa = new Rsa(
-        new StringReader(this.inner.pubkey.value.e).toArrayBuffer(4),
-        new StringReader(this.inner.pubkey.value.n).toArrayBuffer(256)
-      );
+  getRegisterSignMessageByRSA(): string {
+    const rsa = new Rsa(
+      new StringReader(this.inner.pubkey.value.e).toArrayBuffer(4),
+      new StringReader(this.inner.pubkey.value.n).toArrayBuffer(256)
+    );
 
-      const inner = new RegisterInner(
-        new StringReader(this.inner.username).toArrayBuffer(32),
+    const inner = new RegisterInner(
+      new StringReader(this.inner.username).toArrayBuffer(32),
+      new StringReader(this.inner.action.registerEmail).toArrayBuffer(32),
+      new RsaPubkey(rsa),
+      new RecoveryEmail(1, 1, [
         new StringReader(this.inner.action.registerEmail).toArrayBuffer(32),
-        new RsaPubkey(rsa),
-        new RecoveryEmail(1, 1, [
-          new StringReader(this.inner.action.registerEmail).toArrayBuffer(32),
-        ])
-      );
-      const message = inner.serialize();
-      return message;
-    }
-    return '0x';
+      ])
+    );
+    console.log(inner);
+    const message = inner.serialize();
+    console.log('---message', message);
+    return message;
   }
 
   testSignMessage(): string {
