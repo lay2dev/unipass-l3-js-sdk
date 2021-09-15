@@ -116,12 +116,10 @@ export function TransformRowTransaction(
   rawTransaction: any,
   { debugPath = 'raw' } = {}
 ) {
-  console.log('[TransformRowTransaction]', rawTransaction);
   const formateTransaction = transformRawObject(debugPath, rawTransaction, {
     transactionInner: toInvoke(TransformInnerRaw),
     txStatus: toInvoke(TransformTxStatus),
   });
-  console.log('formateTransaction', formateTransaction);
   return formateTransaction;
 }
 

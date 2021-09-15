@@ -57,8 +57,6 @@ export class HexStringReader {
 
 export class Reader {
   constructor(input) {
-    console.log('============================');
-    console.log(input, typeof input);
     if (
       input instanceof HexStringReader ||
       input instanceof ArrayBufferReader
@@ -76,7 +74,6 @@ export class Reader {
     if (input instanceof ArrayBuffer) {
       return new ArrayBufferReader(input);
     }
-    console.log('============================input', input);
     throw new Error('Reader can only accept hex string or ArrayBuffer!');
   }
 

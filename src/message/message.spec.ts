@@ -17,6 +17,5 @@ const rawData = {
 test('test Transaction getSignMessage validate', async (t) => {
   const data = new SignMessage(rawData);
   const signMessage = await data.sign();
-  console.log(signMessage);
   t.is(signMessage.length, 748);
 });
