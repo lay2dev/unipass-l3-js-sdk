@@ -6,8 +6,17 @@ const rawData = {
   type: 'register',
   action: {
     registerEmail: 'johnz@lay2.dev',
-    pubkey: '0x01415498a39E37B7C17b586AB8AB77BE0B518DBDFc',
-    recoveryEmail: null,
+    pubkey: {
+      rsaPubkey: {
+        e: 1111,
+        n: 'johnz@lay2.dev',
+      },
+    },
+    recoveryEmail: {
+      threshold: 1,
+      firstN: 1,
+      emails: ['johnz@lay2.dev'],
+    },
     quickLogin: false,
   },
 };
@@ -22,7 +31,6 @@ const rpc = new RPC(uri);
 test('test Transaction formateData', async (t) => {
   const data = new Transaction(rawData, sig);
   const formateData = data.transform();
-  console.log(formateData);
   const type = (formateData as TransactionParams).inner.type;
   t.is(type, rawData.type);
 });

@@ -1,6 +1,12 @@
 export declare function ValidateTarget(target: any, { debugPath }?: {
     debugPath?: string;
 }): void;
+export declare function ValidatePubkey(raw: any, { debugPath }?: {
+    debugPath?: string;
+}): void;
+export declare function ValidateRecoveryEmail(raw: any, { debugPath }?: {
+    debugPath?: string;
+}): void;
 export declare function ValidateAction(raw: any, { debugPath }?: {
     debugPath?: string;
 }): void;

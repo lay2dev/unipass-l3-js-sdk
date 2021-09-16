@@ -2,18 +2,24 @@ export interface UserInfoResult {
   registerEmail: string;
   quickLogin: boolean;
   localKeys: string[];
-  recoveryEmail: {
-    threshold: number;
-    firstN: number;
-    emails: string[];
-  };
+  recoveryEmail: RecoveryEmail;
   pendingState: {
     pendingKey: string;
     replaceOld: boolean;
     timeCell: string;
   };
 }
+export interface RecoveryEmail {
+  threshold: number;
+  firstN: number;
+  emails: string[];
+}
 
+export interface Pubkey {
+  rsaPubkey: { e: number; n: string };
+  secp256k1: string;
+  secp256r1: string;
+}
 export interface Targets {
   to: string;
   amount: string;
@@ -45,8 +51,8 @@ export interface registerInner {
 export interface Action {
   registerEmail: string;
   username?: string;
-  pubkey: string;
-  recoveryEmail: string | null;
+  pubkey: Pubkey;
+  recoveryEmail: RecoveryEmail | null;
   quickLogin: boolean;
 }
 

@@ -8,7 +8,12 @@ function invokeSerializeJson(debugPath: string, value: any) {
   return value;
 }
 
-function transformObject(debugPath: string, object: any, keys: any) {
+function transformObject(
+  debugPath: string,
+  object: any,
+  keys: any,
+  hintNull?: boolean
+) {
   object = invokeSerializeJson(debugPath, object);
   if (!(object instanceof Object)) {
     throw new Error(`Transformed ${debugPath} is not an object1!`);
@@ -23,7 +28,11 @@ function transformObject(debugPath: string, object: any, keys: any) {
       );
       value = object[camelKey];
     }
-    result[key] = (f as any)(`${debugPath}.${key}`, value);
+    if (hintNull) {
+      if (value) result[key] = (f as any)(`${debugPath}.${key}`, value);
+    } else {
+      result[key] = (f as any)(`${debugPath}.${key}`, value);
+    }
   }
   return result;
 }
@@ -41,6 +50,7 @@ function transformRawObject(debugPath: string, object: any, keys: any) {
       const camelKey = key.replace(/([A-Z])/g, '_$1').toLowerCase();
       value = object[camelKey];
     }
+
     result[key] = (f as any)(`${debugPath}.${key}`, value);
   }
   return result;
@@ -145,15 +155,50 @@ export function TransformRawTransaction(
   return formateTransaction;
 }
 
+export function TransformRsaPubkey(target: any, { debugPath = 'action' } = {}) {
+  const rsaPubkey = transformObject(debugPath, target, {
+    e: invokeSerializeJson,
+    n: invokeSerializeJson,
+  });
+  console.log(rsaPubkey);
+  return rsaPubkey;
+}
+export function transformPubkey(target: any, { debugPath = 'pubkey' } = {}) {
+  const pubkey = transformObject(
+    debugPath,
+    target,
+    {
+      rsa_pubkey: toInvoke(TransformRsaPubkey),
+      secp256k1: invokeSerializeJson,
+      secp256r1: invokeSerializeJson,
+    },
+    true
+  );
+  return pubkey;
+}
+
+export function transformRecoveryEmailInner(
+  target: any,
+  { debugPath = 'recovery' } = {}
+) {
+  const formatAction = transformObject(debugPath, target, {
+    threshold: invokeSerializeJson,
+    first_n: invokeSerializeJson,
+    emails: invokeSerializeJson,
+  });
+
+  return formatAction;
+}
+
 export function TransformAction(
   target: any,
   { validation = true, debugPath = 'action' } = {}
 ) {
   const formatAction = transformObject(debugPath, target, {
     register_email: invokeSerializeJson,
-    pubkey: invokeSerializeJson,
-    recovery_email: invokeSerializeJson,
     quick_login: invokeSerializeJson,
+    pubkey: toInvoke(transformPubkey),
+    recovery_email: toInvoke(transformRecoveryEmailInner),
   });
   if (validation) {
     validators.ValidateAction(formatAction, {

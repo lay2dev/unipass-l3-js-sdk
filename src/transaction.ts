@@ -1,12 +1,4 @@
-import {
-  ArrayBufferReader,
-  RawTransaction,
-  Reader,
-  RPC,
-  Sign,
-  TransactionParams,
-  UniTokenModel,
-} from '.';
+import { RawTransaction, RPC, Sign, TransactionParams, UniTokenModel } from '.';
 import { validators, transaction } from './utils';
 
 export class Transaction implements UniTokenModel {

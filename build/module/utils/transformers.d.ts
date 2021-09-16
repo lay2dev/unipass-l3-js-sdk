@@ -19,6 +19,15 @@ export declare function TransformRowTransaction(rawTransaction: any, { debugPath
 export declare function TransformRawTransaction(rawTransaction: any, { debugPath }?: {
     debugPath?: string;
 }): {};
+export declare function TransformRsaPubkey(target: any, { debugPath }?: {
+    debugPath?: string;
+}): {};
+export declare function transformPubkey(target: any, { debugPath }?: {
+    debugPath?: string;
+}): {};
+export declare function transformRecoveryEmailInner(target: any, { debugPath }?: {
+    debugPath?: string;
+}): {};
 export declare function TransformAction(target: any, { validation, debugPath }?: {
     validation?: boolean;
     debugPath?: string;

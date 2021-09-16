@@ -39,14 +39,36 @@ function assertObjectWithKeys(
 export function ValidateTarget(target: any, { debugPath = 'target' } = {}) {
   assertObjectWithKeys(debugPath, target, ['to', 'amount'], []);
 }
+export function ValidatePubkey(raw: any, { debugPath = 'action' } = {}) {
+  if (raw.rsa_pubkey) {
+    assertObjectWithKeys(debugPath, raw, ['rsa_pubkey'], []);
+  } else if (raw.secp256k1) {
+    assertObjectWithKeys(debugPath, raw, ['secp256k1'], []);
+  } else if (raw.secp256r1) {
+    assertObjectWithKeys(debugPath, raw, ['secp256r1'], []);
+  } else {
+    assertObjectWithKeys(
+      debugPath,
+      raw,
+      ['rsa_pubkey', 'secp256k1', 'secp256r1'],
+      []
+    );
+  }
+}
+
+export function ValidateRecoveryEmail(raw: any, { debugPath = 'action' } = {}) {
+  assertObjectWithKeys(debugPath, raw, ['threshold', 'first_n', 'emails'], []);
+}
 
 export function ValidateAction(raw: any, { debugPath = 'action' } = {}) {
   assertObjectWithKeys(
     debugPath,
     raw,
-    ['register_email', 'pubkey', 'recovery_email', 'quick_login'],
+    ['register_email', 'pubkey', 'quick_login', 'recovery_email'],
     []
   );
+  ValidatePubkey(raw.pubkey);
+  ValidateRecoveryEmail(raw.recovery_email);
 }
 
 export function ValidateInner(raw: any, { debugPath = 'inner' } = {}) {
