@@ -3,13 +3,14 @@ import {
   RawTransaction,
   Reader,
   RPC,
+  Sign,
   TransactionParams,
   UniTokenModel,
 } from '.';
 import { validators, transaction } from './utils';
 
 export class Transaction implements UniTokenModel {
-  constructor(public inner: any, public sig?: string) {}
+  constructor(public inner: any, public sig?: Sign) {}
 
   validate(): Transaction {
     const data = this.transform() as TransactionParams;

@@ -178,13 +178,66 @@ export function TransformInner(
   }
   return formatInner;
 }
+
+export function TransformSign(
+  target: any,
+  { validation = true, debugPath = 'sign' } = {}
+) {
+  // todo  way
+  let formatSign;
+  if (target.emailHeader) {
+    if (target.unipassSignature) {
+      // add key 2
+      formatSign = transformObject(debugPath, target, {
+        signature: invokeSerializeJson,
+        email_header: invokeSerializeJson,
+        unipass_signature: invokeSerializeJson,
+      });
+    } else {
+      // register
+      formatSign = transformObject(debugPath, target, {
+        signature: invokeSerializeJson,
+        email_header: invokeSerializeJson,
+      });
+    }
+  } else {
+    // add key 1
+    formatSign = transformObject(debugPath, target, {
+      signature: invokeSerializeJson,
+      oldkey_signature: invokeSerializeJson,
+    });
+  }
+
+  if (validation) {
+    if (target.emailHeader) {
+      if (target.unipassSignature) {
+        // add key 2
+        validators.ValidatSignAddKey2(formatSign, {
+          debugPath: `(transformed) ${debugPath}`,
+        });
+      } else {
+        // register
+        validators.ValidatSignRegister(formatSign, {
+          debugPath: `(transformed) ${debugPath}`,
+        });
+      }
+    } else {
+      // add key 1
+      validators.ValidatSignAddKey1(formatSign, {
+        debugPath: `(transformed) ${debugPath}`,
+      });
+    }
+  }
+
+  return formatSign;
+}
 export function TransformTransaction(
   transaction: any,
   { validation = true, debugPath = 'transaction' } = {}
 ) {
   const formateTransaction = transformObject(debugPath, transaction, {
     inner: toInvoke(TransformInner),
-    sig: invokeSerializeJson,
+    sig: toInvoke(TransformSign),
   });
 
   if (validation) {

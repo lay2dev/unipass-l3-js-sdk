@@ -1,8 +1,8 @@
-import { RPC, TransactionParams, UniTokenModel } from '.';
+import { RPC, Sign, TransactionParams, UniTokenModel } from '.';
 export declare class Transaction implements UniTokenModel {
     inner: any;
-    sig?: string;
-    constructor(inner: any, sig?: string);
+    sig?: Sign;
+    constructor(inner: any, sig?: Sign);
     validate(): Transaction;
     validateRaw(): Transaction;
     setSig(sig: any): void;

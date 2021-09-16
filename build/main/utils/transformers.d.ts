@@ -27,6 +27,10 @@ export declare function TransformInner(target: any, { validation, debugPath }?: 
     validation?: boolean;
     debugPath?: string;
 }): {};
+export declare function TransformSign(target: any, { validation, debugPath }?: {
+    validation?: boolean;
+    debugPath?: string;
+}): any;
 export declare function TransformTransaction(transaction: any, { validation, debugPath }?: {
     validation?: boolean;
     debugPath?: string;

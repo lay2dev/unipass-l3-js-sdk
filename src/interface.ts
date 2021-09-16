@@ -68,7 +68,13 @@ export interface ResponseInfo {
 
 export interface TransactionParams {
   inner: TransactionInner;
-  sig: string;
+  sig: Sign;
+}
+export interface Sign {
+  signature: string;
+  emailHeader?: string;
+  oldkeySignature?: string;
+  unipassSignature?: string;
 }
 
 export interface UniTokenModel {

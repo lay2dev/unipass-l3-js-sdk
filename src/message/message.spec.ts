@@ -7,15 +7,16 @@ const rawData = {
   pubkey: {
     type: 'RsaPubkey',
     value: {
-      e: '0x11',
-      n: '0x01415498a39E37B7C17b586AB8AB77BE0B518DBDFc',
+      e: 'AQAB',
+      n: 'nz8MOIXWsX_VOpO_bqVpU3lK7AzBhf3t_49PMN8PToYwY6xHJSHDI2rwvUmIPkbqUrYUmimWRwQU7SdRICGyIu3IFKQ',
     },
   },
-  registerEmail: 'johnz@lay2.dev',
+  registerEmail: 's@qq.com',
 };
 
 test('test Transaction getSignMessage validate', async (t) => {
   const data = new SignMessage(rawData);
   const signMessage = await data.sign();
+  console.log(signMessage);
   t.is(signMessage.length, 748);
 });

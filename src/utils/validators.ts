@@ -54,6 +54,24 @@ export function ValidateInner(raw: any, { debugPath = 'inner' } = {}) {
   ValidateAction(raw.action);
 }
 
+export function ValidatSignAddKey1(raw: any, { debugPath = 'sign' } = {}) {
+  assertObjectWithKeys(debugPath, raw, ['signature', 'oldkey_signature'], []);
+  ValidateAction(raw.action);
+}
+export function ValidatSignAddKey2(raw: any, { debugPath = 'sign' } = {}) {
+  assertObjectWithKeys(
+    debugPath,
+    raw,
+    ['signature', 'email_header', 'unipass_signature'],
+    []
+  );
+  ValidateAction(raw.action);
+}
+export function ValidatSignRegister(raw: any, { debugPath = 'sign' } = {}) {
+  assertObjectWithKeys(debugPath, raw, ['signature', 'email_header'], []);
+  ValidateAction(raw.action);
+}
+
 export function ValidateTransaction(
   transaction: any,
   { debugPath = 'transaction' } = {}
@@ -65,6 +83,9 @@ export function ValidateTransaction(
 export const validators = {
   ValidateTransaction,
   ValidateInner,
+  ValidatSignAddKey1,
+  ValidatSignAddKey2,
+  ValidatSignRegister,
   ValidateAction,
   ValidateTarget,
 };
