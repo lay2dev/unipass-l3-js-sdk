@@ -214,6 +214,7 @@ export function TransformInner(
   const formatInner = transformObject(debugPath, target, {
     type: invokeSerializeJson,
     nonce: invokeSerializeJson,
+    username: invokeSerializeJson,
     action: toInvoke(TransformAction),
   });
   if (validation) {

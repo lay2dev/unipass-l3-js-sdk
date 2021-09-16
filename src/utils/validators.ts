@@ -72,7 +72,12 @@ export function ValidateAction(raw: any, { debugPath = 'action' } = {}) {
 }
 
 export function ValidateInner(raw: any, { debugPath = 'inner' } = {}) {
-  assertObjectWithKeys(debugPath, raw, ['type', 'nonce', 'action'], []);
+  assertObjectWithKeys(
+    debugPath,
+    raw,
+    ['type', 'nonce', 'action', 'username'],
+    []
+  );
   ValidateAction(raw.action);
 }
 

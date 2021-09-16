@@ -32,7 +32,7 @@ export interface Message {
 export interface TransactionInner {
   type: string;
   nonce: string;
-  username?: string;
+  username: string;
   pubkey?: pubkey;
   action: Action;
 }
