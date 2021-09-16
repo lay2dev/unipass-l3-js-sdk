@@ -15,12 +15,12 @@ export interface RecoveryEmail {
     emails: string[];
 }
 export interface Pubkey {
-    rsaPubkey: {
+    rsaPubkey?: {
         e: number;
         n: string;
     };
-    secp256k1: string;
-    secp256r1: string;
+    secp256k1?: string;
+    secp256r1?: string;
 }
 export interface Targets {
     to: string;
