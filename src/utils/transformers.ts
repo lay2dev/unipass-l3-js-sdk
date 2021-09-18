@@ -160,7 +160,6 @@ export function TransformRsaPubkey(target: any, { debugPath = 'action' } = {}) {
     e: invokeSerializeJson,
     n: invokeSerializeJson,
   });
-  console.log(rsaPubkey);
   return rsaPubkey;
 }
 export function transformPubkey(target: any, { debugPath = 'pubkey' } = {}) {

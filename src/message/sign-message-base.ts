@@ -1,5 +1,4 @@
 import { Reader } from '..';
-import {} from './unipass-v3-jss/common';
 import { SerializeRegisterChildTxInner } from './unipass-v3-jss/witness';
 interface pubkey {
   type: string;

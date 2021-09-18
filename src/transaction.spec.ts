@@ -36,27 +36,24 @@ const rpc = new RPC(uri);
 test('test Transaction formateData', async (t) => {
   const data = new Transaction(rawData, sig);
   const formateData = data.transform();
-  console.log('===========================');
-  console.log(JSON.stringify(formateData));
-  console.log('===========================');
   const type = (formateData as TransactionParams).inner.type;
   t.is(type, rawData.type);
 });
 
-// test('test Transaction serializeJson', async (t) => {
-//   const data = new Transaction(rawData, sig);
-//   const jsonData = data.serializeJson();
-//   t.is(jsonData.inner.action.registerEmail, rawData.action.registerEmail);
-// });
+test('test Transaction serializeJson', async (t) => {
+  const data = new Transaction(rawData, sig);
+  const jsonData = data.serializeJson();
+  t.is(jsonData.inner.type, rawData.type);
+});
 
-// test('test Transaction validate', async (t) => {
-//   const data = new Transaction(rawData, sig);
-//   const transaction = data.validate();
-//   t.is(transaction.inner.action.registerEmail, rawData.action.registerEmail);
-// });
+test('test Transaction validate', async (t) => {
+  const data = new Transaction(rawData, sig);
+  const transaction = data.validate();
+  t.is(transaction.inner.action.registerEmail, rawData.action.registerEmail);
+});
 
-// test('test Transaction sendTransaction validate', async (t) => {
-//   const data = new Transaction(rawData, sig);
-//   await data.sendTransaction(rpc);
-//   t.is(true, true);
-// });
+test('test Transaction sendTransaction validate', async (t) => {
+  const data = new Transaction(rawData, sig);
+  await data.sendTransaction(rpc);
+  t.is(true, true);
+});

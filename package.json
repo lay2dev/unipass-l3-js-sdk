@@ -1,12 +1,13 @@
 {
-  "name": "unitok-js-sdk",
+  "name": "unipass-l3-js-sdk",
   "version": "1.0.0",
   "main": "build/main/index.js",
   "typings": "build/main/index.d.ts",
   "module": "build/module/index.js",
-  "repository": "https://github.com/lay2dev/unitok-js-sdk.git",
+  "repository": "https://github.com/lay2dev/unipass-l3-js-sdk.git",
   "author": "aven",
   "license": "MIT",
+  "description":"lay2 unipass l3 js sdk",
   "engines": {
     "node": ">=8.9"
   },
@@ -74,7 +75,7 @@
   "ava": {
     "failFast": true,
     "files": [
-      "build/main/**/*.spec.js"
+      "build/main/transaction.spec.js"
     ],
     "ignoredByWatcher": [
       "build/main/**/*.js"
