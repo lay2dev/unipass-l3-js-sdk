@@ -12,7 +12,7 @@ export class SignMessage {
     if (this.inner.action == 'register') {
       const rsa = new Rsa(
         new Uint32Array([this.inner.pubkey.value.e]).reverse().buffer,
-        this.inner.pubkey.value.n.reverse().buffer
+        this.inner.pubkey.value.n
       );
       const pubkey = new RsaPubkey(rsa);
       console.log(pubkey);

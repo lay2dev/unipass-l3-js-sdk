@@ -43,7 +43,7 @@ function initPubkey() {
   const keyObject = key.exportKey('components');
   console.log(keyObject.n);
   console.log('================---');
-  const n = new Uint8Array(keyObject.n.slice(1));
+  const n = new Uint8Array(keyObject.n.slice(1)).reverse().buffer;
 
   rawData.pubkey = { type: 'RsaPubkey', value: { e: keyObject.e, n } };
 }
