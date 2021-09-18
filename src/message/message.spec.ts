@@ -6,7 +6,7 @@ const rawData = {
   action: 'register',
   username: 'aven',
   pubkey: null,
-  registerEmail: 's@qq.com',
+  registerEmail: 'hi.ellen@qq.com',
 };
 
 function initPubkey() {

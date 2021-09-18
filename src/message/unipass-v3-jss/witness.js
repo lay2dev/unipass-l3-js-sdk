@@ -92,7 +92,7 @@ function serializeTable(buffers) {
 }
 
 export class TxWitness {
-  constructor(reader, {validate = true} = {}) {
+  constructor(reader, { validate = true } = {}) {
     this.view = new DataView(assertArrayBuffer(reader));
     if (validate) {
       this.validate();
@@ -149,7 +149,7 @@ export function SerializeTxWitness(value) {
 }
 
 export class TxVec {
-  constructor(reader, {validate = true} = {}) {
+  constructor(reader, { validate = true } = {}) {
     this.view = new DataView(assertArrayBuffer(reader));
     if (validate) {
       this.validate();
@@ -187,11 +187,11 @@ export class TxVec {
 }
 
 export function SerializeTxVec(value) {
-  return serializeTable(value.map(item => SerializeTx(item)));
+  return serializeTable(value.map((item) => SerializeTx(item)));
 }
 
 export class Tx {
-  constructor(reader, {validate = true} = {}) {
+  constructor(reader, { validate = true } = {}) {
     this.view = new DataView(assertArrayBuffer(reader));
     if (validate) {
       this.validate();
@@ -248,7 +248,7 @@ export function SerializeTx(value) {
 }
 
 export class ChildTxVec {
-  constructor(reader, {validate = true} = {}) {
+  constructor(reader, { validate = true } = {}) {
     this.view = new DataView(assertArrayBuffer(reader));
     if (validate) {
       this.validate();
@@ -286,11 +286,11 @@ export class ChildTxVec {
 }
 
 export function SerializeChildTxVec(value) {
-  return serializeTable(value.map(item => SerializeChildTx(item)));
+  return serializeTable(value.map((item) => SerializeChildTx(item)));
 }
 
 export class ChildTx {
-  constructor(reader, {validate = true} = {}) {
+  constructor(reader, { validate = true } = {}) {
     this.view = new DataView(assertArrayBuffer(reader));
     if (validate) {
       this.validate();
@@ -428,7 +428,7 @@ export function SerializeChildTx(value) {
 }
 
 export class RegisterChildTx {
-  constructor(reader, {validate = true} = {}) {
+  constructor(reader, { validate = true } = {}) {
     this.view = new DataView(assertArrayBuffer(reader));
     if (validate) {
       this.validate();
@@ -454,7 +454,7 @@ export class RegisterChildTx {
     const offset_end = this.view.getUint32(start + 4, true);
     return new RegisterChildTxInner(
       this.view.buffer.slice(offset, offset_end),
-      {validate: false}
+      { validate: false }
     );
   }
 
@@ -486,7 +486,7 @@ export function SerializeRegisterChildTx(value) {
 }
 
 export class RegisterChildTxInner {
-  constructor(reader, {validate = true} = {}) {
+  constructor(reader, { validate = true } = {}) {
     this.view = new DataView(assertArrayBuffer(reader));
     if (validate) {
       this.validate();
@@ -584,7 +584,7 @@ export function SerializeRegisterChildTxInner(value) {
 }
 
 export class AddLocalKeyChildTx {
-  constructor(reader, {validate = true} = {}) {
+  constructor(reader, { validate = true } = {}) {
     this.view = new DataView(assertArrayBuffer(reader));
     if (validate) {
       this.validate();
@@ -595,7 +595,7 @@ export class AddLocalKeyChildTx {
     const offsets = verifyAndExtractOffsets(this.view, 0, true);
     new AddLocalKeyChildTxInner(
       this.view.buffer.slice(offsets[0], offsets[1]),
-      {validate: false}
+      { validate: false }
     ).validate();
     new AddLocalKeyChildTxSig(this.view.buffer.slice(offsets[1], offsets[2]), {
       validate: false,
@@ -608,7 +608,7 @@ export class AddLocalKeyChildTx {
     const offset_end = this.view.getUint32(start + 4, true);
     return new AddLocalKeyChildTxInner(
       this.view.buffer.slice(offset, offset_end),
-      {validate: false}
+      { validate: false }
     );
   }
 
@@ -618,7 +618,7 @@ export class AddLocalKeyChildTx {
     const offset_end = this.view.byteLength;
     return new AddLocalKeyChildTxSig(
       this.view.buffer.slice(offset, offset_end),
-      {validate: false}
+      { validate: false }
     );
   }
 }
@@ -631,7 +631,7 @@ export function SerializeAddLocalKeyChildTx(value) {
 }
 
 export class AddLocalKeyChildTxInner {
-  constructor(reader, {validate = true} = {}) {
+  constructor(reader, { validate = true } = {}) {
     this.view = new DataView(assertArrayBuffer(reader));
     if (validate) {
       this.validate();
@@ -688,7 +688,7 @@ export function SerializeAddLocalKeyChildTxInner(value) {
 }
 
 export class AddLocalKeyChildTxSig {
-  constructor(reader, {validate = true} = {}) {
+  constructor(reader, { validate = true } = {}) {
     this.view = new DataView(assertArrayBuffer(reader));
     if (validate) {
       this.validate();
@@ -769,7 +769,7 @@ export function SerializeAddLocalKeyChildTxSig(value) {
 }
 
 export class AddLocalKeyByOldKey {
-  constructor(reader, {validate = true} = {}) {
+  constructor(reader, { validate = true } = {}) {
     this.view = new DataView(assertArrayBuffer(reader));
     if (validate) {
       this.validate();
@@ -813,7 +813,7 @@ export function SerializeAddLocalKeyByOldKey(value) {
 }
 
 export class AddLocalKeyByDoubleSign {
-  constructor(reader, {validate = true} = {}) {
+  constructor(reader, { validate = true } = {}) {
     this.view = new DataView(assertArrayBuffer(reader));
     if (validate) {
       this.validate();
@@ -870,7 +870,7 @@ export function SerializeAddLocalKeyByDoubleSign(value) {
 }
 
 export class DeleteLocalKeyChildTx {
-  constructor(reader, {validate = true} = {}) {
+  constructor(reader, { validate = true } = {}) {
     this.view = new DataView(assertArrayBuffer(reader));
     if (validate) {
       this.validate();
@@ -881,7 +881,7 @@ export class DeleteLocalKeyChildTx {
     const offsets = verifyAndExtractOffsets(this.view, 0, true);
     new DeleteLocalKeyChildTxInner(
       this.view.buffer.slice(offsets[0], offsets[1]),
-      {validate: false}
+      { validate: false }
     ).validate();
     new Bytes(this.view.buffer.slice(offsets[1], offsets[2]), {
       validate: false,
@@ -894,7 +894,7 @@ export class DeleteLocalKeyChildTx {
     const offset_end = this.view.getUint32(start + 4, true);
     return new DeleteLocalKeyChildTxInner(
       this.view.buffer.slice(offset, offset_end),
-      {validate: false}
+      { validate: false }
     );
   }
 
@@ -916,7 +916,7 @@ export function SerializeDeleteLocalKeyChildTx(value) {
 }
 
 export class DeleteLocalKeyChildTxInner {
-  constructor(reader, {validate = true} = {}) {
+  constructor(reader, { validate = true } = {}) {
     this.view = new DataView(assertArrayBuffer(reader));
     if (validate) {
       this.validate();
@@ -973,7 +973,7 @@ export function SerializeDeleteLocalKeyChildTxInner(value) {
 }
 
 export class UpdateRecoveryEmailChildTx {
-  constructor(reader, {validate = true} = {}) {
+  constructor(reader, { validate = true } = {}) {
     this.view = new DataView(assertArrayBuffer(reader));
     if (validate) {
       this.validate();
@@ -984,7 +984,7 @@ export class UpdateRecoveryEmailChildTx {
     const offsets = verifyAndExtractOffsets(this.view, 0, true);
     new UpdateRecoveryEmailChildTxInner(
       this.view.buffer.slice(offsets[0], offsets[1]),
-      {validate: false}
+      { validate: false }
     ).validate();
     new Bytes(this.view.buffer.slice(offsets[1], offsets[2]), {
       validate: false,
@@ -997,7 +997,7 @@ export class UpdateRecoveryEmailChildTx {
     const offset_end = this.view.getUint32(start + 4, true);
     return new UpdateRecoveryEmailChildTxInner(
       this.view.buffer.slice(offset, offset_end),
-      {validate: false}
+      { validate: false }
     );
   }
 
@@ -1019,7 +1019,7 @@ export function SerializeUpdateRecoveryEmailChildTx(value) {
 }
 
 export class UpdateRecoveryEmailChildTxInner {
-  constructor(reader, {validate = true} = {}) {
+  constructor(reader, { validate = true } = {}) {
     this.view = new DataView(assertArrayBuffer(reader));
     if (validate) {
       this.validate();
@@ -1076,7 +1076,7 @@ export function SerializeUpdateRecoveryEmailChildTxInner(value) {
 }
 
 export class UpdateQuickLoginChildTx {
-  constructor(reader, {validate = true} = {}) {
+  constructor(reader, { validate = true } = {}) {
     this.view = new DataView(assertArrayBuffer(reader));
     if (validate) {
       this.validate();
@@ -1087,7 +1087,7 @@ export class UpdateQuickLoginChildTx {
     const offsets = verifyAndExtractOffsets(this.view, 0, true);
     new UpdateQuickLoginChildTxInner(
       this.view.buffer.slice(offsets[0], offsets[1]),
-      {validate: false}
+      { validate: false }
     ).validate();
     new Bytes(this.view.buffer.slice(offsets[1], offsets[2]), {
       validate: false,
@@ -1100,7 +1100,7 @@ export class UpdateQuickLoginChildTx {
     const offset_end = this.view.getUint32(start + 4, true);
     return new UpdateQuickLoginChildTxInner(
       this.view.buffer.slice(offset, offset_end),
-      {validate: false}
+      { validate: false }
     );
   }
 
@@ -1122,7 +1122,7 @@ export function SerializeUpdateQuickLoginChildTx(value) {
 }
 
 export class UpdateQuickLoginChildTxInner {
-  constructor(reader, {validate = true} = {}) {
+  constructor(reader, { validate = true } = {}) {
     this.view = new DataView(assertArrayBuffer(reader));
     if (validate) {
       this.validate();
@@ -1181,7 +1181,7 @@ export function SerializeUpdateQuickLoginChildTxInner(value) {
 }
 
 export class UserInfo {
-  constructor(reader, {validate = true} = {}) {
+  constructor(reader, { validate = true } = {}) {
     this.view = new DataView(assertArrayBuffer(reader));
     if (validate) {
       this.validate();
@@ -1292,7 +1292,7 @@ export function SerializeUserInfo(value) {
 }
 
 export class PendingState {
-  constructor(reader, {validate = true} = {}) {
+  constructor(reader, { validate = true } = {}) {
     this.view = new DataView(assertArrayBuffer(reader));
     if (validate) {
       this.validate();
@@ -1351,7 +1351,7 @@ export function SerializePendingState(value) {
 }
 
 export class PendingStateOpt {
-  constructor(reader, {validate = true} = {}) {
+  constructor(reader, { validate = true } = {}) {
     this.view = new DataView(assertArrayBuffer(reader));
     if (validate) {
       this.validate();
@@ -1365,7 +1365,7 @@ export class PendingStateOpt {
   }
 
   value() {
-    return new PendingState(this.view.buffer, {validate: false});
+    return new PendingState(this.view.buffer, { validate: false });
   }
 
   hasValue() {
@@ -1382,7 +1382,7 @@ export function SerializePendingStateOpt(value) {
 }
 
 export class TypeId {
-  constructor(reader, {validate = true} = {}) {
+  constructor(reader, { validate = true } = {}) {
     this.view = new DataView(assertArrayBuffer(reader));
     if (validate) {
       this.validate();
@@ -1413,7 +1413,7 @@ export function SerializeTypeId(value) {
 }
 
 export class UserInfoOpt {
-  constructor(reader, {validate = true} = {}) {
+  constructor(reader, { validate = true } = {}) {
     this.view = new DataView(assertArrayBuffer(reader));
     if (validate) {
       this.validate();
@@ -1427,7 +1427,7 @@ export class UserInfoOpt {
   }
 
   value() {
-    return new UserInfo(this.view.buffer, {validate: false});
+    return new UserInfo(this.view.buffer, { validate: false });
   }
 
   hasValue() {
@@ -1444,7 +1444,7 @@ export function SerializeUserInfoOpt(value) {
 }
 
 export class RecoveryEmail {
-  constructor(reader, {validate = true} = {}) {
+  constructor(reader, { validate = true } = {}) {
     this.view = new DataView(assertArrayBuffer(reader));
     if (validate) {
       this.validate();
@@ -1505,7 +1505,7 @@ export function SerializeRecoveryEmail(value) {
 }
 
 export class RecoveryEmailOpt {
-  constructor(reader, {validate = true} = {}) {
+  constructor(reader, { validate = true } = {}) {
     this.view = new DataView(assertArrayBuffer(reader));
     if (validate) {
       this.validate();
@@ -1519,7 +1519,7 @@ export class RecoveryEmailOpt {
   }
 
   value() {
-    return new RecoveryEmail(this.view.buffer, {validate: false});
+    return new RecoveryEmail(this.view.buffer, { validate: false });
   }
 
   hasValue() {
@@ -1536,7 +1536,7 @@ export function SerializeRecoveryEmailOpt(value) {
 }
 
 export class Bytes20 {
-  constructor(reader, {validate = true} = {}) {
+  constructor(reader, { validate = true } = {}) {
     this.view = new DataView(assertArrayBuffer(reader));
     if (validate) {
       this.validate();
@@ -1567,7 +1567,7 @@ export function SerializeBytes20(value) {
 }
 
 export class Bytes32 {
-  constructor(reader, {validate = true} = {}) {
+  constructor(reader, { validate = true } = {}) {
     this.view = new DataView(assertArrayBuffer(reader));
     if (validate) {
       this.validate();
@@ -1598,7 +1598,7 @@ export function SerializeBytes32(value) {
 }
 
 export class Bytes256 {
-  constructor(reader, {validate = true} = {}) {
+  constructor(reader, { validate = true } = {}) {
     this.view = new DataView(assertArrayBuffer(reader));
     if (validate) {
       this.validate();
@@ -1629,7 +1629,7 @@ export function SerializeBytes256(value) {
 }
 
 export class Uint32 {
-  constructor(reader, {validate = true} = {}) {
+  constructor(reader, { validate = true } = {}) {
     this.view = new DataView(assertArrayBuffer(reader));
     if (validate) {
       this.validate();
@@ -1668,7 +1668,7 @@ export function SerializeUint32(value) {
 }
 
 export class Bytes {
-  constructor(reader, {validate = true} = {}) {
+  constructor(reader, { validate = true } = {}) {
     this.view = new DataView(assertArrayBuffer(reader));
     if (validate) {
       this.validate();
@@ -1705,7 +1705,7 @@ export function SerializeBytes(value) {
 }
 
 export class BytesOpt {
-  constructor(reader, {validate = true} = {}) {
+  constructor(reader, { validate = true } = {}) {
     this.view = new DataView(assertArrayBuffer(reader));
     if (validate) {
       this.validate();
@@ -1719,7 +1719,7 @@ export class BytesOpt {
   }
 
   value() {
-    return new Bytes(this.view.buffer, {validate: false});
+    return new Bytes(this.view.buffer, { validate: false });
   }
 
   hasValue() {
@@ -1736,7 +1736,7 @@ export function SerializeBytesOpt(value) {
 }
 
 export class Bytes32Vec {
-  constructor(reader, {validate = true} = {}) {
+  constructor(reader, { validate = true } = {}) {
     this.view = new DataView(assertArrayBuffer(reader));
     if (validate) {
       this.validate();
@@ -1761,7 +1761,7 @@ export class Bytes32Vec {
         4 + i * Bytes32.size(),
         4 + (i + 1) * Bytes32.size()
       ),
-      {validate: false}
+      { validate: false }
     );
   }
 
@@ -1781,7 +1781,7 @@ export function SerializeBytes32Vec(value) {
 }
 
 export class BytesVec {
-  constructor(reader, {validate = true} = {}) {
+  constructor(reader, { validate = true } = {}) {
     this.view = new DataView(assertArrayBuffer(reader));
     if (validate) {
       this.validate();
@@ -1819,11 +1819,11 @@ export class BytesVec {
 }
 
 export function SerializeBytesVec(value) {
-  return serializeTable(value.map(item => SerializeBytes(item)));
+  return serializeTable(value.map((item) => SerializeBytes(item)));
 }
 
 export class RsaPubkey {
-  constructor(reader, {validate = true} = {}) {
+  constructor(reader, { validate = true } = {}) {
     this.view = new DataView(assertArrayBuffer(reader));
     if (validate) {
       this.validate();
@@ -1867,7 +1867,7 @@ export function SerializeRsaPubkey(value) {
 }
 
 export class Secp256k1Pubkey {
-  constructor(reader, {validate = true} = {}) {
+  constructor(reader, { validate = true } = {}) {
     this.view = new DataView(assertArrayBuffer(reader));
     if (validate) {
       this.validate();
@@ -1898,7 +1898,7 @@ export function SerializeSecp256k1Pubkey(value) {
 }
 
 export class Secp256r1Pubkey {
-  constructor(reader, {validate = true} = {}) {
+  constructor(reader, { validate = true } = {}) {
     this.view = new DataView(assertArrayBuffer(reader));
     if (validate) {
       this.validate();
@@ -1929,7 +1929,7 @@ export function SerializeSecp256r1Pubkey(value) {
 }
 
 export class Pubkey {
-  constructor(reader, {validate = true} = {}) {
+  constructor(reader, { validate = true } = {}) {
     this.view = new DataView(assertArrayBuffer(reader));
     if (validate) {
       this.validate();
@@ -1943,7 +1943,9 @@ export class Pubkey {
     const t = this.view.getUint32(0, true);
     switch (t) {
       case 0:
-        new RsaPubkey(this.view.buffer.slice(4), {validate: false}).validate();
+        new RsaPubkey(this.view.buffer.slice(4), {
+          validate: false,
+        }).validate();
         break;
       case 1:
         new Secp256k1Pubkey(this.view.buffer.slice(4), {
@@ -1978,7 +1980,7 @@ export class Pubkey {
     const t = this.view.getUint32(0, true);
     switch (t) {
       case 0:
-        return new RsaPubkey(this.view.buffer.slice(4), {validate: false});
+        return new RsaPubkey(this.view.buffer.slice(4), { validate: false });
       case 1:
         return new Secp256k1Pubkey(this.view.buffer.slice(4), {
           validate: false,
@@ -2025,7 +2027,7 @@ export function SerializePubkey(value) {
 }
 
 export class PubkeyVec {
-  constructor(reader, {validate = true} = {}) {
+  constructor(reader, { validate = true } = {}) {
     this.view = new DataView(assertArrayBuffer(reader));
     if (validate) {
       this.validate();
@@ -2063,5 +2065,5 @@ export class PubkeyVec {
 }
 
 export function SerializePubkeyVec(value) {
-  return serializeTable(value.map(item => SerializePubkey(item)));
+  return serializeTable(value.map((item) => SerializePubkey(item)));
 }

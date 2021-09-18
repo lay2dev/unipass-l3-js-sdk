@@ -23,9 +23,9 @@ export declare class RegisterInner {
     username: Reader;
     register_email: Reader;
     pubkey: pubkey;
-    recoveryEmail: RecoveryEmail;
+    recovery_email: RecoveryEmail;
     source: ArrayBuffer;
-    constructor(username: Reader, register_email: Reader, pubkey: pubkey, recoveryEmail: RecoveryEmail, source?: ArrayBuffer);
+    constructor(username: Reader, register_email: Reader, pubkey: pubkey, recovery_email: RecoveryEmail, source?: ArrayBuffer);
     serialize(): Reader;
 }
 export {};

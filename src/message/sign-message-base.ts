@@ -29,7 +29,7 @@ export class RegisterInner {
     public username: Reader,
     public register_email: Reader,
     public pubkey: pubkey,
-    public recoveryEmail: RecoveryEmail,
+    public recovery_email: RecoveryEmail,
     public source: ArrayBuffer = new ArrayBuffer(0)
   ) {}
   serialize() {

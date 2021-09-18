@@ -5,7 +5,15 @@ import {
   Rsa,
   RsaPubkey,
 } from './sign-message-base';
+import { createHash } from 'crypto';
+export function hashData(data: string) {
+  const messageHash = createHash('SHA256')
+    .update(data)
+    .digest('hex')
+    .toString();
 
+  return `0x${messageHash}`;
+}
 export class SignMessage {
   constructor(private inner: registerInner) {}
   sign(): string {
@@ -14,17 +22,16 @@ export class SignMessage {
         new Uint32Array([this.inner.pubkey.value.e]).reverse().buffer,
         this.inner.pubkey.value.n
       );
-      const pubkey = new RsaPubkey(rsa);
-      console.log(pubkey);
       const inner = new RegisterInner(
-        new StringReader(this.inner.username).toArrayBuffer(32),
-        new StringReader(this.inner.registerEmail).toArrayBuffer(32),
-        pubkey,
+        new StringReader(hashData(this.inner.username)).toArrayBuffer(32),
+        new StringReader(hashData(this.inner.registerEmail)).toArrayBuffer(32),
+        new RsaPubkey(rsa),
         new RecoveryEmail(1, 1, [
-          new StringReader(this.inner.registerEmail).toArrayBuffer(32),
+          new StringReader(hashData(this.inner.registerEmail)).toArrayBuffer(
+            32
+          ),
         ])
       );
-      console.log(inner);
       const message = (inner.serialize() as ArrayBufferReader).serializeJson();
       console.log(message);
       return message;
