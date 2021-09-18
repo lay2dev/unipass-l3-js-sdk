@@ -11,8 +11,8 @@ export class SignMessage {
   sign(): string {
     if (this.inner.action == 'register') {
       const rsa = new Rsa(
-        new StringReader(this.inner.pubkey.value.e).toArrayBuffer(4),
-        new StringReader(this.inner.pubkey.value.n).toArrayBuffer(256)
+        new Uint32Array([this.inner.pubkey.value.e]).reverse().buffer,
+        this.inner.pubkey.value.n.reverse().buffer
       );
       const inner = new RegisterInner(
         new StringReader(this.inner.username).toArrayBuffer(32),

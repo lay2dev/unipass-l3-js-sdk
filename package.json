@@ -7,7 +7,7 @@
   "repository": "https://github.com/lay2dev/unipass-l3-js-sdk.git",
   "author": "aven",
   "license": "MIT",
-  "description":"lay2 unipass l3 js sdk",
+  "description": "lay2 unipass l3 js sdk",
   "engines": {
     "node": ">=8.9"
   },
@@ -54,7 +54,8 @@
     "cross-fetch": "^3.1.4",
     "decimal.js": "^10.3.1",
     "jsbi": "^3.1.6",
-    "keccak": "^3.0.1"
+    "keccak": "^3.0.1",
+    "node-rsa": "^1.1.1"
   },
   "devDependencies": {
     "@bitjson/npm-scripts-info": "^1.0.0",
@@ -75,7 +76,7 @@
   "ava": {
     "failFast": true,
     "files": [
-      "build/main/transaction.spec.js"
+      "build/main/message/message.spec.js"
     ],
     "ignoredByWatcher": [
       "build/main/**/*.js"
