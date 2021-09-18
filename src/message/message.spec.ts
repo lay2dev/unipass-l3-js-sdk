@@ -41,6 +41,8 @@ function initPubkey() {
       '-----END RSA PRIVATE KEY-----'
   );
   const keyObject = key.exportKey('components');
+  console.log(keyObject.n);
+  console.log('================---');
   const n = new Uint8Array(keyObject.n.slice(1));
 
   rawData.pubkey = { type: 'RsaPubkey', value: { e: keyObject.e, n } };
