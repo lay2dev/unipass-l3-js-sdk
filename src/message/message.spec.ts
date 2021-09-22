@@ -3,9 +3,10 @@ import { SignMessage } from './sign-message';
 import { Rsa, RsaPubkey } from './sign-message-base';
 
 const rawData = {
-  action: 'register',
+  action: 'addKey',
   username: 'aven',
   pubkey: null,
+  nonce: '1',
   registerEmail: 'hi.ellen@qq.com',
 };
 
@@ -52,7 +53,7 @@ test('test Transaction getSignMessage validate', async (t) => {
   initPubkey();
   console.log(rawData);
   const data = new SignMessage(rawData);
-  const signMessage = await data.sign();
+  const signMessage = await data.messageHash();
   console.log(signMessage);
   t.is(signMessage.length, 748);
 });

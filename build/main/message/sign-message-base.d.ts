@@ -28,4 +28,11 @@ export declare class RegisterInner {
     constructor(username: Reader, register_email: Reader, pubkey: pubkey, recovery_email: RecoveryEmail, source?: ArrayBuffer);
     serialize(): Reader;
 }
+export declare class addLocalKeyInner {
+    username: Reader;
+    nonce: Reader;
+    pubkey: pubkey;
+    constructor(username: Reader, nonce: Reader, pubkey: pubkey);
+    serialize(): Reader;
+}
 export {};

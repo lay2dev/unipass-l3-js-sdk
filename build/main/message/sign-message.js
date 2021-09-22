@@ -1,27 +1,33 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SignMessage = exports.hashData = void 0;
+exports.SignMessage = void 0;
 const __1 = require("..");
 const sign_message_base_1 = require("./sign-message-base");
-const crypto_1 = require("crypto");
-function hashData(data) {
-    const messageHash = crypto_1.createHash('SHA256')
-        .update(data)
-        .digest('hex')
-        .toString();
-    return `0x${messageHash}`;
-}
-exports.hashData = hashData;
 class SignMessage {
     constructor(inner) {
         this.inner = inner;
     }
-    sign() {
+    messageHash() {
+        const rsa = new sign_message_base_1.Rsa(new Uint32Array([this.inner.pubkey.value.e]).reverse().buffer, this.inner.pubkey.value.n);
+        const pubkey = new sign_message_base_1.RsaPubkey(rsa);
         if (this.inner.action == 'register') {
-            const rsa = new sign_message_base_1.Rsa(new Uint32Array([this.inner.pubkey.value.e]).reverse().buffer, this.inner.pubkey.value.n);
-            const inner = new sign_message_base_1.RegisterInner(new __1.StringReader(hashData(this.inner.username)).toArrayBuffer(32), new __1.StringReader(hashData(this.inner.registerEmail)).toArrayBuffer(32), new sign_message_base_1.RsaPubkey(rsa), new sign_message_base_1.RecoveryEmail(1, 1, [
-                new __1.StringReader(hashData(this.inner.registerEmail)).toArrayBuffer(32),
+            if (!this.inner.registerEmail) {
+                throw new Error(`SignMessageError: not find registerEmail `);
+            }
+            const inner = new sign_message_base_1.RegisterInner(new __1.StringReader(__1.hashData(this.inner.username)).toArrayBuffer(32), new __1.StringReader(__1.hashData(this.inner.registerEmail)).toArrayBuffer(32), pubkey, new sign_message_base_1.RecoveryEmail(1, 1, [
+                new __1.StringReader(__1.hashData(this.inner.registerEmail)).toArrayBuffer(32),
             ]));
+            const message = inner.serialize().serializeJson();
+            return message;
+        }
+        else if (this.inner.action == 'addKey') {
+            if (!this.inner.nonce) {
+                throw new Error(`SignMessageError: not find nonce `);
+            }
+            if (!this.inner.nonce.startsWith('0x')) {
+                throw new Error(`SignMessageError: nonce not hex data`);
+            }
+            const inner = new sign_message_base_1.addLocalKeyInner(new __1.StringReader(__1.hashData(this.inner.username)).toArrayBuffer(32), new __1.StringReader(this.inner.nonce).toArrayBuffer(4), pubkey);
             const message = inner.serialize().serializeJson();
             console.log(message);
             return message;
@@ -32,4 +38,4 @@ class SignMessage {
     }
 }
 exports.SignMessage = SignMessage;
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoic2lnbi1tZXNzYWdlLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiLi4vLi4vLi4vc3JjL21lc3NhZ2Uvc2lnbi1tZXNzYWdlLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7OztBQUFBLDBCQUE0RTtBQUM1RSwyREFLNkI7QUFDN0IsbUNBQW9DO0FBQ3BDLFNBQWdCLFFBQVEsQ0FBQyxJQUFZO0lBQ25DLE1BQU0sV0FBVyxHQUFHLG1CQUFVLENBQUMsUUFBUSxDQUFDO1NBQ3JDLE1BQU0sQ0FBQyxJQUFJLENBQUM7U0FDWixNQUFNLENBQUMsS0FBSyxDQUFDO1NBQ2IsUUFBUSxFQUFFLENBQUM7SUFFZCxPQUFPLEtBQUssV0FBVyxFQUFFLENBQUM7QUFDNUIsQ0FBQztBQVBELDRCQU9DO0FBQ0QsTUFBYSxXQUFXO0lBQ3RCLFlBQW9CLEtBQW9CO1FBQXBCLFVBQUssR0FBTCxLQUFLLENBQWU7SUFBRyxDQUFDO0lBQzVDLElBQUk7UUFDRixJQUFJLElBQUksQ0FBQyxLQUFLLENBQUMsTUFBTSxJQUFJLFVBQVUsRUFBRTtZQUNuQyxNQUFNLEdBQUcsR0FBRyxJQUFJLHVCQUFHLENBQ2pCLElBQUksV0FBVyxDQUFDLENBQUMsSUFBSSxDQUFDLEtBQUssQ0FBQyxNQUFNLENBQUMsS0FBSyxDQUFDLENBQUMsQ0FBQyxDQUFDLENBQUMsT0FBTyxFQUFFLENBQUMsTUFBTSxFQUM3RCxJQUFJLENBQUMsS0FBSyxDQUFDLE1BQU0sQ0FBQyxLQUFLLENBQUMsQ0FBQyxDQUMxQixDQUFDO1lBQ0YsTUFBTSxLQUFLLEdBQUcsSUFBSSxpQ0FBYSxDQUM3QixJQUFJLGdCQUFZLENBQUMsUUFBUSxDQUFDLElBQUksQ0FBQyxLQUFLLENBQUMsUUFBUSxDQUFDLENBQUMsQ0FBQyxhQUFhLENBQUMsRUFBRSxDQUFDLEVBQ2pFLElBQUksZ0JBQVksQ0FBQyxRQUFRLENBQUMsSUFBSSxDQUFDLEtBQUssQ0FBQyxhQUFhLENBQUMsQ0FBQyxDQUFDLGFBQWEsQ0FBQyxFQUFFLENBQUMsRUFDdEUsSUFBSSw2QkFBUyxDQUFDLEdBQUcsQ0FBQyxFQUNsQixJQUFJLGlDQUFhLENBQUMsQ0FBQyxFQUFFLENBQUMsRUFBRTtnQkFDdEIsSUFBSSxnQkFBWSxDQUFDLFFBQVEsQ0FBQyxJQUFJLENBQUMsS0FBSyxDQUFDLGFBQWEsQ0FBQyxDQUFDLENBQUMsYUFBYSxDQUNoRSxFQUFFLENBQ0g7YUFDRixDQUFDLENBQ0gsQ0FBQztZQUNGLE1BQU0sT0FBTyxHQUFJLEtBQUssQ0FBQyxTQUFTLEVBQXdCLENBQUMsYUFBYSxFQUFFLENBQUM7WUFDekUsT0FBTyxDQUFDLEdBQUcsQ0FBQyxPQUFPLENBQUMsQ0FBQztZQUNyQixPQUFPLE9BQU8sQ0FBQztTQUNoQjthQUFNO1lBQ0wsTUFBTSxJQUFJLEtBQUssQ0FBQywyQkFBMkIsQ0FBQyxDQUFDO1NBQzlDO0lBQ0gsQ0FBQztDQUNGO0FBekJELGtDQXlCQyJ9
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoic2lnbi1tZXNzYWdlLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiLi4vLi4vLi4vc3JjL21lc3NhZ2Uvc2lnbi1tZXNzYWdlLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7OztBQUFBLDBCQU1ZO0FBQ1osMkRBTTZCO0FBRTdCLE1BQWEsV0FBVztJQUN0QixZQUFvQixLQUFvQjtRQUFwQixVQUFLLEdBQUwsS0FBSyxDQUFlO0lBQUcsQ0FBQztJQUM1QyxXQUFXO1FBQ1QsTUFBTSxHQUFHLEdBQUcsSUFBSSx1QkFBRyxDQUNqQixJQUFJLFdBQVcsQ0FBQyxDQUFDLElBQUksQ0FBQyxLQUFLLENBQUMsTUFBTSxDQUFDLEtBQUssQ0FBQyxDQUFDLENBQUMsQ0FBQyxDQUFDLE9BQU8sRUFBRSxDQUFDLE1BQU0sRUFDN0QsSUFBSSxDQUFDLEtBQUssQ0FBQyxNQUFNLENBQUMsS0FBSyxDQUFDLENBQUMsQ0FDMUIsQ0FBQztRQUNGLE1BQU0sTUFBTSxHQUFHLElBQUksNkJBQVMsQ0FBQyxHQUFHLENBQUMsQ0FBQztRQUVsQyxJQUFJLElBQUksQ0FBQyxLQUFLLENBQUMsTUFBTSxJQUFJLFVBQVUsRUFBRTtZQUNuQyxJQUFJLENBQUMsSUFBSSxDQUFDLEtBQUssQ0FBQyxhQUFhLEVBQUU7Z0JBQzdCLE1BQU0sSUFBSSxLQUFLLENBQUMsMkNBQTJDLENBQUMsQ0FBQzthQUM5RDtZQUNELE1BQU0sS0FBSyxHQUFHLElBQUksaUNBQWEsQ0FDN0IsSUFBSSxnQkFBWSxDQUFDLFlBQVEsQ0FBQyxJQUFJLENBQUMsS0FBSyxDQUFDLFFBQVEsQ0FBQyxDQUFDLENBQUMsYUFBYSxDQUFDLEVBQUUsQ0FBQyxFQUNqRSxJQUFJLGdCQUFZLENBQUMsWUFBUSxDQUFDLElBQUksQ0FBQyxLQUFLLENBQUMsYUFBYSxDQUFDLENBQUMsQ0FBQyxhQUFhLENBQUMsRUFBRSxDQUFDLEVBQ3RFLE1BQU0sRUFDTixJQUFJLGlDQUFhLENBQUMsQ0FBQyxFQUFFLENBQUMsRUFBRTtnQkFDdEIsSUFBSSxnQkFBWSxDQUFDLFlBQVEsQ0FBQyxJQUFJLENBQUMsS0FBSyxDQUFDLGFBQWEsQ0FBQyxDQUFDLENBQUMsYUFBYSxDQUNoRSxFQUFFLENBQ0g7YUFDRixDQUFDLENBQ0gsQ0FBQztZQUNGLE1BQU0sT0FBTyxHQUFJLEtBQUssQ0FBQyxTQUFTLEVBQXdCLENBQUMsYUFBYSxFQUFFLENBQUM7WUFDekUsT0FBTyxPQUFPLENBQUM7U0FDaEI7YUFBTSxJQUFJLElBQUksQ0FBQyxLQUFLLENBQUMsTUFBTSxJQUFJLFFBQVEsRUFBRTtZQUN4QyxJQUFJLENBQUMsSUFBSSxDQUFDLEtBQUssQ0FBQyxLQUFLLEVBQUU7Z0JBQ3JCLE1BQU0sSUFBSSxLQUFLLENBQUMsbUNBQW1DLENBQUMsQ0FBQzthQUN0RDtZQUNELElBQUksQ0FBQyxJQUFJLENBQUMsS0FBSyxDQUFDLEtBQUssQ0FBQyxVQUFVLENBQUMsSUFBSSxDQUFDLEVBQUU7Z0JBQ3RDLE1BQU0sSUFBSSxLQUFLLENBQUMsc0NBQXNDLENBQUMsQ0FBQzthQUN6RDtZQUVELE1BQU0sS0FBSyxHQUFHLElBQUksb0NBQWdCLENBQ2hDLElBQUksZ0JBQVksQ0FBQyxZQUFRLENBQUMsSUFBSSxDQUFDLEtBQUssQ0FBQyxRQUFRLENBQUMsQ0FBQyxDQUFDLGFBQWEsQ0FBQyxFQUFFLENBQUMsRUFDakUsSUFBSSxnQkFBWSxDQUFDLElBQUksQ0FBQyxLQUFLLENBQUMsS0FBSyxDQUFDLENBQUMsYUFBYSxDQUFDLENBQUMsQ0FBQyxFQUNuRCxNQUFNLENBQ1AsQ0FBQztZQUNGLE1BQU0sT0FBTyxHQUFJLEtBQUssQ0FBQyxTQUFTLEVBQXdCLENBQUMsYUFBYSxFQUFFLENBQUM7WUFDekUsT0FBTyxDQUFDLEdBQUcsQ0FBQyxPQUFPLENBQUMsQ0FBQztZQUNyQixPQUFPLE9BQU8sQ0FBQztTQUNoQjthQUFNO1lBQ0wsTUFBTSxJQUFJLEtBQUssQ0FBQywyQkFBMkIsQ0FBQyxDQUFDO1NBQzlDO0lBQ0gsQ0FBQztDQUNGO0FBN0NELGtDQTZDQyJ9

@@ -1,5 +1,6 @@
 import Decimal from 'decimal.js';
 import JSBI from 'jsbi';
+import { createHash } from 'crypto';
 import { FormatOptions } from '../interface';
 export const rationalNumberToBnString = (
   rational: string,
@@ -169,3 +170,12 @@ export const bnStringToRationalNumber = (
   if (dec.length) return `${int}.${dec}`;
   return int;
 };
+
+export function hashData(data: string) {
+  const messageHash = createHash('SHA256')
+    .update(data)
+    .digest('hex')
+    .toString();
+
+  return `0x${messageHash}`;
+}

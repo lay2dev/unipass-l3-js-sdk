@@ -1,5 +1,8 @@
 import { Reader } from '..';
-import { SerializeRegisterChildTxInner } from './unipass-v3-jss/witness';
+import {
+  SerializeAddLocalKeyChildTxInner,
+  SerializeRegisterChildTxInner,
+} from './unipass-v3-jss/witness';
 interface pubkey {
   type: string;
   value: any;
@@ -34,5 +37,16 @@ export class RegisterInner {
   ) {}
   serialize() {
     return new Reader(SerializeRegisterChildTxInner(this));
+  }
+}
+
+export class addLocalKeyInner {
+  constructor(
+    public username: Reader,
+    public nonce: Reader,
+    public pubkey: pubkey
+  ) {}
+  serialize() {
+    return new Reader(SerializeAddLocalKeyChildTxInner(this));
   }
 }

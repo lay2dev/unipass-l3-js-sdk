@@ -9,3 +9,4 @@ export declare function readBigUInt32LE(hex: any): JSBI;
 export declare function readBigUInt64LE(hex: any): JSBI;
 export declare function readBigUInt128LE(hex: any): JSBI;
 export declare const bnStringToRationalNumber: (bn: string, decimals: number, options: FormatOptions) => string;
+export declare function hashData(data: string): string;
