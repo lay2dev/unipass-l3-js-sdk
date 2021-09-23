@@ -36,6 +36,8 @@ export class Transaction implements UniTokenModel {
   async sendTransaction(rpc: RPC) {
     const transformData = this.transform();
     const data = await rpc.send_up_transaction(transformData);
+    console.log('-----data------');
+    console.log(data);
     if (data) {
       const rawResponse = data as RawTransaction;
       return rawResponse.transform();

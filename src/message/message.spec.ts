@@ -6,8 +6,7 @@ const rawData = {
   action: 'addKey',
   username: 'aven',
   pubkey: null,
-  nonce: '1',
-  registerEmail: 'hi.ellen@qq.com',
+  nonce: '0x1',
 };
 
 function initPubkey() {

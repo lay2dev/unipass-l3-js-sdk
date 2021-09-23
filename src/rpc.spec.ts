@@ -1,25 +1,29 @@
-// import test from 'ava';
-// import { RPC } from '.';
+import test from 'ava';
+import { hashData, RPC } from '.';
 
-// const uri = 'https://testnet.ckb.dev';
-// const rpc = new RPC(uri);
+const uri = 'http://112.124.64.189:3030';
+const rpc = new RPC(uri);
 
-// const raw = {
-//   inner: {
-//     nonce: '0x1',
-//     type: 'register',
-//     action: {
-//       register_email: 'johnz@lay2.dev',
-//       pubkey: '0x01415498a39E37B7C17b586AB8AB77BE0B518DBDFc',
-//       recovery_email: null,
-//       quick_login: true,
-//     },
-//   },
-//   sig: '...email boy...',
-// };
+const raw = {
+  inner: {
+    nonce: '0x1',
+    type: 'register',
+    action: {
+      register_email: 'johnz@lay2.dev',
+      pubkey: '0x01415498a39E37B7C17b586AB8AB77BE0B518DBDFc',
+      recovery_email: null,
+      quick_login: true,
+    },
+  },
+  sig: '...email boy...',
+};
 
 // test('test aggregator rpc get_user_info', async (t) => {
-//   const data = await rpc.get_user_info('johnz', 'johnz@lay2.dev');
+//   const data = await rpc.get_user_info(
+//     hashData('aven1'),
+//     hashData('751733381@qq.com')
+//   );
+//   console.log(data);
 //   t.is(true, true);
 // });
 
@@ -30,10 +34,10 @@
 //   t.is(true, true);
 // });
 
-// test('test aggregator rpc get_up_nonce', async (t) => {
-//   const data = await rpc.get_up_nonce('johnz');
-//   t.is(true, true);
-// });
+test('test aggregator rpc get_up_nonce', async (t) => {
+  const data = await rpc.get_up_nonce(hashData('aven'));
+  t.is(true, true);
+});
 
 // test('test aggregator rpc get_up_transaction_history', async (t) => {
 //   const data = await rpc.get_up_transaction_history('johnz');

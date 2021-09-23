@@ -23,12 +23,22 @@ const handler = {
   get: (target: any, method: string): any => {
     return async (...params: any) => {
       const id = Math.round(Math.random() * 10000000);
-      const body = JSON.stringify({
+      let body = JSON.stringify({
         jsonrpc: '2.0',
         id: id,
         method: method,
         params: params,
       });
+      if (method === 'send_up_transaction') {
+        body = JSON.stringify({
+          jsonrpc: '2.0',
+          id: id,
+          method: method,
+          params: params[0],
+        });
+      }
+
+      console.log(body);
 
       const response = await fetch(
         target.uri,
