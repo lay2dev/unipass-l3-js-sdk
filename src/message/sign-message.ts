@@ -52,7 +52,7 @@ export class SignMessage {
         pubkey
       );
       const message = (inner.serialize() as ArrayBufferReader).serializeJson();
-      console.log(message);
+
       return message;
     } else {
       throw new Error(`SignError: action  error `);
