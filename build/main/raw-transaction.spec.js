@@ -1,95 +1,96 @@
-// import test from 'ava';
-// import { TransactionResult, UserInfoResult } from './interface';
-// import { RawTransaction } from './raw-transaction';
-// const txRawData = {
-//   id: 2,
-//   jsonrpc: '2.0',
-//   result: {
-//     transaction_inner: {
-//       nonce: '0x1',
-//       type: 'register',
-//       action: {
-//         register_email: 'johnz@lay2.dev',
-//         pubkey: '0x01415498a39E37B7C17b586AB8AB77BE0B518DBDFc',
-//         recovery_email: null,
-//         quick_login: true,
-//       },
-//     },
-//     tx_status: {
-//       ckb_tx_hash:
-//         '0x067da578be477e3b0596a282e0fea6c33121f40df2e9dbe787f00d1249af01a2',
-//       status: 'pending',
-//     },
-//   },
-// };
-// const historyTxRawStringData = {
-//   id: 2,
-//   jsonrpc: '2.0',
-//   result: [
-//     {
-//       transaction_inner: {
-//         nonce: '0x1',
-//         type: 'register',
-//         action: {
-//           register_email: 'johnz@lay2.dev',
-//           pubkey: '0x01415498a39E37B7C17b586AB8AB77BE0B518DBDFc',
-//           recovery_email: null,
-//           quick_login: true,
-//         },
-//       },
-//       tx_status: {
-//         ckb_tx_hash:
-//           '0x067da578be477e3b0596a282e0fea6c33121f40df2e9dbe787f00d1249af01a2',
-//         status: 'pending',
-//       },
-//     },
-//     {
-//       transaction_inner: {
-//         nonce: '0x1',
-//         type: 'register',
-//         action: {
-//           register_email: 'johnz@lay2.dev',
-//           pubkey: '0x01415498a39E37B7C17b586AB8AB77BE0B518DBDFc',
-//           recovery_email: null,
-//           quick_login: true,
-//         },
-//       },
-//       tx_status: {
-//         ckb_tx_hash:
-//           '0x067da578be477e3b0596a282e0fea6c33121f40df2e9dbe787f00d1249af01a2',
-//         status: 'pending',
-//       },
-//     },
-//   ],
-// };
-// const userInfoRawData = {
-//   id: 2,
-//   jsonrpc: '2.0',
-//   result: {
-//     register_email: 'johnz@lay2.dev',
-//     quick_login: false,
-//     local_keys: [
-//       '01415498a39E37B7C17b586AB8AB77BE0B518DBDFc',
-//       '02f376bdc2590c720d0d0c32cbebf9bb4c7cddc09b880c4a85ad86f625ff614bf3cf50c16a18f0a954c14104c729698a976246d6403010b107d9c02f4b4711f577',
-//       '03000800000100010027235838be9d2044c72aabcfeab3ca368ea10988d700b49e7aef7810fce9a83742ec43e5e7b935ac08e4bbb8b72056722a6fff64d59eb6ac31813d827df4807f64c9c5179eba3624286aa3cdfb2da75ef644c1f88589567bc7f0ba84841be9d847c46c48861be9b478dd79c5a8465e85bc8ce817bfd3e6e3cc65e68d12858a0ff3abe7b4833ccdd5c2f0f4bb086d3042c9ef69ace4afd41f427f16377ac31c25c207916457394a9242499576b7f62502f203783edc1e7ad071a0012f1e880a74c9c6c44b3b46abbeb7979029d0effab8b92575e6385caec73df68ee8c0d9887636183d338193ee93981f93651b13ec763482ea62ada18833f8e0e887157815c3',
-//     ],
-//     recovery_email: {
-//       threshold: 1,
-//       first_n: 1,
-//       emails: ['johnz@lay2.dev'],
-//     },
-//     pending_state: {
-//       pending_key: '0x01415498a39E37B7C17b586AB8AB77BE0B518DBDFc',
-//       replace_old: false,
-//       time_cell:
-//         '0x9bd7e06f3ecf4be0f2fcd2188b23f1b9fcc88e5d4b65a8637b17723bbda3cce8',
-//     },
-//   },
-// };
-// interface stringResult {
-//   result: string;
-// }
-// const stringRawData = { jsonrpc: '2.0', result: '0x2cb4', id: 2 };
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const ava_1 = __importDefault(require("ava"));
+const raw_transaction_1 = require("./raw-transaction");
+const txRawData = {
+    id: 2,
+    jsonrpc: '2.0',
+    result: {
+        transaction_inner: {
+            nonce: '0x1',
+            type: 'register',
+            action: {
+                register_email: 'johnz@lay2.dev',
+                pubkey: '0x01415498a39E37B7C17b586AB8AB77BE0B518DBDFc',
+                recovery_email: null,
+                quick_login: true,
+            },
+        },
+        tx_status: {
+            ckb_tx_hash: '0x067da578be477e3b0596a282e0fea6c33121f40df2e9dbe787f00d1249af01a2',
+            status: 'pending',
+        },
+    },
+};
+const historyTxRawStringData = {
+    id: 2,
+    jsonrpc: '2.0',
+    result: [
+        {
+            transaction_inner: {
+                nonce: '0x1',
+                type: 'register',
+                action: {
+                    register_email: 'johnz@lay2.dev',
+                    pubkey: '0x01415498a39E37B7C17b586AB8AB77BE0B518DBDFc',
+                    recovery_email: null,
+                    quick_login: true,
+                },
+            },
+            tx_status: {
+                ckb_tx_hash: '0x067da578be477e3b0596a282e0fea6c33121f40df2e9dbe787f00d1249af01a2',
+                status: 'pending',
+            },
+        },
+        {
+            transaction_inner: {
+                nonce: '0x1',
+                type: 'register',
+                action: {
+                    register_email: 'johnz@lay2.dev',
+                    pubkey: '0x01415498a39E37B7C17b586AB8AB77BE0B518DBDFc',
+                    recovery_email: null,
+                    quick_login: true,
+                },
+            },
+            tx_status: {
+                ckb_tx_hash: '0x067da578be477e3b0596a282e0fea6c33121f40df2e9dbe787f00d1249af01a2',
+                status: 'pending',
+            },
+        },
+    ],
+};
+const userInfoRawData = {
+    jsonrpc: '2.0',
+    result: [
+        {
+            local_keys: [
+                {
+                    rsa_pubkey: {
+                        e: 65537,
+                        n: '0xc686b98fcdce07eb6c938c010b19dabae7bbfecb6cde8c45c533ab01f740536fd8de2de63395eebfc0c4a3f3ebcd2f60a7debdfd8aa86a592b6a51c135c3bbd8f195f8aef02db7e3eac04d3fff6dff69f6e90f48a31df80c1a5a92adeb051e1dd3242c8adf22259151eda9ce47169f1f198fa634e6e38de4df26738e38dd921269ac01acb7f74c329d93e1353a98aaa5cdae3e6c78ca615955f20adb1058046429542755c3151abade06e0af6470b088ff1781227999e60b17a214b8887739396f699c889125cf4c0dec45190fb079f11b0fec4c204875be6d66f8ad3a5e1523d5017b8989346ad91e7988942b008e6517c1ca1c2a71630e1e9096569583a181',
+                    },
+                },
+            ],
+            nonce: '0x1',
+            quick_login: false,
+            recovery_email: {
+                emails: [
+                    '0xb701f116b2c00668ae2a6fab119af93703df4c37ee79a7d63c4ff971b17a6902',
+                ],
+                first_n: 1,
+                threshold: 1,
+            },
+            register_email: '0xb701f116b2c00668ae2a6fab119af93703df4c37ee79a7d63c4ff971b17a6902',
+            username: '0x231edefda5d8c03e2ca9c5f36c55b0735f5ce3289b21c7f2e153a5cd8a1882f9',
+        },
+    ],
+    id: 4627112,
+};
+const stringRawData = { jsonrpc: '2.0', result: '0x2cb4', id: 2 };
 // test('test rawTransaction tx txRawData', async (t) => {
 //   const data = new RawTransaction(txRawData);
 //   const formateData = data.transform() as TransactionResult;
@@ -105,16 +106,16 @@
 //     historyTxRawStringData.result[0].tx_status.ckb_tx_hash
 //   );
 // });
-// test('test rawTransaction userInfoRawData ', async (t) => {
-//   const data = new RawTransaction(userInfoRawData);
-//   const formateData = data.transform() as UserInfoResult;
-//   console.log(formateData);
-//   t.is(formateData.registerEmail, userInfoRawData.result.register_email);
-// });
+ava_1.default('test rawTransaction userInfoRawData ', async (t) => {
+    const data = new raw_transaction_1.RawTransaction(userInfoRawData);
+    const formateData = data.transform();
+    console.log(formateData);
+    t.is(formateData.registerEmail, userInfoRawData.result[0].register_email);
+});
 // test('test rawTransaction stringRawData ', async (t) => {
 //   const data = new RawTransaction(stringRawData);
 //   const formateData = data.transform();
 //   console.log(formateData);
 //   t.is(formateData, stringRawData.result);
 // });
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoicmF3LXRyYW5zYWN0aW9uLnNwZWMuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi8uLi9zcmMvcmF3LXRyYW5zYWN0aW9uLnNwZWMudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUEsMEJBQTBCO0FBQzFCLG1FQUFtRTtBQUNuRSxzREFBc0Q7QUFFdEQsc0JBQXNCO0FBQ3RCLFdBQVc7QUFDWCxvQkFBb0I7QUFDcEIsY0FBYztBQUNkLDJCQUEyQjtBQUMzQixzQkFBc0I7QUFDdEIsMEJBQTBCO0FBQzFCLGtCQUFrQjtBQUNsQiw0Q0FBNEM7QUFDNUMsa0VBQWtFO0FBQ2xFLGdDQUFnQztBQUNoQyw2QkFBNkI7QUFDN0IsV0FBVztBQUNYLFNBQVM7QUFDVCxtQkFBbUI7QUFDbkIscUJBQXFCO0FBQ3JCLGdGQUFnRjtBQUNoRiwyQkFBMkI7QUFDM0IsU0FBUztBQUNULE9BQU87QUFDUCxLQUFLO0FBRUwsbUNBQW1DO0FBQ25DLFdBQVc7QUFDWCxvQkFBb0I7QUFDcEIsY0FBYztBQUNkLFFBQVE7QUFDUiw2QkFBNkI7QUFDN0Isd0JBQXdCO0FBQ3hCLDRCQUE0QjtBQUM1QixvQkFBb0I7QUFDcEIsOENBQThDO0FBQzlDLG9FQUFvRTtBQUNwRSxrQ0FBa0M7QUFDbEMsK0JBQStCO0FBQy9CLGFBQWE7QUFDYixXQUFXO0FBQ1gscUJBQXFCO0FBQ3JCLHVCQUF1QjtBQUN2QixrRkFBa0Y7QUFDbEYsNkJBQTZCO0FBQzdCLFdBQVc7QUFDWCxTQUFTO0FBQ1QsUUFBUTtBQUNSLDZCQUE2QjtBQUM3Qix3QkFBd0I7QUFDeEIsNEJBQTRCO0FBQzVCLG9CQUFvQjtBQUNwQiw4Q0FBOEM7QUFDOUMsb0VBQW9FO0FBQ3BFLGtDQUFrQztBQUNsQywrQkFBK0I7QUFDL0IsYUFBYTtBQUNiLFdBQVc7QUFDWCxxQkFBcUI7QUFDckIsdUJBQXVCO0FBQ3ZCLGtGQUFrRjtBQUNsRiw2QkFBNkI7QUFDN0IsV0FBVztBQUNYLFNBQVM7QUFDVCxPQUFPO0FBQ1AsS0FBSztBQUVMLDRCQUE0QjtBQUM1QixXQUFXO0FBQ1gsb0JBQW9CO0FBQ3BCLGNBQWM7QUFDZCx3Q0FBd0M7QUFDeEMsMEJBQTBCO0FBQzFCLG9CQUFvQjtBQUNwQixzREFBc0Q7QUFDdEQsOElBQThJO0FBQzlJLDhoQkFBOGhCO0FBQzloQixTQUFTO0FBQ1Qsd0JBQXdCO0FBQ3hCLHNCQUFzQjtBQUN0QixvQkFBb0I7QUFDcEIsb0NBQW9DO0FBQ3BDLFNBQVM7QUFDVCx1QkFBdUI7QUFDdkIscUVBQXFFO0FBQ3JFLDRCQUE0QjtBQUM1QixtQkFBbUI7QUFDbkIsZ0ZBQWdGO0FBQ2hGLFNBQVM7QUFDVCxPQUFPO0FBQ1AsS0FBSztBQUVMLDJCQUEyQjtBQUMzQixvQkFBb0I7QUFDcEIsSUFBSTtBQUVKLHFFQUFxRTtBQUVyRSwwREFBMEQ7QUFDMUQsZ0RBQWdEO0FBQ2hELCtEQUErRDtBQUMvRCw4QkFBOEI7QUFDOUIsa0ZBQWtGO0FBQ2xGLE1BQU07QUFFTiwrREFBK0Q7QUFDL0QsNkRBQTZEO0FBQzdELGlFQUFpRTtBQUNqRSw4QkFBOEI7QUFDOUIsVUFBVTtBQUNWLHlDQUF5QztBQUN6Qyw2REFBNkQ7QUFDN0QsT0FBTztBQUNQLE1BQU07QUFFTiw4REFBOEQ7QUFDOUQsc0RBQXNEO0FBQ3RELDREQUE0RDtBQUM1RCw4QkFBOEI7QUFDOUIsNEVBQTRFO0FBQzVFLE1BQU07QUFFTiw0REFBNEQ7QUFDNUQsb0RBQW9EO0FBQ3BELDBDQUEwQztBQUMxQyw4QkFBOEI7QUFDOUIsNkNBQTZDO0FBQzdDLE1BQU0ifQ==
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoicmF3LXRyYW5zYWN0aW9uLnNwZWMuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi8uLi9zcmMvcmF3LXRyYW5zYWN0aW9uLnNwZWMudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7Ozs7QUFBQSw4Q0FBdUI7QUFFdkIsdURBQW1EO0FBRW5ELE1BQU0sU0FBUyxHQUFHO0lBQ2hCLEVBQUUsRUFBRSxDQUFDO0lBQ0wsT0FBTyxFQUFFLEtBQUs7SUFDZCxNQUFNLEVBQUU7UUFDTixpQkFBaUIsRUFBRTtZQUNqQixLQUFLLEVBQUUsS0FBSztZQUNaLElBQUksRUFBRSxVQUFVO1lBQ2hCLE1BQU0sRUFBRTtnQkFDTixjQUFjLEVBQUUsZ0JBQWdCO2dCQUNoQyxNQUFNLEVBQUUsOENBQThDO2dCQUN0RCxjQUFjLEVBQUUsSUFBSTtnQkFDcEIsV0FBVyxFQUFFLElBQUk7YUFDbEI7U0FDRjtRQUNELFNBQVMsRUFBRTtZQUNULFdBQVcsRUFDVCxvRUFBb0U7WUFDdEUsTUFBTSxFQUFFLFNBQVM7U0FDbEI7S0FDRjtDQUNGLENBQUM7QUFFRixNQUFNLHNCQUFzQixHQUFHO0lBQzdCLEVBQUUsRUFBRSxDQUFDO0lBQ0wsT0FBTyxFQUFFLEtBQUs7SUFDZCxNQUFNLEVBQUU7UUFDTjtZQUNFLGlCQUFpQixFQUFFO2dCQUNqQixLQUFLLEVBQUUsS0FBSztnQkFDWixJQUFJLEVBQUUsVUFBVTtnQkFDaEIsTUFBTSxFQUFFO29CQUNOLGNBQWMsRUFBRSxnQkFBZ0I7b0JBQ2hDLE1BQU0sRUFBRSw4Q0FBOEM7b0JBQ3RELGNBQWMsRUFBRSxJQUFJO29CQUNwQixXQUFXLEVBQUUsSUFBSTtpQkFDbEI7YUFDRjtZQUNELFNBQVMsRUFBRTtnQkFDVCxXQUFXLEVBQ1Qsb0VBQW9FO2dCQUN0RSxNQUFNLEVBQUUsU0FBUzthQUNsQjtTQUNGO1FBQ0Q7WUFDRSxpQkFBaUIsRUFBRTtnQkFDakIsS0FBSyxFQUFFLEtBQUs7Z0JBQ1osSUFBSSxFQUFFLFVBQVU7Z0JBQ2hCLE1BQU0sRUFBRTtvQkFDTixjQUFjLEVBQUUsZ0JBQWdCO29CQUNoQyxNQUFNLEVBQUUsOENBQThDO29CQUN0RCxjQUFjLEVBQUUsSUFBSTtvQkFDcEIsV0FBVyxFQUFFLElBQUk7aUJBQ2xCO2FBQ0Y7WUFDRCxTQUFTLEVBQUU7Z0JBQ1QsV0FBVyxFQUNULG9FQUFvRTtnQkFDdEUsTUFBTSxFQUFFLFNBQVM7YUFDbEI7U0FDRjtLQUNGO0NBQ0YsQ0FBQztBQUVGLE1BQU0sZUFBZSxHQUFHO0lBQ3RCLE9BQU8sRUFBRSxLQUFLO0lBQ2QsTUFBTSxFQUFFO1FBQ047WUFDRSxVQUFVLEVBQUU7Z0JBQ1Y7b0JBQ0UsVUFBVSxFQUFFO3dCQUNWLENBQUMsRUFBRSxLQUFLO3dCQUNSLENBQUMsRUFBRSxvZ0JBQW9nQjtxQkFDeGdCO2lCQUNGO2FBQ0Y7WUFDRCxLQUFLLEVBQUUsS0FBSztZQUNaLFdBQVcsRUFBRSxLQUFLO1lBQ2xCLGNBQWMsRUFBRTtnQkFDZCxNQUFNLEVBQUU7b0JBQ04sb0VBQW9FO2lCQUNyRTtnQkFDRCxPQUFPLEVBQUUsQ0FBQztnQkFDVixTQUFTLEVBQUUsQ0FBQzthQUNiO1lBQ0QsY0FBYyxFQUNaLG9FQUFvRTtZQUN0RSxRQUFRLEVBQ04sb0VBQW9FO1NBQ3ZFO0tBQ0Y7SUFDRCxFQUFFLEVBQUUsT0FBTztDQUNaLENBQUM7QUFNRixNQUFNLGFBQWEsR0FBRyxFQUFFLE9BQU8sRUFBRSxLQUFLLEVBQUUsTUFBTSxFQUFFLFFBQVEsRUFBRSxFQUFFLEVBQUUsQ0FBQyxFQUFFLENBQUM7QUFFbEUsMERBQTBEO0FBQzFELGdEQUFnRDtBQUNoRCwrREFBK0Q7QUFDL0QsOEJBQThCO0FBQzlCLGtGQUFrRjtBQUNsRixNQUFNO0FBRU4sK0RBQStEO0FBQy9ELDZEQUE2RDtBQUM3RCxpRUFBaUU7QUFDakUsOEJBQThCO0FBQzlCLFVBQVU7QUFDVix5Q0FBeUM7QUFDekMsNkRBQTZEO0FBQzdELE9BQU87QUFDUCxNQUFNO0FBRU4sYUFBSSxDQUFDLHNDQUFzQyxFQUFFLEtBQUssRUFBRSxDQUFDLEVBQUUsRUFBRTtJQUN2RCxNQUFNLElBQUksR0FBRyxJQUFJLGdDQUFjLENBQUMsZUFBZSxDQUFDLENBQUM7SUFDakQsTUFBTSxXQUFXLEdBQUcsSUFBSSxDQUFDLFNBQVMsRUFBb0IsQ0FBQztJQUN2RCxPQUFPLENBQUMsR0FBRyxDQUFDLFdBQVcsQ0FBQyxDQUFDO0lBQ3pCLENBQUMsQ0FBQyxFQUFFLENBQUMsV0FBVyxDQUFDLGFBQWEsRUFBRSxlQUFlLENBQUMsTUFBTSxDQUFDLENBQUMsQ0FBQyxDQUFDLGNBQWMsQ0FBQyxDQUFDO0FBQzVFLENBQUMsQ0FBQyxDQUFDO0FBRUgsNERBQTREO0FBQzVELG9EQUFvRDtBQUNwRCwwQ0FBMEM7QUFDMUMsOEJBQThCO0FBQzlCLDZDQUE2QztBQUM3QyxNQUFNIn0=

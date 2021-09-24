@@ -138,16 +138,26 @@ export function TransformRawTransaction(
   rawTransaction: any,
   { debugPath = 'raw_transaction' } = {}
 ) {
+  console.log('------------');
+  console.log(rawTransaction);
   let formateTransaction = {};
+
   if (rawTransaction.tx_status) {
     formateTransaction = TransformRowTransaction(rawTransaction);
-  } else if (rawTransaction.register_email) {
-    formateTransaction = transformRawObject(debugPath, rawTransaction, {
+  } else if (rawTransaction[0].pending_state) {
+    formateTransaction = transformRawObject(debugPath, rawTransaction[0], {
       registerEmail: invokeSerializeJson,
       quickLogin: invokeSerializeJson,
       localKeys: invokeSerializeJson,
       recoveryEmail: toInvoke(TransformRecoveryEmail),
       pendingState: toInvoke(TransformPendingState),
+    });
+  } else if (rawTransaction[0].username) {
+    formateTransaction = transformRawObject(debugPath, rawTransaction[0], {
+      registerEmail: invokeSerializeJson,
+      quickLogin: invokeSerializeJson,
+      localKeys: invokeSerializeJson,
+      recoveryEmail: toInvoke(TransformRecoveryEmail),
     });
   } else {
     formateTransaction = toTxRowArray(rawTransaction);

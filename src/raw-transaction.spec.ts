@@ -1,100 +1,105 @@
-// import test from 'ava';
-// import { TransactionResult, UserInfoResult } from './interface';
-// import { RawTransaction } from './raw-transaction';
+import test from 'ava';
+import { TransactionResult, UserInfoResult } from './interface';
+import { RawTransaction } from './raw-transaction';
 
-// const txRawData = {
-//   id: 2,
-//   jsonrpc: '2.0',
-//   result: {
-//     transaction_inner: {
-//       nonce: '0x1',
-//       type: 'register',
-//       action: {
-//         register_email: 'johnz@lay2.dev',
-//         pubkey: '0x01415498a39E37B7C17b586AB8AB77BE0B518DBDFc',
-//         recovery_email: null,
-//         quick_login: true,
-//       },
-//     },
-//     tx_status: {
-//       ckb_tx_hash:
-//         '0x067da578be477e3b0596a282e0fea6c33121f40df2e9dbe787f00d1249af01a2',
-//       status: 'pending',
-//     },
-//   },
-// };
+const txRawData = {
+  id: 2,
+  jsonrpc: '2.0',
+  result: {
+    transaction_inner: {
+      nonce: '0x1',
+      type: 'register',
+      action: {
+        register_email: 'johnz@lay2.dev',
+        pubkey: '0x01415498a39E37B7C17b586AB8AB77BE0B518DBDFc',
+        recovery_email: null,
+        quick_login: true,
+      },
+    },
+    tx_status: {
+      ckb_tx_hash:
+        '0x067da578be477e3b0596a282e0fea6c33121f40df2e9dbe787f00d1249af01a2',
+      status: 'pending',
+    },
+  },
+};
 
-// const historyTxRawStringData = {
-//   id: 2,
-//   jsonrpc: '2.0',
-//   result: [
-//     {
-//       transaction_inner: {
-//         nonce: '0x1',
-//         type: 'register',
-//         action: {
-//           register_email: 'johnz@lay2.dev',
-//           pubkey: '0x01415498a39E37B7C17b586AB8AB77BE0B518DBDFc',
-//           recovery_email: null,
-//           quick_login: true,
-//         },
-//       },
-//       tx_status: {
-//         ckb_tx_hash:
-//           '0x067da578be477e3b0596a282e0fea6c33121f40df2e9dbe787f00d1249af01a2',
-//         status: 'pending',
-//       },
-//     },
-//     {
-//       transaction_inner: {
-//         nonce: '0x1',
-//         type: 'register',
-//         action: {
-//           register_email: 'johnz@lay2.dev',
-//           pubkey: '0x01415498a39E37B7C17b586AB8AB77BE0B518DBDFc',
-//           recovery_email: null,
-//           quick_login: true,
-//         },
-//       },
-//       tx_status: {
-//         ckb_tx_hash:
-//           '0x067da578be477e3b0596a282e0fea6c33121f40df2e9dbe787f00d1249af01a2',
-//         status: 'pending',
-//       },
-//     },
-//   ],
-// };
+const historyTxRawStringData = {
+  id: 2,
+  jsonrpc: '2.0',
+  result: [
+    {
+      transaction_inner: {
+        nonce: '0x1',
+        type: 'register',
+        action: {
+          register_email: 'johnz@lay2.dev',
+          pubkey: '0x01415498a39E37B7C17b586AB8AB77BE0B518DBDFc',
+          recovery_email: null,
+          quick_login: true,
+        },
+      },
+      tx_status: {
+        ckb_tx_hash:
+          '0x067da578be477e3b0596a282e0fea6c33121f40df2e9dbe787f00d1249af01a2',
+        status: 'pending',
+      },
+    },
+    {
+      transaction_inner: {
+        nonce: '0x1',
+        type: 'register',
+        action: {
+          register_email: 'johnz@lay2.dev',
+          pubkey: '0x01415498a39E37B7C17b586AB8AB77BE0B518DBDFc',
+          recovery_email: null,
+          quick_login: true,
+        },
+      },
+      tx_status: {
+        ckb_tx_hash:
+          '0x067da578be477e3b0596a282e0fea6c33121f40df2e9dbe787f00d1249af01a2',
+        status: 'pending',
+      },
+    },
+  ],
+};
 
-// const userInfoRawData = {
-//   id: 2,
-//   jsonrpc: '2.0',
-//   result: {
-//     register_email: 'johnz@lay2.dev',
-//     quick_login: false,
-//     local_keys: [
-//       '01415498a39E37B7C17b586AB8AB77BE0B518DBDFc',
-//       '02f376bdc2590c720d0d0c32cbebf9bb4c7cddc09b880c4a85ad86f625ff614bf3cf50c16a18f0a954c14104c729698a976246d6403010b107d9c02f4b4711f577',
-//       '03000800000100010027235838be9d2044c72aabcfeab3ca368ea10988d700b49e7aef7810fce9a83742ec43e5e7b935ac08e4bbb8b72056722a6fff64d59eb6ac31813d827df4807f64c9c5179eba3624286aa3cdfb2da75ef644c1f88589567bc7f0ba84841be9d847c46c48861be9b478dd79c5a8465e85bc8ce817bfd3e6e3cc65e68d12858a0ff3abe7b4833ccdd5c2f0f4bb086d3042c9ef69ace4afd41f427f16377ac31c25c207916457394a9242499576b7f62502f203783edc1e7ad071a0012f1e880a74c9c6c44b3b46abbeb7979029d0effab8b92575e6385caec73df68ee8c0d9887636183d338193ee93981f93651b13ec763482ea62ada18833f8e0e887157815c3',
-//     ],
-//     recovery_email: {
-//       threshold: 1,
-//       first_n: 1,
-//       emails: ['johnz@lay2.dev'],
-//     },
-//     pending_state: {
-//       pending_key: '0x01415498a39E37B7C17b586AB8AB77BE0B518DBDFc',
-//       replace_old: false,
-//       time_cell:
-//         '0x9bd7e06f3ecf4be0f2fcd2188b23f1b9fcc88e5d4b65a8637b17723bbda3cce8',
-//     },
-//   },
-// };
+const userInfoRawData = {
+  jsonrpc: '2.0',
+  result: [
+    {
+      local_keys: [
+        {
+          rsa_pubkey: {
+            e: 65537,
+            n: '0xc686b98fcdce07eb6c938c010b19dabae7bbfecb6cde8c45c533ab01f740536fd8de2de63395eebfc0c4a3f3ebcd2f60a7debdfd8aa86a592b6a51c135c3bbd8f195f8aef02db7e3eac04d3fff6dff69f6e90f48a31df80c1a5a92adeb051e1dd3242c8adf22259151eda9ce47169f1f198fa634e6e38de4df26738e38dd921269ac01acb7f74c329d93e1353a98aaa5cdae3e6c78ca615955f20adb1058046429542755c3151abade06e0af6470b088ff1781227999e60b17a214b8887739396f699c889125cf4c0dec45190fb079f11b0fec4c204875be6d66f8ad3a5e1523d5017b8989346ad91e7988942b008e6517c1ca1c2a71630e1e9096569583a181',
+          },
+        },
+      ],
+      nonce: '0x1',
+      quick_login: false,
+      recovery_email: {
+        emails: [
+          '0xb701f116b2c00668ae2a6fab119af93703df4c37ee79a7d63c4ff971b17a6902',
+        ],
+        first_n: 1,
+        threshold: 1,
+      },
+      register_email:
+        '0xb701f116b2c00668ae2a6fab119af93703df4c37ee79a7d63c4ff971b17a6902',
+      username:
+        '0x231edefda5d8c03e2ca9c5f36c55b0735f5ce3289b21c7f2e153a5cd8a1882f9',
+    },
+  ],
+  id: 4627112,
+};
 
-// interface stringResult {
-//   result: string;
-// }
+interface stringResult {
+  result: string;
+}
 
-// const stringRawData = { jsonrpc: '2.0', result: '0x2cb4', id: 2 };
+const stringRawData = { jsonrpc: '2.0', result: '0x2cb4', id: 2 };
 
 // test('test rawTransaction tx txRawData', async (t) => {
 //   const data = new RawTransaction(txRawData);
@@ -113,12 +118,12 @@
 //   );
 // });
 
-// test('test rawTransaction userInfoRawData ', async (t) => {
-//   const data = new RawTransaction(userInfoRawData);
-//   const formateData = data.transform() as UserInfoResult;
-//   console.log(formateData);
-//   t.is(formateData.registerEmail, userInfoRawData.result.register_email);
-// });
+test('test rawTransaction userInfoRawData ', async (t) => {
+  const data = new RawTransaction(userInfoRawData);
+  const formateData = data.transform() as UserInfoResult;
+  console.log(formateData);
+  t.is(formateData.registerEmail, userInfoRawData.result[0].register_email);
+});
 
 // test('test rawTransaction stringRawData ', async (t) => {
 //   const data = new RawTransaction(stringRawData);
