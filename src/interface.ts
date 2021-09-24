@@ -69,7 +69,7 @@ export interface TransactionResult {
 
 export interface ResponseInfo {
   jsonrpc: string;
-  result: string | UserInfoResult | TransactionResult | TransactionResult[];
+  result: string | UserInfoResult[] | TransactionResult | TransactionResult[];
   id: number;
 }
 
