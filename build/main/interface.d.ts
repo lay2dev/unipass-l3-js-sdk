@@ -1,7 +1,7 @@
 export interface UserInfoResult {
     registerEmail: string;
     quickLogin: boolean;
-    localKeys: string[];
+    localKeys: Pubkey[];
     recoveryEmail: RecoveryEmail;
     username: string;
     nonce: string;
