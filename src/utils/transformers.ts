@@ -149,6 +149,8 @@ export function TransformRawTransaction(
       registerEmail: invokeSerializeJson,
       quickLogin: invokeSerializeJson,
       localKeys: invokeSerializeJson,
+      nonce: invokeSerializeJson,
+      username: invokeSerializeJson,
       recoveryEmail: toInvoke(TransformRecoveryEmail),
       pendingState: toInvoke(TransformPendingState),
     });
@@ -157,6 +159,8 @@ export function TransformRawTransaction(
     formateTransaction = transformRawObject(debugPath, rawTransaction[0], {
       registerEmail: invokeSerializeJson,
       quickLogin: invokeSerializeJson,
+      nonce: invokeSerializeJson,
+      username: invokeSerializeJson,
       localKeys: invokeSerializeJson,
       recoveryEmail: toInvoke(TransformRecoveryEmail),
     });

@@ -3,7 +3,9 @@ export interface UserInfoResult {
     quickLogin: boolean;
     localKeys: string[];
     recoveryEmail: RecoveryEmail;
-    pendingState: {
+    username: string;
+    nonce: string;
+    pendingState?: {
         pendingKey: string;
         replaceOld: boolean;
         timeCell: string;
