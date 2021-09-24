@@ -10,6 +10,9 @@ export declare function TransformTxStatus(target: any, { debugPath }?: {
 export declare function TransformRecoveryEmail(target: any, { debugPath }?: {
     debugPath?: string;
 }): {};
+export declare function TransformLocalKey(rawTransaction: any, { debugPath }?: {
+    debugPath?: string;
+}): any;
 export declare function TransformPendingState(target: any, { debugPath }?: {
     debugPath?: string;
 }): {};

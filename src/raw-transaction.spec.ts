@@ -121,7 +121,7 @@ const stringRawData = { jsonrpc: '2.0', result: '0x2cb4', id: 2 };
 test('test rawTransaction userInfoRawData ', async (t) => {
   const data = new RawTransaction(userInfoRawData);
   const formateData = data.transform() as UserInfoResult[];
-  console.log(formateData);
+
   t.is(formateData[0].registerEmail, userInfoRawData.result[0].register_email);
 });
 

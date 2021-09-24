@@ -106,6 +106,29 @@ export function TransformRecoveryEmail(
   return formatRecoveryEmail;
 }
 
+export function TransformLocalKey(
+  rawTransaction: any,
+  { debugPath = 'LocalKey' } = {}
+) {
+  let formatLocalKey;
+  if (rawTransaction.rsa_pubkey) {
+    formatLocalKey = transformRawObject(debugPath, rawTransaction, {
+      rsaPubkey: invokeSerializeJson,
+    });
+  }
+  if (rawTransaction.secp256k1) {
+    formatLocalKey = transformRawObject(debugPath, rawTransaction, {
+      secp256k1: invokeSerializeJson,
+    });
+  }
+  if (rawTransaction.secp256r1) {
+    formatLocalKey = transformRawObject(debugPath, rawTransaction, {
+      secp256r1: invokeSerializeJson,
+    });
+  }
+  return formatLocalKey;
+}
+
 export function TransformPendingState(target: any, { debugPath = 'raw' } = {}) {
   const formatRecoveryEmail = transformRawObject(debugPath, target, {
     pendingKey: invokeSerializeJson,
@@ -133,6 +156,14 @@ export function TransformRowTransaction(
   return formateTransaction;
 }
 
+function toInvokeArray(invokeFunction) {
+  return function (debugPath, array) {
+    return array.map((item, i) => {
+      return invokeFunction(`${debugPath}[${i}]`, item);
+    });
+  };
+}
+
 // raw transaction
 export function TransformRawTransaction(
   rawTransaction: any,
@@ -148,7 +179,7 @@ export function TransformRawTransaction(
     formateTransaction = transformRawObject(debugPath, rawTransaction[0], {
       registerEmail: invokeSerializeJson,
       quickLogin: invokeSerializeJson,
-      localKeys: invokeSerializeJson,
+      localKeys: toInvokeArray(toInvoke(TransformLocalKey)),
       nonce: invokeSerializeJson,
       username: invokeSerializeJson,
       recoveryEmail: toInvoke(TransformRecoveryEmail),
@@ -161,7 +192,7 @@ export function TransformRawTransaction(
       quickLogin: invokeSerializeJson,
       nonce: invokeSerializeJson,
       username: invokeSerializeJson,
-      localKeys: invokeSerializeJson,
+      localKeys: toInvokeArray(toInvoke(TransformLocalKey)),
       recoveryEmail: toInvoke(TransformRecoveryEmail),
     });
     return [formateTransaction];
