@@ -55,11 +55,11 @@ export interface registerInner {
 }
 
 export interface Action {
-  registerEmail: string;
+  registerEmail?: string;
   username?: string;
-  pubkey: Pubkey;
-  recoveryEmail: RecoveryEmail | null;
-  quickLogin: boolean;
+  pubkey?: Pubkey;
+  recoveryEmail?: RecoveryEmail | null;
+  quickLogin?: boolean;
 }
 
 export interface TxStatus {

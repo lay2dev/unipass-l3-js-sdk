@@ -73,11 +73,26 @@ const rawUpdateRecoveryEmail = {
 
 const rawUpdateQuickLogin = {
   type: 'update_quick_login',
-  nonce: '0x2',
+  nonce: '0x1',
   username:
     '0x231edefda5d8c03e2ca9c5f36c55b0735f5ce3289b21c7f2e153a5cd8a1882f9',
   action: {
+    registerEmail:
+      '0xb701f116b2c00668ae2a6fab119af93703df4c37ee79a7d63c4ff971b17a6902',
     quickLogin: false,
+    pubkey: {
+      rsaPubkey: {
+        e: 65537,
+        n: '0xc686b98fcdce07eb6c938c010b19dabae7bbfecb6cde8c45c533ab01f740536fd8de2de63395eebfc0c4a3f3ebcd2f60a7debdfd8aa86a592b6a51c135c3bbd8f195f8aef02db7e3eac04d3fff6dff69f6e90f48a31df80c1a5a92adeb051e1dd3242c8adf22259151eda9ce47169f1f198fa634e6e38de4df26738e38dd921269ac01acb7f74c329d93e1353a98aaa5cdae3e6c78ca615955f20adb1058046429542755c3151abade06e0af6470b088ff1781227999e60b17a214b8887739396f699c889125cf4c0dec45190fb079f11b0fec4c204875be6d66f8ad3a5e1523d5017b8989346ad91e7988942b008e6517c1ca1c2a71630e1e9096569583a181',
+      },
+    },
+    recoveryEmail: {
+      threshold: 1,
+      firstN: 1,
+      emails: [
+        '0xb701f116b2c00668ae2a6fab119af93703df4c37ee79a7d63c4ff971b17a6902',
+      ],
+    },
   },
 };
 
