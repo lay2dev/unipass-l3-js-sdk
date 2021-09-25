@@ -19,7 +19,10 @@ import {
 
 function initPubkey(pubKey: string, keyType: string) {
   const pubkeyBuffer = Buffer.from(pubKey.replace('0x', ''), 'hex');
-  const e = pubkeyBuffer.slice(4, 8).readUInt32LE();
+  const e = new DataView(toArrayBuffer(pubkeyBuffer.slice(4, 8))).getUint32(
+    0,
+    true
+  );
   const n = toArrayBuffer(pubkeyBuffer.slice(8).reverse());
   const rsa = new Rsa(new Uint32Array([e]).reverse().buffer, n);
   const pubkey = new RsaPubkey(rsa);
