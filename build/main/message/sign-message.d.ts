@@ -1,6 +1,7 @@
 import { registerInner } from '..';
 export declare class SignMessage {
     private inner;
-    constructor(inner: registerInner);
+    private backend?;
+    constructor(inner: registerInner, backend?: boolean);
     messageHash(): string;
 }
