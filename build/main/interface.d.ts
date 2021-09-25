@@ -44,7 +44,8 @@ export interface pubkey {
 }
 export interface registerInner {
     action: string;
-    pubkey: pubkey;
+    pubKey: string;
+    keyType: string;
     username: string;
     registerEmail?: string;
     nonce?: string;

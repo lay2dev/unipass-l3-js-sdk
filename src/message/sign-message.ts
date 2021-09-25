@@ -4,6 +4,7 @@ import {
   pubkey,
   registerInner,
   StringReader,
+  toArrayBuffer,
 } from '..';
 import {
   addLocalKeyInner,
@@ -16,14 +17,22 @@ import {
   UpdateRecoveryEmailInner,
 } from './sign-message-base';
 
+function initPubkey(pubKey: string, keyType: string) {
+  const pubkeyBuffer = Buffer.from(pubKey.replace('0x', ''), 'hex');
+  const e = pubkeyBuffer.slice(4, 8).readUInt32LE();
+  const n = toArrayBuffer(pubkeyBuffer.slice(8).reverse());
+  const rsa = new Rsa(new Uint32Array([e]).reverse().buffer, n);
+  const pubkey = new RsaPubkey(rsa);
+  return pubkey;
+}
+
 export class SignMessage {
   constructor(private inner: registerInner) {}
   messageHash(): string {
-    const rsa = new Rsa(
-      new Uint32Array([this.inner.pubkey.value.e]).reverse().buffer,
-      this.inner.pubkey.value.n
-    );
-    const pubkey = new RsaPubkey(rsa);
+    if (!this.inner.pubKey) {
+      throw new Error(`SignMessageError: not find pubKey `);
+    }
+    const pubkey = initPubkey(this.inner.pubKey, this.inner.keyType);
 
     if (this.inner.action == 'register') {
       if (!this.inner.registerEmail) {

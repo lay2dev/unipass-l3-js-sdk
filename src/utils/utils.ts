@@ -58,6 +58,15 @@ export function toBigUInt64LE(num) {
   return byteArrayToHex(buffer);
 }
 
+export const toArrayBuffer = function (buf: Buffer): ArrayBuffer {
+  const ab = new ArrayBuffer(buf.length);
+  const view = new Uint8Array(ab);
+  for (let i = 0; i < buf.length; ++i) {
+    view[i] = buf[i];
+  }
+  return ab;
+};
+
 export function toBigUInt128LE(u128) {
   const viewRight = toBigUInt64LE(
     JSBI.signedRightShift(JSBI.BigInt(u128), JSBI.BigInt(64))
