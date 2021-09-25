@@ -3,10 +3,12 @@ import { SignMessage } from './sign-message';
 import { Rsa, RsaPubkey } from './sign-message-base';
 
 const rawData = {
-  action: 'addKey',
+  action: 'update_recovery_email',
   username: 'aven',
   pubkey: null,
   nonce: '0x1',
+  quickLogin: true,
+  recoveryEmail: 'hi.ellen@qq.com',
 };
 
 function initPubkey() {

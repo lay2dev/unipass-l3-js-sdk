@@ -1,7 +1,10 @@
 import { Reader } from '..';
 import {
   SerializeAddLocalKeyChildTxInner,
+  SerializeDeleteLocalKeyChildTxInner,
   SerializeRegisterChildTxInner,
+  SerializeUpdateQuickLoginChildTxInner,
+  SerializeUpdateRecoveryEmailChildTxInner,
 } from './unipass-v3-jss/witness';
 interface pubkey {
   type: string;
@@ -48,5 +51,38 @@ export class addLocalKeyInner {
   ) {}
   serialize() {
     return new Reader(SerializeAddLocalKeyChildTxInner(this));
+  }
+}
+
+export class deleteLocalKeyInner {
+  constructor(
+    public username: Reader,
+    public nonce: Reader,
+    public pubkey: pubkey
+  ) {}
+  serialize() {
+    return new Reader(SerializeDeleteLocalKeyChildTxInner(this));
+  }
+}
+
+export class updateQuickLoginInner {
+  constructor(
+    public username: Reader,
+    public nonce: Reader,
+    public quick_login: number
+  ) {}
+  serialize() {
+    return new Reader(SerializeUpdateQuickLoginChildTxInner(this));
+  }
+}
+
+export class UpdateRecoveryEmailInner {
+  constructor(
+    public username: Reader,
+    public nonce: Reader,
+    public recovery_email: RecoveryEmail | null
+  ) {}
+  serialize() {
+    return new Reader(SerializeUpdateRecoveryEmailChildTxInner(this));
   }
 }

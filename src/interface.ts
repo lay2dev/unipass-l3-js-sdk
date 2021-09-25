@@ -49,6 +49,8 @@ export interface registerInner {
   username: string;
   registerEmail?: string;
   nonce?: string;
+  quickLogin?: boolean;
+  recoveryEmail?: string | null;
 }
 
 export interface Action {
