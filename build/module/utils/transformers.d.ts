@@ -31,10 +31,22 @@ export declare function transformPubkey(target: any, { debugPath }?: {
 export declare function transformRecoveryEmailInner(target: any, { debugPath }?: {
     debugPath?: string;
 }): {};
-export declare function TransformAction(target: any, { validation, debugPath }?: {
-    validation?: boolean;
+export declare function TransformActionRegister(target: any, { debugPath }?: {
     debugPath?: string;
 }): {};
+export declare function TransformActionAddKey(target: any, { debugPath }?: {
+    debugPath?: string;
+}): {};
+export declare function TransformActionDeleteKey(target: any, { debugPath }?: {
+    debugPath?: string;
+}): {};
+export declare function TransformActionUpdateRecoveryEmail(target: any, { debugPath }?: {
+    debugPath?: string;
+}): {};
+export declare function TransformActionUpdateQuickLogin(target: any, { debugPath }?: {
+    debugPath?: string;
+}): {};
+export declare function TransformInnerTypeData(type: string): any;
 export declare function TransformInner(target: any, { validation, debugPath }?: {
     validation?: boolean;
     debugPath?: string;

@@ -60,15 +60,50 @@ export function ValidateRecoveryEmail(raw: any, { debugPath = 'action' } = {}) {
   assertObjectWithKeys(debugPath, raw, ['threshold', 'first_n', 'emails'], []);
 }
 
-export function ValidateAction(raw: any, { debugPath = 'action' } = {}) {
-  assertObjectWithKeys(
-    debugPath,
-    raw,
-    ['register_email', 'pubkey', 'quick_login', 'recovery_email'],
-    []
-  );
-  ValidatePubkey(raw.pubkey);
-  ValidateRecoveryEmail(raw.recovery_email);
+export function ValidateAction(
+  raw: any,
+  { debugPath = 'action', action = null } = {}
+) {
+  if (action) {
+    switch (action) {
+      case 'register':
+        assertObjectWithKeys(
+          debugPath,
+          raw,
+          ['register_email', 'pubkey', 'quick_login', 'recovery_email'],
+          []
+        );
+        ValidatePubkey(raw.pubkey);
+        ValidateRecoveryEmail(raw.recovery_email);
+        break;
+      case 'add_key':
+        assertObjectWithKeys(debugPath, raw, ['pubkey'], []);
+        ValidatePubkey(raw.pubkey);
+        break;
+      case 'delete_key':
+        assertObjectWithKeys(debugPath, raw, ['pubkey'], []);
+        ValidatePubkey(raw.pubkey);
+        break;
+      case 'update_recovery_email':
+        assertObjectWithKeys(debugPath, raw, ['recovery_email'], []);
+        ValidateRecoveryEmail(raw.recovery_email);
+        break;
+      case 'update_quick_login':
+        assertObjectWithKeys(debugPath, raw, ['quick_login'], []);
+        break;
+      default:
+        throw new Error('invalid type ');
+    }
+  } else {
+    assertObjectWithKeys(
+      debugPath,
+      raw,
+      ['register_email', 'pubkey', 'quick_login', 'recovery_email'],
+      []
+    );
+    ValidatePubkey(raw.pubkey);
+    ValidateRecoveryEmail(raw.recovery_email);
+  }
 }
 
 export function ValidateInner(raw: any, { debugPath = 'inner' } = {}) {
@@ -78,7 +113,7 @@ export function ValidateInner(raw: any, { debugPath = 'inner' } = {}) {
     ['type', 'nonce', 'action', 'username'],
     []
   );
-  ValidateAction(raw.action);
+  ValidateAction(raw.action, { action: raw.type, debugPath: 'action' });
 }
 
 export function ValidatSignAddKey1(raw: any, { debugPath = 'sign' } = {}) {

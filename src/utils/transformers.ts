@@ -236,9 +236,9 @@ export function transformRecoveryEmailInner(
   return formatAction;
 }
 
-export function TransformAction(
+export function TransformActionRegister(
   target: any,
-  { validation = true, debugPath = 'action' } = {}
+  { debugPath = 'RegisterAction' } = {}
 ) {
   const formatAction = transformObject(debugPath, target, {
     register_email: invokeSerializeJson,
@@ -246,23 +246,107 @@ export function TransformAction(
     pubkey: toInvoke(transformPubkey),
     recovery_email: toInvoke(transformRecoveryEmailInner),
   });
-  if (validation) {
-    validators.ValidateAction(formatAction, {
-      debugPath: `(transformed) ${debugPath}`,
-    });
-  }
   return formatAction;
 }
+
+export function TransformActionAddKey(
+  target: any,
+  { debugPath = 'AddKeyAction' } = {}
+) {
+  const formatAction = transformObject(debugPath, target, {
+    pubkey: toInvoke(transformPubkey),
+  });
+  return formatAction;
+}
+
+export function TransformActionDeleteKey(
+  target: any,
+  { debugPath = 'deleteKeyAction' } = {}
+) {
+  const formatAction = transformObject(debugPath, target, {
+    pubkey: toInvoke(transformPubkey),
+  });
+  return formatAction;
+}
+
+export function TransformActionUpdateRecoveryEmail(
+  target: any,
+  { debugPath = 'action_update_recovery_email' } = {}
+) {
+  const formatAction = transformObject(debugPath, target, {
+    recovery_email: toInvoke(transformRecoveryEmailInner),
+  });
+  return formatAction;
+}
+
+export function TransformActionUpdateQuickLogin(
+  target: any,
+  { debugPath = 'action_update_quick_login' } = {}
+) {
+  const formatAction = transformObject(debugPath, target, {
+    quick_login: invokeSerializeJson,
+  });
+  return formatAction;
+}
+
+export function TransformInnerTypeData(type: string) {
+  // todo type checkout
+  let data: any;
+  switch (type) {
+    case 'register':
+      data = {
+        type: invokeSerializeJson,
+        nonce: invokeSerializeJson,
+        username: invokeSerializeJson,
+        action: toInvoke(TransformActionRegister),
+      };
+      break;
+    case 'add_key':
+      data = {
+        type: invokeSerializeJson,
+        nonce: invokeSerializeJson,
+        username: invokeSerializeJson,
+        action: toInvoke(TransformActionAddKey),
+      };
+      break;
+    case 'delete_key':
+      data = {
+        type: invokeSerializeJson,
+        nonce: invokeSerializeJson,
+        username: invokeSerializeJson,
+        action: toInvoke(TransformActionDeleteKey),
+      };
+      break;
+    case 'update_recovery_email':
+      data = {
+        type: invokeSerializeJson,
+        nonce: invokeSerializeJson,
+        username: invokeSerializeJson,
+        action: toInvoke(TransformActionUpdateRecoveryEmail),
+      };
+      break;
+    case 'update_quick_login':
+      data = {
+        type: invokeSerializeJson,
+        nonce: invokeSerializeJson,
+        username: invokeSerializeJson,
+        action: toInvoke(TransformActionUpdateQuickLogin),
+      };
+      break;
+    default:
+      throw new Error('invalid type ');
+  }
+  return data;
+}
+
 export function TransformInner(
   target: any,
   { validation = true, debugPath = 'inner' } = {}
 ) {
-  const formatInner = transformObject(debugPath, target, {
-    type: invokeSerializeJson,
-    nonce: invokeSerializeJson,
-    username: invokeSerializeJson,
-    action: toInvoke(TransformAction),
-  });
+  // todo type checkout
+
+  const data = TransformInnerTypeData(target.type);
+  const formatInner = transformObject(debugPath, target, data);
   if (validation) {
     validators.ValidateInner(formatInner, {
       debugPath: `(transformed) ${debugPath}`,

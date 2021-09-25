@@ -7,8 +7,9 @@ export declare function ValidatePubkey(raw: any, { debugPath }?: {
 export declare function ValidateRecoveryEmail(raw: any, { debugPath }?: {
     debugPath?: string;
 }): void;
-export declare function ValidateAction(raw: any, { debugPath }?: {
+export declare function ValidateAction(raw: any, { debugPath, action }?: {
     debugPath?: string;
+    action?: any;
 }): void;
 export declare function ValidateInner(raw: any, { debugPath }?: {
     debugPath?: string;
