@@ -190,6 +190,18 @@ export function hashData(data: string) {
 }
 
 export function sha256HashData(data: string) {
+  if (data.startsWith('0x')) return data.slice(2);
   const messageHash = createHash('sha256').update(data).digest('hex');
   return messageHash;
 }
+
+declare global {
+  interface String {
+    hexToBuffer(): Buffer;
+  }
+}
+
+String.prototype.hexToBuffer = function () {
+  const d = String(this);
+  return Buffer.from(d.replace('0x', ''), 'hex');
+};

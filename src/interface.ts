@@ -1,13 +1,19 @@
-export enum SDKActionType {
-  REGISTER = 'register',
-  ADD_KEY = 'add_key',
-  ADD_LOCAL_KEY = 'add_local_key',
-  DEL_KEY = 'delete_key',
-  UPDATE_QUICK_LOGIN = 'update_quick_login',
-  UPDATE_RECOVERY_EMAIL = 'update_recovery_email',
-  START_RECOVERY = 'start_recovery',
-  CANCEL_RECOVERY = 'cancel_recovery',
-  COMPLETE_RECOVERY = 'complete_recovery',
+export enum ActionType {
+  REGISTER = 0,
+  ADD_LOCAL_KEY,
+  QUICK_ADD_LOCAL_KEY,
+  DEL_LOCAL_KEY,
+  UPDATE_QUICK_LOGIN,
+  UPDATE_RECOVERY_EMAIL,
+  START_RECOVERY,
+  CANCEL_RECOVERY,
+  COMPLETE_RECOVERY,
+}
+
+export enum KeyType {
+  RSA,
+  Secp256K1,
+  Secp256R1,
 }
 
 export interface UserInfoResult {
@@ -55,10 +61,10 @@ export interface pubkey {
   value: any;
 }
 
-export interface registerInner {
-  action: string;
+export interface HashRawData {
+  action: ActionType;
   pubKey: string;
-  keyType: string;
+  keyType: KeyType;
   username: string;
   registerEmail?: string;
   nonce?: string;

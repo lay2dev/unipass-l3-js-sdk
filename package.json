@@ -78,7 +78,7 @@
   "ava": {
     "failFast": true,
     "files": [
-      "build/main/message/hash-data.spec.js"
+      "build/main/message/*.spec.js"
     ],
     "ignoredByWatcher": [
       "build/main/**/*.js"

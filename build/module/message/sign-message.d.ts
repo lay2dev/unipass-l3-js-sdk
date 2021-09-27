@@ -1,7 +1,7 @@
-import { registerInner } from '..';
+import { HashRawData } from '..';
 export declare class SignMessage {
     private inner;
     private backend?;
-    constructor(inner: registerInner, backend?: boolean);
+    constructor(inner: HashRawData, backend?: boolean);
     messageHash(): string;
 }
