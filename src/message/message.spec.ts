@@ -10,7 +10,7 @@ const rsaKey = new NodeRSA(
 rsaKey.setOptions({ signingScheme: 'pkcs1-sha256' });
 
 const rawData = {
-  action: ActionType.DEL_LOCAL_KEY,
+  action: ActionType.REGISTER,
   username: 'aven',
   nonce: '0x2',
   registerEmail: 'hi.ellen@qq.com',

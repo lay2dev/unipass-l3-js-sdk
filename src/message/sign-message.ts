@@ -1,20 +1,17 @@
 import { ActionType, HashRawData, sha256HashData } from '..';
 
 import { soliditySha3 } from 'web3-utils';
-const source = 'unipass-wallet';
+let source = 'unipass-wallet';
 
 export class SignMessage {
   constructor(private inner: HashRawData) {}
   messageHash(): string {
-    if (!this.inner.pubKey) {
-      throw new Error(`SignMessageError: not find pubKey `);
+    if (!this.inner.registerEmail || !this.inner.username) {
+      throw new Error(`SignMessageError: not find username or registerEmail`);
     }
 
     if (this.inner.action == ActionType.REGISTER) {
-      if (!this.inner.registerEmail) {
-        throw new Error(`SignMessageError: not find registerEmail `);
-      }
-
+      source = this.inner.source ? this.inner.source : source;
       const hash: string = soliditySha3(
         { v: this.inner.action, t: 'uint8' },
         { v: sha256HashData(this.inner.username), t: 'bytes32' },
@@ -27,8 +24,8 @@ export class SignMessage {
       this.inner.action == ActionType.ADD_LOCAL_KEY ||
       this.inner.action == ActionType.QUICK_ADD_LOCAL_KEY
     ) {
-      if (!this.inner.nonce) {
-        throw new Error(`SignMessageError: not find nonce `);
+      if (!this.inner.nonce || !this.inner.pubKey) {
+        throw new Error(`SignMessageError: not find nonce or not find pubKey`);
       }
       if (!this.inner.nonce.startsWith('0x')) {
         throw new Error(`SignMessageError: nonce not hex data`);
@@ -38,15 +35,15 @@ export class SignMessage {
         { v: this.inner.action, t: 'uint8' },
         { v: sha256HashData(this.inner.registerEmail), t: 'bytes32' },
         { v: sha256HashData(this.inner.username), t: 'bytes32' },
-        { v: sha256HashData(this.inner.nonce), t: 'uint' },
+        { v: this.inner.nonce, t: 'uint' },
         { v: this.inner.keyType, t: 'uint' },
-        { v: sha256HashData(this.inner.pubKey), t: 'bytes' }
+        { v: this.inner.pubKey, t: 'bytes' }
       )!;
 
       return hash;
     } else if (this.inner.action == ActionType.DEL_LOCAL_KEY) {
-      if (!this.inner.nonce) {
-        throw new Error(`SignMessageError: not find nonce `);
+      if (!this.inner.nonce || !this.inner.pubKey) {
+        throw new Error(`SignMessageError: not find nonce or not find pubKey`);
       }
       if (!this.inner.nonce.startsWith('0x')) {
         throw new Error(`SignMessageError: nonce not hex data`);
@@ -56,9 +53,9 @@ export class SignMessage {
         { v: this.inner.action, t: 'uint8' },
         { v: sha256HashData(this.inner.registerEmail), t: 'bytes32' },
         { v: sha256HashData(this.inner.username), t: 'bytes32' },
-        { v: sha256HashData(this.inner.nonce), t: 'uint' },
+        { v: this.inner.nonce, t: 'uint' },
         { v: this.inner.keyType, t: 'uint' },
-        { v: sha256HashData(this.inner.pubKey), t: 'bytes' }
+        { v: this.inner.pubKey, t: 'bytes' }
       )!;
 
       return hash;
@@ -74,15 +71,14 @@ export class SignMessage {
 
       const emails = [];
       for (let item of this.inner.recoveryEmail) {
-        sha256HashData(item);
-        emails.push(item);
+        emails.push(sha256HashData(item));
       }
 
       const hash: string = soliditySha3(
         { v: this.inner.action, t: 'uint8' },
         { v: sha256HashData(this.inner.registerEmail), t: 'bytes32' },
         { v: sha256HashData(this.inner.username), t: 'bytes32' },
-        { v: sha256HashData(this.inner.nonce), t: 'uint' },
+        { v: this.inner.nonce, t: 'uint' },
         { v: '0x' + emails.join(), t: 'bytes' },
         { v: this.inner.threshold, t: 'uint' }
       )!;
@@ -100,7 +96,7 @@ export class SignMessage {
         { v: this.inner.action, t: 'uint8' },
         { v: sha256HashData(this.inner.registerEmail), t: 'bytes32' },
         { v: sha256HashData(this.inner.username), t: 'bytes32' },
-        { v: sha256HashData(this.inner.nonce), t: 'uint' },
+        { v: this.inner.nonce, t: 'uint' },
         { v: Number(this.inner.quickLogin), t: 'bool' }
       )!;
 
@@ -117,10 +113,10 @@ export class SignMessage {
         { v: this.inner.action, t: 'uint8' },
         { v: sha256HashData(this.inner.registerEmail), t: 'bytes32' },
         { v: sha256HashData(this.inner.username), t: 'bytes32' },
-        { v: sha256HashData(this.inner.nonce), t: 'uint' },
+        { v: this.inner.nonce, t: 'uint' },
         { v: Number(this.inner.resetKeys), t: 'bool' },
         { v: this.inner.keyType, t: 'uint' },
-        { v: sha256HashData(this.inner.pubKey), t: 'bytes' }
+        { v: this.inner.pubKey, t: 'bytes' }
       )!;
 
       return hash;
@@ -136,7 +132,7 @@ export class SignMessage {
         { v: this.inner.action, t: 'uint8' },
         { v: sha256HashData(this.inner.registerEmail), t: 'bytes32' },
         { v: sha256HashData(this.inner.username), t: 'bytes32' },
-        { v: sha256HashData(this.inner.nonce), t: 'uint' }
+        { v: this.inner.nonce, t: 'uint' }
       )!;
 
       return hash;

@@ -72,6 +72,7 @@ export interface HashRawData {
   resetKeys?: boolean;
   quickLogin?: boolean;
   recoveryEmail?: string[] | null;
+  source?: string;
 }
 
 export interface Action {
