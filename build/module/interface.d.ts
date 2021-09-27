@@ -60,13 +60,15 @@ export interface pubkey {
 }
 export interface HashRawData {
     action: ActionType;
-    pubKey: string;
-    keyType: KeyType;
+    pubKey?: string;
+    keyType?: KeyType;
     username: string;
-    registerEmail?: string;
+    registerEmail: string;
     nonce?: string;
+    threshold?: number;
+    resetKeys?: boolean;
     quickLogin?: boolean;
-    recoveryEmail?: string | null;
+    recoveryEmail?: string[] | null;
 }
 export interface Action {
     registerEmail?: string;

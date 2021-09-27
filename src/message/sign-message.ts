@@ -4,7 +4,7 @@ import { soliditySha3 } from 'web3-utils';
 const source = 'unipass-wallet';
 
 export class SignMessage {
-  constructor(private inner: HashRawData, private backend?: boolean) {}
+  constructor(private inner: HashRawData) {}
   messageHash(): string {
     if (!this.inner.pubKey) {
       throw new Error(`SignMessageError: not find pubKey `);
@@ -63,11 +63,19 @@ export class SignMessage {
 
       return hash;
     } else if (this.inner.action == ActionType.UPDATE_RECOVERY_EMAIL) {
-      if (!this.inner.nonce) {
-        throw new Error(`SignMessageError: not find nonce `);
+      if (!this.inner.nonce || !this.inner.threshold) {
+        throw new Error(
+          `SignMessageError: not find nonce or nof find threshold `
+        );
       }
       if (!this.inner.nonce.startsWith('0x')) {
         throw new Error(`SignMessageError: nonce not hex data`);
+      }
+
+      const emails = [];
+      for (let item of this.inner.recoveryEmail) {
+        sha256HashData(item);
+        emails.push(item);
       }
 
       const hash: string = soliditySha3(
@@ -75,8 +83,8 @@ export class SignMessage {
         { v: sha256HashData(this.inner.registerEmail), t: 'bytes32' },
         { v: sha256HashData(this.inner.username), t: 'bytes32' },
         { v: sha256HashData(this.inner.nonce), t: 'uint' },
-        { v: this.inner.keyType, t: 'uint' },
-        { v: sha256HashData(this.inner.pubKey), t: 'bytes' }
+        { v: '0x' + emails.join(), t: 'bytes' },
+        { v: this.inner.threshold, t: 'uint' }
       )!;
 
       return hash;
@@ -94,6 +102,41 @@ export class SignMessage {
         { v: sha256HashData(this.inner.username), t: 'bytes32' },
         { v: sha256HashData(this.inner.nonce), t: 'uint' },
         { v: Number(this.inner.quickLogin), t: 'bool' }
+      )!;
+
+      return hash;
+    } else if (this.inner.action == ActionType.START_RECOVERY) {
+      if (!this.inner.nonce) {
+        throw new Error(`SignMessageError: not find nonce `);
+      }
+      if (!this.inner.nonce.startsWith('0x')) {
+        throw new Error(`SignMessageError: nonce not hex data`);
+      }
+
+      const hash: string = soliditySha3(
+        { v: this.inner.action, t: 'uint8' },
+        { v: sha256HashData(this.inner.registerEmail), t: 'bytes32' },
+        { v: sha256HashData(this.inner.username), t: 'bytes32' },
+        { v: sha256HashData(this.inner.nonce), t: 'uint' },
+        { v: Number(this.inner.resetKeys), t: 'bool' },
+        { v: this.inner.keyType, t: 'uint' },
+        { v: sha256HashData(this.inner.pubKey), t: 'bytes' }
+      )!;
+
+      return hash;
+    } else if (this.inner.action == ActionType.CANCEL_RECOVERY) {
+      if (!this.inner.nonce) {
+        throw new Error(`SignMessageError: not find nonce `);
+      }
+      if (!this.inner.nonce.startsWith('0x')) {
+        throw new Error(`SignMessageError: nonce not hex data`);
+      }
+
+      const hash: string = soliditySha3(
+        { v: this.inner.action, t: 'uint8' },
+        { v: sha256HashData(this.inner.registerEmail), t: 'bytes32' },
+        { v: sha256HashData(this.inner.username), t: 'bytes32' },
+        { v: sha256HashData(this.inner.nonce), t: 'uint' }
       )!;
 
       return hash;
