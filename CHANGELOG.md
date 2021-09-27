@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.0.22](https://github.com/lay2dev/unipass-l3-js-sdk/compare/v1.0.3...v1.0.22) (2021-09-27)
+
 ### [1.0.3](https://github.com/lay2dev/unipass-l3-js-sdk/compare/v1.0.12...v1.0.3) (2021-09-27)
 
 ### [1.0.12](https://github.com/lay2dev/unipass-l3-js-sdk/compare/v1.0.10...v1.0.12) (2021-09-25)
