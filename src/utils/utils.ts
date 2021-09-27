@@ -188,3 +188,8 @@ export function hashData(data: string) {
 
   return `0x${messageHash}`;
 }
+
+export function sha256HashData(data: string) {
+  const messageHash = createHash('sha256').update(data).digest('hex');
+  return messageHash;
+}

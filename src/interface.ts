@@ -1,3 +1,15 @@
+export enum SDKActionType {
+  REGISTER = 'register',
+  ADD_KEY = 'add_key',
+  ADD_LOCAL_KEY = 'add_local_key',
+  DEL_KEY = 'delete_key',
+  UPDATE_QUICK_LOGIN = 'update_quick_login',
+  UPDATE_RECOVERY_EMAIL = 'update_recovery_email',
+  START_RECOVERY = 'start_recovery',
+  CANCEL_RECOVERY = 'cancel_recovery',
+  COMPLETE_RECOVERY = 'complete_recovery',
+}
+
 export interface UserInfoResult {
   registerEmail: string;
   quickLogin: boolean;

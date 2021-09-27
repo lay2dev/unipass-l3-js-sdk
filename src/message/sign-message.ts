@@ -1,7 +1,7 @@
 import {
+  SDKActionType,
   ArrayBufferReader,
   hashData,
-  pubkey,
   registerInner,
   StringReader,
   toArrayBuffer,
@@ -40,7 +40,7 @@ export class SignMessage {
       this.backend
     );
 
-    if (this.inner.action == 'register') {
+    if (this.inner.action == SDKActionType.REGISTER) {
       if (!this.inner.registerEmail) {
         throw new Error(`SignMessageError: not find registerEmail `);
       }
@@ -56,7 +56,7 @@ export class SignMessage {
       );
       const message = (inner.serialize() as ArrayBufferReader).serializeJson();
       return message;
-    } else if (this.inner.action == 'add_key') {
+    } else if (this.inner.action == SDKActionType.ADD_KEY) {
       if (!this.inner.nonce) {
         throw new Error(`SignMessageError: not find nonce `);
       }
@@ -72,7 +72,7 @@ export class SignMessage {
       const message = (inner.serialize() as ArrayBufferReader).serializeJson();
 
       return message;
-    } else if (this.inner.action == 'delete_key') {
+    } else if (this.inner.action == SDKActionType.DEL_KEY) {
       if (!this.inner.nonce) {
         throw new Error(`SignMessageError: not find nonce `);
       }
@@ -108,7 +108,7 @@ export class SignMessage {
       const message = (inner.serialize() as ArrayBufferReader).serializeJson();
 
       return message;
-    } else if (this.inner.action == 'update_quick_login') {
+    } else if (this.inner.action == SDKActionType.UPDATE_QUICK_LOGIN) {
       if (!this.inner.nonce) {
         throw new Error(`SignMessageError: not find nonce `);
       }
