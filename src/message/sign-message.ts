@@ -36,7 +36,7 @@ export class SignMessage {
         { v: sha256HashData(this.inner.registerEmail), t: 'bytes32' },
         { v: sha256HashData(this.inner.username), t: 'bytes32' },
         { v: this.inner.nonce, t: 'uint' },
-        { v: this.inner.keyType, t: 'uint' },
+        { v: this.inner.keyType, t: 'uint8' },
         { v: this.inner.pubKey, t: 'bytes' }
       )!;
 
@@ -54,7 +54,7 @@ export class SignMessage {
         { v: sha256HashData(this.inner.registerEmail), t: 'bytes32' },
         { v: sha256HashData(this.inner.username), t: 'bytes32' },
         { v: this.inner.nonce, t: 'uint' },
-        { v: this.inner.keyType, t: 'uint' },
+        { v: this.inner.keyType, t: 'uint8' },
         { v: this.inner.pubKey, t: 'bytes' }
       )!;
 
@@ -115,7 +115,7 @@ export class SignMessage {
         { v: sha256HashData(this.inner.username), t: 'bytes32' },
         { v: this.inner.nonce, t: 'uint' },
         { v: Number(this.inner.resetKeys), t: 'bool' },
-        { v: this.inner.keyType, t: 'uint' },
+        { v: this.inner.keyType, t: 'uint8' },
         { v: this.inner.pubKey, t: 'bytes' }
       )!;
 
