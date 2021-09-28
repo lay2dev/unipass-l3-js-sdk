@@ -7,7 +7,7 @@ const rawDataRegister = {
   username:
     '0x231edefda5d8c03e2ca9c5f36c55b0735f5ce3289b21c7f2e153a5cd8a1882f9',
   action: {
-    source: 'unipass-wallet',
+    // source: 'unipass-wallet',
     registerEmail:
       '0xb701f116b2c00668ae2a6fab119af93703df4c37ee79a7d63c4ff971b17a6902',
     quickLogin: false,

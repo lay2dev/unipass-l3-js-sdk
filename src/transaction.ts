@@ -1,5 +1,6 @@
 import { RawTransaction, RPC, Sign, TransactionParams, UniTokenModel } from '.';
 import { validators, transaction } from './utils';
+let source = 'unipass-wallet';
 
 export class Transaction implements UniTokenModel {
   constructor(public inner: any, public sig?: Sign) {}
@@ -21,9 +22,13 @@ export class Transaction implements UniTokenModel {
   }
 
   transform(): object {
-    return transaction.TransformTransaction(
+    const data = transaction.TransformTransaction(
       this.serializeJson()
     ) as TransactionParams;
+    data.inner.action.source = data.inner.action.source
+      ? data.inner.action.source
+      : source;
+    return data;
   }
 
   serializeJson(): TransactionParams {
