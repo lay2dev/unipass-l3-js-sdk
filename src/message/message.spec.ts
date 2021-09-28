@@ -11,9 +11,9 @@ rsaKey.setOptions({ signingScheme: 'pkcs1-sha256' });
 
 const rawData = {
   action: ActionType.REGISTER,
-  username: 'aven',
+  username: 'iwangyang',
+  registerEmail: 'iwangyang@qq.com',
   nonce: '0x2',
-  registerEmail: 'hi.ellen@qq.com',
   threshold: 1,
   keyType: KeyType.RSA,
   pubKey:
