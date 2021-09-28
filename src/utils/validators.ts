@@ -70,7 +70,13 @@ export function ValidateAction(
         assertObjectWithKeys(
           debugPath,
           raw,
-          ['register_email', 'pubkey', 'quick_login', 'recovery_email'],
+          [
+            'register_email',
+            'pubkey',
+            'quick_login',
+            'recovery_email',
+            'source',
+          ],
           []
         );
         ValidatePubkey(raw.pubkey);

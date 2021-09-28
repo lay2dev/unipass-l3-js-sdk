@@ -77,6 +77,7 @@ export interface Action {
     pubkey?: Pubkey;
     recoveryEmail?: RecoveryEmail | null;
     quickLogin?: boolean;
+    source?: string;
 }
 export interface TxStatus {
     ckbTxHash: string;

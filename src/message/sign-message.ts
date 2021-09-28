@@ -12,6 +12,14 @@ export class SignMessage {
 
     if (this.inner.action == ActionType.REGISTER) {
       source = this.inner.source ? this.inner.source : source;
+      console.log('------------');
+      console.log(this.inner);
+      console.log(
+        { v: this.inner.action, t: 'uint8' },
+        { v: sha256HashData(this.inner.registerEmail), t: 'bytes32' },
+        { v: sha256HashData(this.inner.username), t: 'bytes32' },
+        { v: source, t: 'string' }
+      );
       const hash: string = soliditySha3(
         { v: this.inner.action, t: 'uint8' },
         { v: sha256HashData(this.inner.registerEmail), t: 'bytes32' },

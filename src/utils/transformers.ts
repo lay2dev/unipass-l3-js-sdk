@@ -245,6 +245,7 @@ export function TransformActionRegister(
     quick_login: invokeSerializeJson,
     pubkey: toInvoke(transformPubkey),
     recovery_email: toInvoke(transformRecoveryEmailInner),
+    source: invokeSerializeJson,
   });
   return formatAction;
 }
