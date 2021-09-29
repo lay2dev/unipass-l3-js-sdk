@@ -1,6 +1,6 @@
 {
   "name": "unipass-l3-js-sdk",
-  "version": "1.0.26",
+  "version": "1.0.24",
   "main": "build/main/index.js",
   "typings": "build/main/index.d.ts",
   "module": "build/module/index.js",
@@ -78,7 +78,7 @@
   "ava": {
     "failFast": true,
     "files": [
-      "build/main/transaction.spec.js"
+      "build/main/massage/*.spec.js"
     ],
     "ignoredByWatcher": [
       "build/main/**/*.js"
