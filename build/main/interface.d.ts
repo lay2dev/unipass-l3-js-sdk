@@ -98,7 +98,7 @@ export interface TransactionParams {
 }
 export interface Sign {
     signature: string;
-    emailHeader?: string;
+    emailHeader?: string[] | string;
     oldkeySignature?: string;
     unipassSignature?: string;
 }

@@ -128,8 +128,8 @@ const rpc = new RPC(uri);
 
 test('test Transaction sendTransaction validate', async (t) => {
   const data = new Transaction(rawDataRegister, sig);
+  console.log((data.transform() as TransactionParams).sig);
   console.log((data.transform() as TransactionParams).inner);
-  console.log((data.transform() as TransactionParams).inner.action);
   // const ckbTxHash = await data.sendTransaction(rpc);
   // console.log(ckbTxHash);
   t.is(true, true);

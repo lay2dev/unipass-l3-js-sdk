@@ -10,11 +10,11 @@ const rsaKey = new NodeRSA(
 rsaKey.setOptions({ signingScheme: 'pkcs1-sha256' });
 
 const rawData = {
-  username: 'aven',
+  username: 'codecup',
   key: '0x01000100b96f3a23b4dc3e5bbddde8e9f6bc5ad6e309f24efd5c1e3f763108121995ff847e52db6dcf310fb0360f9d9cafea6a034ad38bbaa4bdecd599b0d8d5196c496cbe212dc31fc94f62b50aa56140b1cad9a37715a3b117773fe7652e582b78facc700d21057d99b60a8809b5694448bbbe16398baa8dfcc6977fdf4c17e046182ef3e9ea94326ced855f8181fa582815fdc563b40f987459fe30fa5b35b6954a1d7c33c0925fe9f092ebf41460b17b57c46a1dd841da5fa54c7471f53579e7cb7e7c2b69255ebe0b2da8a335f0e85b508fd5e2b5ca568128a7fa815a111dbf8d75ba640a502684833da1093481a980b2eb3e005b7952382dbbba4190010d909715',
   nonce: '0x2',
   keyType: 0,
-  registerEmail: '751733381@qq.com',
+  registerEmail: 'codecup@foxmail.com',
   action: 1,
 };
 
