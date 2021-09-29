@@ -95,7 +95,7 @@ export class SignMessage {
         emails.push(sha256HashData(item));
       }
 
-      const hash: string = soliditySha3(
+      const data: string = encodePacked(
         { v: this.inner.action, t: 'uint8' },
         { v: sha256HashData(this.inner.registerEmail), t: 'bytes32' },
         { v: sha256HashData(this.inner.username), t: 'bytes32' },
@@ -103,6 +103,13 @@ export class SignMessage {
         { v: '0x' + emails.join(), t: 'bytes' },
         { v: this.inner.threshold, t: 'uint' }
       )!;
+      console.log('-----------data-----------');
+      console.log(data);
+
+      const hash: string = soliditySha3(data) as string;
+
+      console.log('-----------hash-----------');
+      console.log(hash);
 
       return hash;
     } else if (this.inner.action == ActionType.UPDATE_QUICK_LOGIN) {
