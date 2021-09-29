@@ -1,6 +1,6 @@
 import { ActionType, HashRawData, sha256HashData } from '..';
 
-import { soliditySha3 } from 'web3-utils';
+import { encodePacked, soliditySha3 } from 'web3-utils';
 let source = 'unipass-wallet';
 
 export class SignMessage {
@@ -39,7 +39,7 @@ export class SignMessage {
         throw new Error(`SignMessageError: nonce not hex data`);
       }
 
-      const hash: string = soliditySha3(
+      const data: string = encodePacked(
         { v: this.inner.action, t: 'uint8' },
         { v: sha256HashData(this.inner.registerEmail), t: 'bytes32' },
         { v: sha256HashData(this.inner.username), t: 'bytes32' },
@@ -47,6 +47,13 @@ export class SignMessage {
         { v: this.inner.keyType, t: 'uint8' },
         { v: this.inner.pubKey, t: 'bytes' }
       )!;
+      console.log('-----------data-----------');
+      console.log(data);
+
+      const hash: string = soliditySha3(data) as string;
+
+      console.log('-----------hash-----------');
+      console.log(hash);
 
       return hash;
     } else if (this.inner.action == ActionType.DEL_LOCAL_KEY) {
