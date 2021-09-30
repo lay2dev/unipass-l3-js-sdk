@@ -78,7 +78,8 @@
   "ava": {
     "failFast": true,
     "files": [
-      "build/main/massage/*.spec.js"
+     
+      "build/main/message/*.spec.js"
     ],
     "ignoredByWatcher": [
       "build/main/**/*.js"

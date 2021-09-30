@@ -1,3 +1,5 @@
+import { RpcActionType } from '../interface';
+
 function assertObject(debugPath: string, object: object) {
   if (!(object instanceof Object)) {
     throw new Error(`${debugPath} is not an object!`);
@@ -66,7 +68,7 @@ export function ValidateAction(
 ) {
   if (action) {
     switch (action) {
-      case 'register':
+      case RpcActionType.REGISTER:
         assertObjectWithKeys(
           debugPath,
           raw,
@@ -82,19 +84,19 @@ export function ValidateAction(
         ValidatePubkey(raw.pubkey);
         ValidateRecoveryEmail(raw.recovery_email);
         break;
-      case 'add_key':
+      case RpcActionType.ADD_KEY:
         assertObjectWithKeys(debugPath, raw, ['pubkey'], []);
         ValidatePubkey(raw.pubkey);
         break;
-      case 'delete_key':
+      case RpcActionType.DEL_KEY:
         assertObjectWithKeys(debugPath, raw, ['pubkey'], []);
         ValidatePubkey(raw.pubkey);
         break;
-      case 'update_recovery_email':
+      case RpcActionType.UPDATE_RECOVERY_EMAIL:
         assertObjectWithKeys(debugPath, raw, ['recovery_email'], []);
         ValidateRecoveryEmail(raw.recovery_email);
         break;
-      case 'update_quick_login':
+      case RpcActionType.UPDATE_QUICK_LOGIN:
         assertObjectWithKeys(debugPath, raw, ['quick_login'], []);
         break;
       default:

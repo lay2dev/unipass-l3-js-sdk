@@ -1,3 +1,4 @@
+import { RpcActionType } from '../interface';
 import { validators } from './validators';
 
 function invokeSerializeJson(debugPath: string, value: any) {
@@ -294,7 +295,7 @@ export function TransformInnerTypeData(type: string) {
   // todo type checkout
   let data: any;
   switch (type) {
-    case 'register':
+    case RpcActionType.REGISTER:
       data = {
         type: invokeSerializeJson,
         nonce: invokeSerializeJson,
@@ -302,7 +303,7 @@ export function TransformInnerTypeData(type: string) {
         action: toInvoke(TransformActionRegister),
       };
       break;
-    case 'add_key':
+    case RpcActionType.ADD_KEY:
       data = {
         type: invokeSerializeJson,
         nonce: invokeSerializeJson,
@@ -310,7 +311,7 @@ export function TransformInnerTypeData(type: string) {
         action: toInvoke(TransformActionAddKey),
       };
       break;
-    case 'delete_key':
+    case RpcActionType.DEL_KEY:
       data = {
         type: invokeSerializeJson,
         nonce: invokeSerializeJson,
@@ -318,7 +319,7 @@ export function TransformInnerTypeData(type: string) {
         action: toInvoke(TransformActionDeleteKey),
       };
       break;
-    case 'update_recovery_email':
+    case RpcActionType.UPDATE_RECOVERY_EMAIL:
       data = {
         type: invokeSerializeJson,
         nonce: invokeSerializeJson,
@@ -326,7 +327,7 @@ export function TransformInnerTypeData(type: string) {
         action: toInvoke(TransformActionUpdateRecoveryEmail),
       };
       break;
-    case 'update_quick_login':
+    case RpcActionType.UPDATE_QUICK_LOGIN:
       data = {
         type: invokeSerializeJson,
         nonce: invokeSerializeJson,

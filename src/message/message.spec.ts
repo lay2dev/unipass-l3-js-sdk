@@ -10,12 +10,15 @@ const rsaKey = new NodeRSA(
 rsaKey.setOptions({ signingScheme: 'pkcs1-sha256' });
 
 const rawData = {
+  action: 5,
   username: 'codecup',
-  key: '0x0001000192657789dffc25f4b8e1b07ae3311851318383976499af2aca9139ac877ddfd60cd7eeefd3db480d022e6566ccee028d2153160ddc501670e7f2a026f2ae0d97bdf08030e63595e4f7d70b65a0a3b60c696e2860dae6cda4cdb1dd9c0cd2dfa107fae3424719d126665b888f366cda4a9308b67d2c2bb2bdbf0e2eca224ee92dcde82c2e88e5e976bc8edc8f2828d5901e18b6466012d2650265deac33e2de02ce6ca1c9029ed33726fd66ba152d09cb75059b6c60b5a4009af89258420716151850966d75741c8043a6f3729155ea3e0cec75ec8748d2cd0366a5d73de1fce8ad14458880fc0e0feb8819193db49dd1a3b71d46f6e1ce7729fa2264efdb278b',
-  nonce: '0x5',
+  pubKey:
+    '0x00010001c686b98fcdce07eb6c938c010b19dabae7bbfecb6cde8c45c533ab01f740536fd8de2de63395eebfc0c4a3f3ebcd2f60a7debdfd8aa86a592b6a51c135c3bbd8f195f8aef02db7e3eac04d3fff6dff69f6e90f48a31df80c1a5a92adeb051e1dd3242c8adf22259151eda9ce47169f1f198fa634e6e38de4df26738e38dd921269ac01acb7f74c329d93e1353a98aaa5cdae3e6c78ca615955f20adb1058046429542755c3151abade06e0af6470b088ff1781227999e60b17a214b8887739396f699c889125cf4c0dec45190fb079f11b0fec4c204875be6d66f8ad3a5e1523d5017b8989346ad91e7988942b008e6517c1ca1c2a71630e1e9096569583a181',
   keyType: 0,
+  nonce: '0x2',
   registerEmail: 'codecup@foxmail.com',
-  action: ActionType.QUICK_ADD_LOCAL_KEY,
+  recoveryEmail: ['hi.ellen@qq.com'],
+  threshold: 1,
 };
 
 test('test Transaction getSignMessage validate', async (t) => {

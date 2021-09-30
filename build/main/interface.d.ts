@@ -9,6 +9,13 @@ export declare enum ActionType {
     CANCEL_RECOVERY = 7,
     COMPLETE_RECOVERY = 8
 }
+export declare enum RpcActionType {
+    REGISTER = "register",
+    ADD_KEY = "add_key",
+    DEL_KEY = "update_quick_login",
+    UPDATE_QUICK_LOGIN = "update_recovery_email",
+    UPDATE_RECOVERY_EMAIL = "update_recovery_email"
+}
 export declare enum KeyType {
     RSA = 0,
     Secp256K1 = 1,
