@@ -13,8 +13,8 @@ export enum ActionType {
 export enum RpcActionType {
   REGISTER = 'register',
   ADD_KEY = 'add_key',
-  DEL_KEY = 'update_quick_login',
-  UPDATE_QUICK_LOGIN = 'update_recovery_email',
+  DEL_KEY = 'delete_key',
+  UPDATE_QUICK_LOGIN = 'update_quick_login',
   UPDATE_RECOVERY_EMAIL = 'update_recovery_email',
 }
 
