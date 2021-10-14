@@ -176,7 +176,7 @@ export function TransformRawTransaction(
     formateTransaction = TransformRowTransaction(rawTransaction);
   } else if (rawTransaction.length == 0) {
     return [];
-  } else if (rawTransaction[0].pending_state) {
+  } else if (rawTransaction[0].commit_status) {
     formateTransaction = transformRawObject(debugPath, rawTransaction[0], {
       registerEmail: invokeSerializeJson,
       quickLogin: invokeSerializeJson,
@@ -185,6 +185,7 @@ export function TransformRawTransaction(
       username: invokeSerializeJson,
       recoveryEmail: toInvoke(TransformRecoveryEmail),
       pendingState: toInvoke(TransformPendingState),
+      commitStatus: invokeSerializeJson,
     });
     return [formateTransaction];
   } else if (rawTransaction[0].username) {

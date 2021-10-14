@@ -78,8 +78,7 @@
   "ava": {
     "failFast": true,
     "files": [
-     
-      "build/main/message/*.spec.js"
+      "build/main/raw-transaction.spec.js"
     ],
     "ignoredByWatcher": [
       "build/main/**/*.js"

@@ -36,6 +36,7 @@ export interface UserInfoResult {
     replaceOld: boolean;
     timeCell: string;
   };
+  commitStatus?: string;
 }
 export interface RecoveryEmail {
   threshold: number;
