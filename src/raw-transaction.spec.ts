@@ -86,12 +86,6 @@ const userInfoRawData = {
         first_n: 1,
         threshold: 1,
       },
-      pending_state: {
-        pending_key: '0x01415498a39E37B7C17b586AB8AB77BE0B518DBDFc',
-        replace_old: false,
-        time_cell:
-          '0x9bd7e06f3ecf4be0f2fcd2188b23f1b9fcc88e5d4b65a8637b17723bbda3cce8',
-      },
       commit_status: 'pending',
       register_email:
         '0xb701f116b2c00668ae2a6fab119af93703df4c37ee79a7d63c4ff971b17a6902',

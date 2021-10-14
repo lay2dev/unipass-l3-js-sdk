@@ -184,7 +184,7 @@ export function TransformRawTransaction(
       nonce: invokeSerializeJson,
       username: invokeSerializeJson,
       recoveryEmail: toInvoke(TransformRecoveryEmail),
-      pendingState: toInvoke(TransformPendingState),
+      // pendingState: toInvoke(TransformPendingState),
       commitStatus: invokeSerializeJson,
     });
     return [formateTransaction];
