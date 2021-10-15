@@ -14,6 +14,8 @@ export enum RpcActionType {
   REGISTER = 'register',
   ADD_KEY = 'add_key',
   DEL_KEY = 'delete_key',
+  RECOVERY_ADD = 'recovery_add_key',
+  RECOVERY_REPLACE = 'recovery_replace',
   UPDATE_QUICK_LOGIN = 'update_quick_login',
   UPDATE_RECOVERY_EMAIL = 'update_recovery_email',
 }
@@ -28,9 +30,9 @@ export interface UserInfoResult {
   registerEmail: string;
   quickLogin: boolean;
   localKeys: Pubkey[];
-  recoveryEmail: RecoveryEmail;
   username: string;
   nonce: string;
+  recoveryEmail?: RecoveryEmail;
   pendingState?: {
     pendingKey: string;
     replaceOld: boolean;
