@@ -99,6 +99,9 @@ export function TransformRecoveryEmail(
   target: any,
   { debugPath = 'raw' } = {}
 ) {
+  if (!target) {
+    return null;
+  }
   const formatRecoveryEmail = transformRawObject(debugPath, target, {
     threshold: invokeSerializeJson,
     firstN: invokeSerializeJson,

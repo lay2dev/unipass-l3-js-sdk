@@ -69,28 +69,25 @@ const userInfoRawData = {
   jsonrpc: '2.0',
   result: [
     {
+      commit_status: 'committed',
       local_keys: [
+        {
+          secp256k1: '0x68514d4a157aa662e79682184be0b94a42f6b5b4',
+        },
         {
           rsa_pubkey: {
             e: 65537,
-            n: '0xc686b98fcdce07eb6c938c010b19dabae7bbfecb6cde8c45c533ab01f740536fd8de2de63395eebfc0c4a3f3ebcd2f60a7debdfd8aa86a592b6a51c135c3bbd8f195f8aef02db7e3eac04d3fff6dff69f6e90f48a31df80c1a5a92adeb051e1dd3242c8adf22259151eda9ce47169f1f198fa634e6e38de4df26738e38dd921269ac01acb7f74c329d93e1353a98aaa5cdae3e6c78ca615955f20adb1058046429542755c3151abade06e0af6470b088ff1781227999e60b17a214b8887739396f699c889125cf4c0dec45190fb079f11b0fec4c204875be6d66f8ad3a5e1523d5017b8989346ad91e7988942b008e6517c1ca1c2a71630e1e9096569583a181',
+            n: '0xb96f3a23b4dc3e5bbddde8e9f6bc5ad6e309f24efd5c1e3f763108121995ff847e52db6dcf310fb0360f9d9cafea6a034ad38bbaa4bdecd599b0d8d5196c496cbe212dc31fc94f62b50aa56140b1cad9a37715a3b117773fe7652e582b78facc700d21057d99b60a8809b5694448bbbe16398baa8dfcc6977fdf4c17e046182ef3e9ea94326ced855f8181fa582815fdc563b40f987459fe30fa5b35b6954a1d7c33c0925fe9f092ebf41460b17b57c46a1dd841da5fa54c7471f53579e7cb7e7c2b69255ebe0b2da8a335f0e85b508fd5e2b5ca568128a7fa815a111dbf8d75ba640a502684833da1093481a980b2eb3e005b7952382dbbba4190010d909715',
           },
         },
       ],
-      nonce: '0x1',
+      nonce: '0x2',
       quick_login: false,
-      recovery_email: {
-        emails: [
-          '0xb701f116b2c00668ae2a6fab119af93703df4c37ee79a7d63c4ff971b17a6902',
-        ],
-        first_n: 1,
-        threshold: 1,
-      },
-      commit_status: 'pending',
+      recovery_email: null,
       register_email:
-        '0xb701f116b2c00668ae2a6fab119af93703df4c37ee79a7d63c4ff971b17a6902',
+        '0xea196b650027e538de43667b4b312746f35145f00afed5bef9a6368c2c309988',
       username:
-        '0x231edefda5d8c03e2ca9c5f36c55b0735f5ce3289b21c7f2e153a5cd8a1882f9',
+        '0x2a1eb676171606ea0c6ffad366ddee63cd2c2c8fa2ac99da0334862f4290c140',
     },
   ],
   id: 4627112,
