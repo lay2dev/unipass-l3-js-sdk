@@ -46,6 +46,9 @@ export declare function TransformActionUpdateRecoveryEmail(target: any, { debugP
 export declare function TransformActionUpdateQuickLogin(target: any, { debugPath }?: {
     debugPath?: string;
 }): {};
+export declare function TransformActionRecovery(target: any, { debugPath }?: {
+    debugPath?: string;
+}): {};
 export declare function TransformInnerTypeData(type: string): any;
 export declare function TransformInner(target: any, { validation, debugPath }?: {
     validation?: boolean;

@@ -303,6 +303,17 @@ export function TransformActionUpdateQuickLogin(
   return formatAction;
 }
 
+export function TransformActionRecovery(
+  target: any,
+  { debugPath = 'action_recovery' } = {}
+) {
+  const formatAction = transformObject(debugPath, target, {
+    pubkey: toInvoke(transformPubkey),
+    replace: invokeSerializeJson,
+  });
+  return formatAction;
+}
+
 export function TransformInnerTypeData(type: string) {
   // todo type checkout
   let data: any;
@@ -345,6 +356,17 @@ export function TransformInnerTypeData(type: string) {
         nonce: invokeSerializeJson,
         username: invokeSerializeJson,
         action: toInvoke(TransformActionUpdateQuickLogin),
+      };
+      break;
+    case RpcActionType.START_RECOVERY_1:
+    case RpcActionType.START_RECOVERY_2:
+    case RpcActionType.CANCEL_RECOVERY:
+    case RpcActionType.FINISH_RECOVERY:
+      data = {
+        type: invokeSerializeJson,
+        nonce: invokeSerializeJson,
+        username: invokeSerializeJson,
+        action: toInvoke(TransformActionRecovery),
       };
       break;
     default:

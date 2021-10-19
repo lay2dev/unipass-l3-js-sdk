@@ -99,6 +99,13 @@ export function ValidateAction(
       case RpcActionType.UPDATE_QUICK_LOGIN:
         assertObjectWithKeys(debugPath, raw, ['quick_login'], []);
         break;
+      case RpcActionType.START_RECOVERY_1:
+      case RpcActionType.START_RECOVERY_2:
+      case RpcActionType.CANCEL_RECOVERY:
+      case RpcActionType.FINISH_RECOVERY:
+        assertObjectWithKeys(debugPath, raw, ['pubkey', 'replace'], []);
+        ValidatePubkey(raw.pubkey);
+        break;
       default:
         throw new Error('invalid type ');
     }

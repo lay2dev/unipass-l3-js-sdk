@@ -98,6 +98,7 @@ export interface Action {
   recoveryEmail?: RecoveryEmail | null;
   quickLogin?: boolean;
   source?: string;
+  replace?: boolean;
 }
 
 export interface TxStatus {
