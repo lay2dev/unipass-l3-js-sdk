@@ -5,9 +5,10 @@ export declare enum ActionType {
     DEL_LOCAL_KEY = 3,
     UPDATE_QUICK_LOGIN = 4,
     UPDATE_RECOVERY_EMAIL = 5,
-    START_RECOVERY = 6,
-    CANCEL_RECOVERY = 7,
-    COMPLETE_RECOVERY = 8
+    START_RECOVERY_1 = 6,
+    START_RECOVERY_2 = 7,
+    COMPLETE_RECOVERY = 8,
+    CANCEL_RECOVERY = 9
 }
 export declare enum RpcActionType {
     REGISTER = "register",
@@ -16,7 +17,11 @@ export declare enum RpcActionType {
     RECOVERY_ADD = "recovery_add_key",
     RECOVERY_REPLACE = "recovery_replace",
     UPDATE_QUICK_LOGIN = "update_quick_login",
-    UPDATE_RECOVERY_EMAIL = "update_recovery_email"
+    UPDATE_RECOVERY_EMAIL = "update_recovery_email",
+    START_RECOVERY_1 = "start_recovery_1",
+    START_RECOVERY_2 = "start_recovery_2",
+    FINISH_RECOVERY = "finish_recovery",
+    CANCEL_RECOVERY = "cancel_recovery"
 }
 export declare enum KeyType {
     RSA = 0,

@@ -5,9 +5,10 @@ export enum ActionType {
   DEL_LOCAL_KEY,
   UPDATE_QUICK_LOGIN,
   UPDATE_RECOVERY_EMAIL,
-  START_RECOVERY,
-  CANCEL_RECOVERY,
+  START_RECOVERY_1,
+  START_RECOVERY_2,
   COMPLETE_RECOVERY,
+  CANCEL_RECOVERY,
 }
 
 export enum RpcActionType {
@@ -18,6 +19,10 @@ export enum RpcActionType {
   RECOVERY_REPLACE = 'recovery_replace',
   UPDATE_QUICK_LOGIN = 'update_quick_login',
   UPDATE_RECOVERY_EMAIL = 'update_recovery_email',
+  START_RECOVERY_1 = 'start_recovery_1',
+  START_RECOVERY_2 = 'start_recovery_2',
+  FINISH_RECOVERY = 'finish_recovery',
+  CANCEL_RECOVERY = 'cancel_recovery',
 }
 
 export enum KeyType {

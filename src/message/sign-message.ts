@@ -138,7 +138,7 @@ export class SignMessage {
       )!;
 
       return hash;
-    } else if (this.inner.action == ActionType.START_RECOVERY) {
+    } else if (this.inner.action == ActionType.START_RECOVERY_1) {
       if (!this.inner.nonce) {
         throw new Error(`SignMessageError: not find nonce `);
       }
