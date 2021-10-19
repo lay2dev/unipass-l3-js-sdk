@@ -18,7 +18,7 @@ export declare function TransformPendingState(target: any, { debugPath }?: {
 }): {};
 export declare function TransformRowTransaction(rawTransaction: any, { debugPath }?: {
     debugPath?: string;
-}): {};
+}): any;
 export declare function TransformRawTransaction(rawTransaction: any, { debugPath }?: {
     debugPath?: string;
 }): {};

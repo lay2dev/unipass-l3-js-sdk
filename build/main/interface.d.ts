@@ -97,9 +97,12 @@ export interface TransactionResult {
     transactionInner: TransactionInner;
     txStatus: TxStatus;
 }
+export interface TransactionTemple {
+    txStatus: string;
+}
 export interface ResponseInfo {
     jsonrpc: string;
-    result: string | UserInfoResult[] | TransactionResult | TransactionResult[];
+    result: string | UserInfoResult[] | TransactionResult | TransactionResult[] | TransactionTemple[];
     id: number;
 }
 export interface TransactionParams {

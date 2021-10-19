@@ -153,10 +153,18 @@ export function TransformRowTransaction(
   rawTransaction: any,
   { debugPath = 'raw' } = {}
 ) {
-  const formateTransaction = transformRawObject(debugPath, rawTransaction, {
-    transactionInner: toInvoke(TransformInnerRaw),
-    txStatus: toInvoke(TransformTxStatus),
-  });
+  let formateTransaction = null;
+  if (rawTransaction.hash) {
+    formateTransaction = transformRawObject(debugPath, rawTransaction, {
+      txStatus: invokeSerializeJson,
+    });
+  } else {
+    formateTransaction = transformRawObject(debugPath, rawTransaction, {
+      transactionInner: toInvoke(TransformInnerRaw),
+      txStatus: toInvoke(TransformTxStatus),
+    });
+  }
+
   return formateTransaction;
 }
 

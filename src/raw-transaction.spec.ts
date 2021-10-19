@@ -1,5 +1,9 @@
 import test from 'ava';
-import { TransactionResult, UserInfoResult } from './interface';
+import {
+  TransactionResult,
+  TransactionTemple,
+  UserInfoResult,
+} from './interface';
 import { RawTransaction } from './raw-transaction';
 
 const txRawData = {
@@ -93,6 +97,18 @@ const userInfoRawData = {
   id: 4627112,
 };
 
+const TxIndoRawData = {
+  jsonrpc: '2.0',
+  result: [
+    {
+      hash: '0x...',
+      child_tx: '0x...',
+      tx_status: 'comitted',
+    },
+  ],
+  id: 4627112,
+};
+
 interface stringResult {
   result: string;
 }
@@ -116,12 +132,23 @@ const stringRawData = { jsonrpc: '2.0', result: '0x2cb4', id: 2 };
 //   );
 // });
 
-test('test rawTransaction userInfoRawData ', async (t) => {
-  const data = new RawTransaction(userInfoRawData);
-  const formateData = data.transform() as UserInfoResult[];
-  console.log(formateData, userInfoRawData);
+// test('test rawTransaction userInfoRawData ', async (t) => {
+//   const data = new RawTransaction(userInfoRawData);
+//   const formateData = data.transform() as UserInfoResult[];
+//   console.log(formateData, userInfoRawData);
 
-  t.is(formateData[0].registerEmail, userInfoRawData.result[0].register_email);
+//   t.is(formateData[0].registerEmail, userInfoRawData.result[0].register_email);
+// });
+
+//
+
+test('test rawTransaction userInfoRawData ', async (t) => {
+  const data = new RawTransaction(TxIndoRawData);
+  const formateData = data.transform() as TransactionTemple[];
+  console.log(formateData);
+  console.log(formateData[0].txStatus, TxIndoRawData.result[0].tx_status);
+
+  t.is(formateData[0].txStatus, TxIndoRawData.result[0].tx_status);
 });
 
 // test('test rawTransaction stringRawData ', async (t) => {
