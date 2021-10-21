@@ -309,7 +309,7 @@ export function TransformActionRecovery(
 ) {
   const formatAction = transformObject(debugPath, target, {
     pubkey: toInvoke(transformPubkey),
-    replace: invokeSerializeJson,
+    replace_old: invokeSerializeJson,
   });
   return formatAction;
 }

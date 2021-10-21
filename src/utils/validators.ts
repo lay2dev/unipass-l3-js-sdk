@@ -103,7 +103,7 @@ export function ValidateAction(
       case RpcActionType.START_RECOVERY_2:
       case RpcActionType.CANCEL_RECOVERY:
       case RpcActionType.FINISH_RECOVERY:
-        assertObjectWithKeys(debugPath, raw, ['pubkey', 'replace'], []);
+        assertObjectWithKeys(debugPath, raw, ['pubkey', 'replace_old'], []);
         ValidatePubkey(raw.pubkey);
         break;
       default:

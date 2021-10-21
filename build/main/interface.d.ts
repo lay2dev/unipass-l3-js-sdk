@@ -93,7 +93,7 @@ export interface Action {
     recoveryEmail?: RecoveryEmail | null;
     quickLogin?: boolean;
     source?: string;
-    replace?: boolean;
+    replaceOld?: boolean;
 }
 export interface TxStatus {
     ckbTxHash: string;
