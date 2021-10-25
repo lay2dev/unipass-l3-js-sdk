@@ -13,19 +13,21 @@ export class SignMessage {
     if (this.inner.action == ActionType.REGISTER) {
       source = this.inner.source ? this.inner.source : source;
       console.log('------------');
-      console.log(this.inner);
-      console.log(
-        { v: this.inner.action, t: 'uint8' },
-        { v: sha256HashData(this.inner.registerEmail), t: 'bytes32' },
-        { v: sha256HashData(this.inner.username), t: 'bytes32' },
-        { v: source, t: 'string' }
-      );
-      const hash: string = soliditySha3(
+
+      const data: string = encodePacked(
+        { v: this.inner.chainId, t: 'uint8' },
         { v: this.inner.action, t: 'uint8' },
         { v: sha256HashData(this.inner.registerEmail), t: 'bytes32' },
         { v: sha256HashData(this.inner.username), t: 'bytes32' },
         { v: source, t: 'string' }
       )!;
+      console.log('-----------data-----------');
+      console.log(data);
+
+      const hash: string = soliditySha3(data) as string;
+
+      console.log('-----------hash-----------');
+      console.log(hash);
 
       return hash;
     } else if (
@@ -40,6 +42,7 @@ export class SignMessage {
       }
 
       const data: string = encodePacked(
+        { v: this.inner.chainId, t: 'uint8' },
         { v: this.inner.action, t: 'uint8' },
         { v: sha256HashData(this.inner.registerEmail), t: 'bytes32' },
         { v: sha256HashData(this.inner.username), t: 'bytes32' },
@@ -64,6 +67,7 @@ export class SignMessage {
         throw new Error(`SignMessageError: nonce not hex data`);
       }
       const data: string = encodePacked(
+        { v: this.inner.chainId, t: 'uint8' },
         { v: this.inner.action, t: 'uint8' },
         { v: sha256HashData(this.inner.registerEmail), t: 'bytes32' },
         { v: sha256HashData(this.inner.username), t: 'bytes32' },
@@ -96,6 +100,7 @@ export class SignMessage {
       }
       console.log(this.inner);
       console.log(
+        { v: this.inner.chainId, t: 'uint8' },
         { v: this.inner.action, t: 'uint8' },
         { v: sha256HashData(this.inner.registerEmail), t: 'bytes32' },
         { v: sha256HashData(this.inner.username), t: 'bytes32' },
@@ -105,6 +110,7 @@ export class SignMessage {
       );
 
       const data: string = encodePacked(
+        { v: this.inner.chainId, t: 'uint8' },
         { v: this.inner.action, t: 'uint8' },
         { v: sha256HashData(this.inner.registerEmail), t: 'bytes32' },
         { v: sha256HashData(this.inner.username), t: 'bytes32' },
@@ -130,6 +136,7 @@ export class SignMessage {
       }
 
       const data: string = encodePacked(
+        { v: this.inner.chainId, t: 'uint8' },
         { v: this.inner.action, t: 'uint8' },
         { v: sha256HashData(this.inner.registerEmail), t: 'bytes32' },
         { v: sha256HashData(this.inner.username), t: 'bytes32' },
@@ -154,6 +161,7 @@ export class SignMessage {
       }
 
       const data: string = encodePacked(
+        { v: this.inner.chainId, t: 'uint8' },
         { v: this.inner.action, t: 'uint8' },
         { v: sha256HashData(this.inner.registerEmail), t: 'bytes32' },
         { v: sha256HashData(this.inner.username), t: 'bytes32' },
@@ -180,6 +188,7 @@ export class SignMessage {
       }
 
       const data: string = encodePacked(
+        { v: this.inner.chainId, t: 'uint8' },
         { v: this.inner.action, t: 'uint8' },
         { v: sha256HashData(this.inner.registerEmail), t: 'bytes32' },
         { v: sha256HashData(this.inner.username), t: 'bytes32' },

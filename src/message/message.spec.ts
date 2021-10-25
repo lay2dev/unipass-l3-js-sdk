@@ -1,6 +1,6 @@
 import test from 'ava';
 import { SignMessage } from '.';
-import { ActionType, KeyType } from '..';
+import { ActionType, ChainId, KeyType } from '..';
 const NodeRSA = require('node-rsa');
 const rsaKey = new NodeRSA(
   `-----BEGIN PRIVATE KEY-----
@@ -10,6 +10,7 @@ const rsaKey = new NodeRSA(
 rsaKey.setOptions({ signingScheme: 'pkcs1-sha256' });
 
 const rawData = {
+  chainId: ChainId.devNet,
   action: 5,
   username: 'codecup',
   pubKey:

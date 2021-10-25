@@ -28,6 +28,10 @@ export declare enum KeyType {
     Secp256K1 = 1,
     Secp256R1 = 2
 }
+export declare enum ChainId {
+    devNet = 0,
+    mainNet = 1
+}
 export interface UserInfoResult {
     registerEmail: string;
     quickLogin: boolean;
@@ -74,6 +78,7 @@ export interface pubkey {
     value: any;
 }
 export interface HashRawData {
+    chainId: ChainId;
     action: ActionType;
     pubKey?: string;
     keyType?: KeyType;
