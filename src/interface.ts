@@ -99,7 +99,7 @@ export interface HashRawData {
 
 export interface Action {
   registerEmail?: string;
-  username?: string;
+  oriUsername?: string;
   pubkey?: Pubkey;
   recoveryEmail?: RecoveryEmail | null;
   quickLogin?: boolean;

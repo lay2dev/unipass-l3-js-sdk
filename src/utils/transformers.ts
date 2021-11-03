@@ -255,6 +255,7 @@ export function TransformActionRegister(
 ) {
   const formatAction = transformObject(debugPath, target, {
     register_email: invokeSerializeJson,
+    ori_username:invokeSerializeJson,
     quick_login: invokeSerializeJson,
     pubkey: toInvoke(transformPubkey),
     recovery_email: toInvoke(transformRecoveryEmailInner),

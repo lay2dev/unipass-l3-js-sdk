@@ -73,6 +73,7 @@ export function ValidateAction(
           debugPath,
           raw,
           [
+            'ori_username',
             'register_email',
             'pubkey',
             'quick_login',
