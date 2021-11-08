@@ -1,13 +1,13 @@
 {
-  "name": "unipass-l3-js-sdk",
-  "version": "1.0.24",
+  "name": "up-aggregator-utils",
+  "version": "0.1.0",
   "main": "build/main/index.js",
   "typings": "build/main/index.d.ts",
   "module": "build/module/index.js",
-  "repository": "https://github.com/lay2dev/unipass-l3-js-sdk.git",
+  "repository": "https://github.com/lay2dev/up-aggregator-utils.git",
   "author": "aven",
   "license": "MIT",
-  "description": "lay2 unipass l3 js sdk",
+  "description": "unipass aggregator utils",
   "engines": {
     "node": ">=8.9"
   },
