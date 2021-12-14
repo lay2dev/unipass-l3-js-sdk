@@ -13,6 +13,7 @@ export enum ActionType {
 
 export enum RpcActionType {
   REGISTER = 'register',
+  QuickRegister = 'quick_register',
   ADD_KEY = 'add_key',
   DEL_KEY = 'delete_key',
   RECOVERY_ADD = 'recovery_add_key',
@@ -44,9 +45,9 @@ export interface UserInfoResult {
   nonce: string;
   recoveryEmail?: RecoveryEmail;
   pendingState?: {
-    pendingKey: string;
+    pendingKey: Pubkey;
     replaceOld: boolean;
-    timeCell: string;
+    startBlock: number;
   };
   commitStatus?: string;
 }
@@ -141,6 +142,7 @@ export interface Sign {
   emailHeader?: string[] | string;
   oldkeySignature?: string;
   unipassSignature?: string;
+  adminSignature?: string;
 }
 
 export interface UniTokenModel {

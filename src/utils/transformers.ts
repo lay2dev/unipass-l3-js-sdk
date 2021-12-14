@@ -134,12 +134,13 @@ export function TransformLocalKey(
 }
 
 export function TransformPendingState(target: any, { debugPath = 'raw' } = {}) {
-  const formatRecoveryEmail = transformRawObject(debugPath, target, {
-    pendingKey: invokeSerializeJson,
+  if (!target) return null;
+  const pendingState = transformRawObject(debugPath, target, {
+    pendingKey: toInvoke(TransformLocalKey),
     replaceOld: invokeSerializeJson,
-    timeCell: invokeSerializeJson,
+    startBlock: invokeSerializeJson,
   });
-  return formatRecoveryEmail;
+  return pendingState;
 }
 
 function toTxRowArray(array: any[]) {
@@ -195,7 +196,7 @@ export function TransformRawTransaction(
       nonce: invokeSerializeJson,
       username: invokeSerializeJson,
       recoveryEmail: toInvoke(TransformRecoveryEmail),
-      // pendingState: toInvoke(TransformPendingState),
+      pendingState: toInvoke(TransformPendingState),
       commitStatus: invokeSerializeJson,
     });
     return [formateTransaction];
@@ -255,7 +256,7 @@ export function TransformActionRegister(
 ) {
   const formatAction = transformObject(debugPath, target, {
     register_email: invokeSerializeJson,
-    ori_username:invokeSerializeJson,
+    ori_username: invokeSerializeJson,
     quick_login: invokeSerializeJson,
     pubkey: toInvoke(transformPubkey),
     recovery_email: toInvoke(transformRecoveryEmailInner),
@@ -413,6 +414,11 @@ export function TransformSign(
         email_header: invokeSerializeJson,
       });
     }
+  } else if (target.adminSignature) {
+    formatSign = transformObject(debugPath, target, {
+      signature: invokeSerializeJson,
+      admin_signature: invokeSerializeJson,
+    });
   } else {
     // add key 1
     formatSign = transformObject(debugPath, target, {
@@ -434,6 +440,10 @@ export function TransformSign(
           debugPath: `(transformed) ${debugPath}`,
         });
       }
+    } else if (target.adminSignature) {
+      validators.ValidatQuickRegister(formatSign, {
+        debugPath: `(transformed) ${debugPath}`,
+      });
     } else {
       // add key 1
       validators.ValidatSignAddKey1(formatSign, {

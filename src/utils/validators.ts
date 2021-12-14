@@ -136,6 +136,10 @@ export function ValidatSignAddKey1(raw: any, { debugPath = 'sign' } = {}) {
   assertObjectWithKeys(debugPath, raw, ['signature', 'oldkey_signature'], []);
   ValidateAction(raw.action);
 }
+export function ValidatQuickRegister(raw: any, { debugPath = 'sign' } = {}) {
+  assertObjectWithKeys(debugPath, raw, ['signature', 'admin_signature'], []);
+  ValidateAction(raw.action);
+}
 export function ValidatSignAddKey2(raw: any, { debugPath = 'sign' } = {}) {
   assertObjectWithKeys(
     debugPath,
@@ -162,6 +166,7 @@ export const validators = {
   ValidateTransaction,
   ValidateInner,
   ValidatSignAddKey1,
+  ValidatQuickRegister,
   ValidatSignAddKey2,
   ValidatSignRegister,
   ValidateAction,
