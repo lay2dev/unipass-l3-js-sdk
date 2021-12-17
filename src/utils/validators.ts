@@ -69,6 +69,7 @@ export function ValidateAction(
   if (action) {
     switch (action) {
       case RpcActionType.REGISTER:
+      case RpcActionType.QuickRegister:
         assertObjectWithKeys(
           debugPath,
           raw,
@@ -136,10 +137,6 @@ export function ValidatSignAddKey1(raw: any, { debugPath = 'sign' } = {}) {
   assertObjectWithKeys(debugPath, raw, ['signature', 'oldkey_signature'], []);
   ValidateAction(raw.action);
 }
-export function ValidatQuickRegister(raw: any, { debugPath = 'sign' } = {}) {
-  assertObjectWithKeys(debugPath, raw, ['signature', 'admin_signature'], []);
-  ValidateAction(raw.action);
-}
 export function ValidatSignAddKey2(raw: any, { debugPath = 'sign' } = {}) {
   assertObjectWithKeys(
     debugPath,
@@ -151,6 +148,11 @@ export function ValidatSignAddKey2(raw: any, { debugPath = 'sign' } = {}) {
 }
 export function ValidatSignRegister(raw: any, { debugPath = 'sign' } = {}) {
   assertObjectWithKeys(debugPath, raw, ['signature', 'email_header'], []);
+  ValidateAction(raw.action);
+}
+
+export function ValidatQuickRegister(raw: any, { debugPath = 'sign' } = {}) {
+  assertObjectWithKeys(debugPath, raw, ['signature', 'admin_signature'], []);
   ValidateAction(raw.action);
 }
 
@@ -166,9 +168,9 @@ export const validators = {
   ValidateTransaction,
   ValidateInner,
   ValidatSignAddKey1,
-  ValidatQuickRegister,
   ValidatSignAddKey2,
   ValidatSignRegister,
+  ValidatQuickRegister,
   ValidateAction,
   ValidateTarget,
 };

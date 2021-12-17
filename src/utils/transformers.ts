@@ -321,6 +321,7 @@ export function TransformInnerTypeData(type: string) {
   let data: any;
   switch (type) {
     case RpcActionType.REGISTER:
+    case RpcActionType.QuickRegister:
       data = {
         type: invokeSerializeJson,
         nonce: invokeSerializeJson,
