@@ -96,6 +96,7 @@ export interface HashRawData {
   quickLogin?: boolean;
   recoveryEmail?: string[] | null;
   source?: string;
+  ethSig?: string;
 }
 
 export interface Action {

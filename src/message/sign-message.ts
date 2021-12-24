@@ -41,15 +41,27 @@ export class SignMessage {
         throw new Error(`SignMessageError: nonce not hex data`);
       }
 
-      const data: string = encodePacked(
-        { v: this.inner.chainId, t: 'uint8' },
-        { v: this.inner.action, t: 'uint8' },
-        { v: sha256HashData(this.inner.registerEmail), t: 'bytes32' },
-        { v: sha256HashData(this.inner.username), t: 'bytes32' },
-        { v: this.inner.nonce, t: 'uint32' },
-        { v: this.inner.keyType, t: 'uint8' },
-        { v: this.inner.pubKey, t: 'bytes' }
-      )!;
+      let data: string = '';
+      if (this.inner.ethSig) {
+        data = encodePacked(
+          { v: this.inner.chainId, t: 'uint8' },
+          { v: this.inner.action, t: 'uint8' },
+          { v: sha256HashData(this.inner.username), t: 'bytes32' },
+          { v: this.inner.nonce, t: 'uint32' },
+          { v: this.inner.ethSig, t: 'bytes' }
+        )!;
+      } else {
+        data = encodePacked(
+          { v: this.inner.chainId, t: 'uint8' },
+          { v: this.inner.action, t: 'uint8' },
+          { v: sha256HashData(this.inner.registerEmail), t: 'bytes32' },
+          { v: sha256HashData(this.inner.username), t: 'bytes32' },
+          { v: this.inner.nonce, t: 'uint32' },
+          { v: this.inner.keyType, t: 'uint8' },
+          { v: this.inner.pubKey, t: 'bytes' }
+        )!;
+      }
+
       console.log('-----------data-----------');
       console.log(data);
 
