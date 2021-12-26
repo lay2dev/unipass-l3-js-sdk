@@ -121,6 +121,7 @@ export interface TransactionResult {
 
 export interface TransactionTemple {
   txStatus: string;
+  hash: string;
 }
 
 export interface ResponseInfo {

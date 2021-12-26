@@ -158,6 +158,7 @@ export function TransformRowTransaction(
   if (rawTransaction.hash) {
     formateTransaction = transformRawObject(debugPath, rawTransaction, {
       txStatus: invokeSerializeJson,
+      hash: invokeSerializeJson,
     });
   } else {
     formateTransaction = transformRawObject(debugPath, rawTransaction, {
