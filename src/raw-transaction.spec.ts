@@ -211,6 +211,15 @@ const TxIndoRawData = {
   ],
   id: 4456459,
 };
+const TxErrorRawData = {
+  jsonrpc: '2.0',
+  error: {
+    code: -9, // 错误码
+    message: 'unipass utils error:`rsa validate error: -1`', // 错误信息
+    data: '0xd216bbba07f0dc2bf2c06b532cf272c9efd472e42a02c7831e2d4d0896eda075', // 字符串交易hash,如果是请求参数错误，则不传data
+  },
+  id: 4969056,
+};
 
 interface stringResult {
   result: string;
@@ -246,12 +255,11 @@ const stringRawData = { jsonrpc: '2.0', result: '0x2cb4', id: 2 };
 //
 
 test('test rawTransaction userInfoRawData ', async (t) => {
-  const data = new RawTransaction(TxIndoRawData);
-  const formateData = data.transform() as TransactionTemple[];
+  const data = new RawTransaction(TxErrorRawData);
+  const formateData = data.transform();
   console.log(formateData);
-  console.log(formateData[0].txStatus, TxIndoRawData.result[0].tx_status);
 
-  t.is(formateData[0].txStatus, TxIndoRawData.result[0].tx_status);
+  t.is(formateData, formateData);
 });
 
 // test('test rawTransaction stringRawData ', async (t) => {

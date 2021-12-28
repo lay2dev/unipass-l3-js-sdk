@@ -8,6 +8,9 @@ export class RawTransaction implements UniTokenModel {
   }
 
   transform(): object | string {
+    if (!this.transactionResult.result) {
+      return this.transactionResult.error;
+    }
     if (typeof this.transactionResult.result == 'string') {
       return this.transactionResult.result;
     }

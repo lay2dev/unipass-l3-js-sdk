@@ -133,6 +133,13 @@ export interface ResponseInfo {
     | TransactionResult[]
     | TransactionTemple[];
   id: number;
+  error: ResponseError;
+}
+
+export interface ResponseError {
+  code: number;
+  message: string;
+  data: string;
 }
 
 export interface TransactionParams {
