@@ -9,6 +9,7 @@ export enum ActionType {
   START_RECOVERY_2,
   COMPLETE_RECOVERY,
   CANCEL_RECOVERY,
+  BIND_EMAIL,
 }
 
 export enum RpcActionType {
@@ -24,6 +25,7 @@ export enum RpcActionType {
   START_RECOVERY_2 = 'start_recovery_2',
   FINISH_RECOVERY = 'finish_recovery',
   CANCEL_RECOVERY = 'cancel_recovery',
+  BIND_EMAIL = 'bind_email',
 }
 
 export enum KeyType {
@@ -97,6 +99,7 @@ export interface HashRawData {
   recoveryEmail?: string[] | null;
   source?: string;
   ethSig?: string;
+  bindEmail?: string;
 }
 
 export interface Action {

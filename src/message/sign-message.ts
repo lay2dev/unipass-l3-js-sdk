@@ -215,6 +215,30 @@ export class SignMessage {
       console.log(hash);
 
       return hash;
+    } else if (this.inner.action == ActionType.BIND_EMAIL) {
+      if (!this.inner.nonce) {
+        throw new Error(`SignMessageError: not find nonce `);
+      }
+      if (!this.inner.nonce.startsWith('0x')) {
+        throw new Error(`SignMessageError: nonce not hex data`);
+      }
+
+      const data: string = encodePacked(
+        { v: this.inner.chainId, t: 'uint8' },
+        { v: this.inner.action, t: 'uint8' },
+        { v: sha256HashData(this.inner.username), t: 'bytes32' },
+        { v: this.inner.bindEmail, t: 'bytes' },
+        { v: this.inner.nonce, t: 'uint32' }
+      )!;
+      console.log('-----------data-----------');
+      console.log(data);
+
+      const hash: string = soliditySha3(data) as string;
+
+      console.log('-----------hash-----------');
+      console.log(hash);
+
+      return hash;
     } else {
       throw new Error(`SignMessageError: action error`);
     }
