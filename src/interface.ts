@@ -1,4 +1,5 @@
 export enum ActionType {
+  newAdminKeyType = -1,
   REGISTER = 0,
   ADD_LOCAL_KEY,
   QUICK_ADD_LOCAL_KEY,

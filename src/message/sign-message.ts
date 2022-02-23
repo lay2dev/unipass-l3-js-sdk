@@ -6,6 +6,20 @@ let source = 'unipass-wallet';
 export class SignMessage {
   constructor(private inner: HashRawData) {}
   messageHash(): string {
+    if (this.inner.action == ActionType.newAdminKeyType) {
+      const data: string = encodePacked(
+        { v: this.inner.chainId, t: 'uint8' },
+        { v: this.inner.keyType, t: 'uint8' },
+        { v: this.inner.pubKey, t: 'bytes' }
+      )!;
+      console.log('-----------data-----------');
+      console.log(data);
+      const hash: string = soliditySha3(data) as string;
+      console.log('-----------hash-----------');
+      console.log(hash);
+      return hash;
+    }
+
     if (!this.inner.registerEmail || !this.inner.username) {
       throw new Error(`SignMessageError: not find username or registerEmail`);
     }
