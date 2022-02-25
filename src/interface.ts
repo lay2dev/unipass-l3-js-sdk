@@ -11,6 +11,8 @@ export enum ActionType {
   COMPLETE_RECOVERY,
   CANCEL_RECOVERY,
   BIND_EMAIL,
+  REMOVE_VERIFIED_KEY,
+  REMOVE_VERIFIED_DISCORD,
 }
 
 export enum RpcActionType {
@@ -101,6 +103,7 @@ export interface HashRawData {
   source?: string;
   ethSig?: string;
   bindEmail?: string;
+  discordUuid?: string;
 }
 
 export interface Action {

@@ -253,6 +253,57 @@ export class SignMessage {
       console.log(hash);
 
       return hash;
+    } else if (this.inner.action == ActionType.REMOVE_VERIFIED_KEY) {
+      if (!this.inner.nonce) {
+        throw new Error(`SignMessageError: not find nonce `);
+      }
+      if (!this.inner.nonce.startsWith('0x')) {
+        throw new Error(`SignMessageError: nonce not hex data`);
+      }
+
+      const data: string = encodePacked(
+        { v: this.inner.chainId, t: 'uint8' },
+        { v: this.inner.action, t: 'uint8' },
+        { v: sha256HashData(this.inner.registerEmail), t: 'bytes32' },
+        { v: sha256HashData(this.inner.username), t: 'bytes32' },
+        { v: this.inner.nonce, t: 'uint32' },
+        { v: this.inner.keyType, t: 'uint8' },
+        { v: this.inner.pubKey, t: 'bytes' }
+      )!;
+      console.log('-----------data-----------');
+      console.log(data);
+
+      const hash: string = soliditySha3(data) as string;
+
+      console.log('-----------hash-----------');
+      console.log(hash);
+
+      return hash;
+    } else if (this.inner.action == ActionType.REMOVE_VERIFIED_DISCORD) {
+      if (!this.inner.nonce) {
+        throw new Error(`SignMessageError: not find nonce `);
+      }
+      if (!this.inner.nonce.startsWith('0x')) {
+        throw new Error(`SignMessageError: nonce not hex data`);
+      }
+
+      const data: string = encodePacked(
+        { v: this.inner.chainId, t: 'uint8' },
+        { v: this.inner.action, t: 'uint8' },
+        { v: sha256HashData(this.inner.registerEmail), t: 'bytes32' },
+        { v: sha256HashData(this.inner.username), t: 'bytes32' },
+        { v: this.inner.nonce, t: 'uint32' },
+        { v: this.inner.discordUuid, t: 'bytes32' }
+      )!;
+      console.log('-----------data-----------');
+      console.log(data);
+
+      const hash: string = soliditySha3(data) as string;
+
+      console.log('-----------hash-----------');
+      console.log(hash);
+
+      return hash;
     } else {
       throw new Error(`SignMessageError: action error`);
     }
