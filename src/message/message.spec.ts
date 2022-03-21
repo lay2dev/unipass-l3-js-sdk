@@ -11,7 +11,7 @@ rsaKey.setOptions({ signingScheme: 'pkcs1-sha256' });
 
 const rawData = {
   chainId: 1,
-  action: 0,
+  action: 10,
   username:
     '0xe88e6cc723d239c8817fce42a8aad67782eef2a02b153e89b9909fe1fbc386b1',
   pubKey:
@@ -19,6 +19,9 @@ const rawData = {
   keyType: 0,
   registerEmail:
     '0xa5479138e3c60ddca59afbba6d8689fa959dcb9eba2089bc2b99d22cd0b5d308',
+  bindEmail:
+    '0xa5479138e3c60ddca59afbba6d8689fa959dcb9eba2089bc2b99d22cd0b5d308',
+  nonce: '0x2',
 };
 
 test('test Transaction getSignMessage validate', async (t) => {

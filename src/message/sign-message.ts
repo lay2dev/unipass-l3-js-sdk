@@ -241,7 +241,7 @@ export class SignMessage {
         { v: this.inner.chainId, t: 'uint8' },
         { v: this.inner.action, t: 'uint8' },
         { v: sha256HashData(this.inner.username), t: 'bytes32' },
-        { v: this.inner.bindEmail, t: 'bytes' },
+        { v: sha256HashData(this.inner.bindEmail), t: 'bytes32' },
         { v: this.inner.nonce, t: 'uint32' }
       )!;
       console.log('-----------data-----------');
