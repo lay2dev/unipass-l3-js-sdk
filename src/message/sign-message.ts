@@ -124,6 +124,7 @@ export class SignMessage {
       for (let item of this.inner.recoveryEmail) {
         emails.push(sha256HashData(item));
       }
+      console.log(emails);
 
       const data: string = encodePacked(
         { v: this.inner.chainId, t: 'uint8' },
@@ -131,7 +132,8 @@ export class SignMessage {
         { v: sha256HashData(this.inner.registerEmail), t: 'bytes32' },
         { v: sha256HashData(this.inner.username), t: 'bytes32' },
         { v: this.inner.nonce, t: 'uint32' },
-        { v: '0x' + emails.join(''), t: 'bytes' },
+        /* tslint:disable-next-line */
+        { v: emails as unknown as string, t: 'bytes32[]' },
         { v: this.inner.threshold, t: 'uint8' }
       )!;
       console.log('-----------data-----------');
